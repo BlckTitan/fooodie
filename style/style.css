@@ -25,7 +25,7 @@ body footer{
 }
 body header,
 body footer{
-    background-color: #1f2937;
+    background-color: #DC3545;
 }
 body header{
     height: 350px;
@@ -33,7 +33,6 @@ body header{
 header > nav.tab{
     display: flex;
     justify-content: space-between;
-    position: fixed;
 }
 header > nav.tab h3{
     color: #f9faf8;
@@ -43,6 +42,10 @@ header > nav.tab > nav.links a{
     color: #e5e7eb;
     font-size: 18px;
     margin-left: 1rem;
+    font-weight: 300;
+}
+header > nav.tab > nav.links a:hover{
+    color: #6d1818;
 }
 header div.hero{
     display: flex;
@@ -73,6 +76,9 @@ header div.hero > div.heroText button{
     border-radius: 0.3rem;
     width: 8rem;
     height: 2.5rem;
+}
+header div.hero > div.heroText button:hover{
+    background-color: #2c63bb;
 }
 header div.hero > figure{
     flex: 3;
@@ -118,8 +124,8 @@ main section.chefs > div.imageAndCaption > figure > img{
 }
 main section.chefs > div.imageAndCaption > figure > figcaption{
     font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
+    font-weight: light;
+    color: #e05f2c;
 }
 main section.quote{
     background-color: #e5e7eb;
@@ -168,6 +174,8 @@ main section.cta > div > div > button:hover{
     background-color: #2c63bb;
 }
 footer{
+    bottom: 0;
     color: #fff;
     font-size: 18px;
+    font-weight: 300;
 }

@@ -5,19 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="./style/menu.css">
+    <link rel="stylesheet" href="../style/menu.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Kalam:wght@300;400;700&family=Montserrat:wght@100;200;400;500;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&family=Satisfy&display=swap" rel="stylesheet">
 </head>
 <body>
-    <figure>
-        <img 
-            src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" 
-            alt="" 
-            srcset=""
-        >
-    </figure>
+    <img 
+        src="https://images.unsplash.com/photo-1533777324565-a040eb52facd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1436&q=80" 
+        alt="Editorial, Food & Drink; By Pablo Merchán Montes;" 
+    >
     <header>
         <nav class="container tab">
             <h3>Fooodie</h3>
@@ -29,12 +26,39 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
+        <h2>Our Menu</h2>
+
+        <section>
+            <form action="" class="targetHolder">
+                <div class="mealItem">
+                    <img src="" alt=""/>
+                    <div class="foodPrice">
+                        <h3>Fried Rice</h3>
+                        <span>
+                            ₦150 pack cost inclusive.
+                        </span>
+                        <button>ADD TO CART</button>
+                    </div>
+                    <div class="foodQuantity">
+                        <div class="quantity">
+                            <label>Quantity</label>
+                            <input type="number" min="1" max="9" value="1"/>
+                        </div>
+                        <span>₦850</span>
+                    </div>
+                </div>
+
+            </form>
+        </section>
 
     </main>
 
     <footer>
         <span>Copyright &copy;</span>
     </footer>
+    
+    <script src="../js/menu.js">
+    </script>
 </body>
 </html>
