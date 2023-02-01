@@ -14,7 +14,7 @@ a{
     width: 70%;
 }
 body{
-    background-image: url('../img//anto-meneghini-unsplash.jpg');
+    background-image: url('https://images.unsplash.com/photo-1660505465468-c898ea7ff674?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -105,7 +105,9 @@ main section > form > div.mealItem > div.foodQuantity{
 
 }
 main section > form > div.mealItem > div.foodPrice > h3{
+    color: #e8e8e8;
     font-size: 28px;
+    font-weight: 400;
 }
 main section > form > div.mealItem > div.foodPrice > span{
     margin: 1rem 0;
