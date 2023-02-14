@@ -9,15 +9,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Kalam:wght@300;400;700&family=Montserrat:wght@100;200;400;500;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="container tab">
             <h3>Fooodie</h3>
             <nav class="links">
-                <a href="">header link one</a>
-                <a href="./pages/menu.html">Menu</a>
-                <a href="">header link three</a>
+                <a href="../index.html">Home</a>
+                <a href="./menu.html">Menu</a>
+                <a href="./cart.html" class="checkout">
+                    <i class="material-icons">
+                        shopping_cart
+                    </i>
+                </a>
             </nav>
         </nav>
     </header>
@@ -170,13 +175,12 @@
                 </div>
             </form>
         </section>
-        <div></div>
-    </main>
 
-    <!--<footer>
-        <span>Copyright &copy;</span>
-    </footer>-->
+    </main>
     
+    <div class="toTop" onclick="arrowTop()">
+        <i class="material-icons">arrow_upward</i>
+    </div>
     <script src="../js/menu.js">
     </script>
 </body>

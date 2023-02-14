@@ -1,4 +1,7 @@
 @import url('./buttonAnimation.css');
+html{
+    scroll-behavior: smooth;
+}
 *{
     font-family: "Roboto", "aboreto";
     margin: 0;
@@ -61,6 +64,10 @@ header > nav.tab h3{
     color: #f9faf8;
     font-size: 24px;
 }
+header > nav.tab > nav.links{
+    display: flex;
+    align-items: center;
+}
 header > nav.tab > nav.links a{
     color: #e5e7eb;
     font-size: 18px;
@@ -69,6 +76,11 @@ header > nav.tab > nav.links a{
 }
 header > nav.tab > nav.links a:hover{
     color: #eccaca;
+}
+header > nav.tab > nav.links > a.checkout{
+    display: flex;
+    align-items: center;
+    margin-left: 4rem;
 }
 main{
     background-color: rgba(26, 36, 33, 0.7);
@@ -143,6 +155,24 @@ main section > form > div.mealItem > div.foodQuantity > div.quantity > input{
 }
 main section > form > div.mealItem > div.foodQuantity > span{
     margin-top: 2rem;
+}
+div.toTop{
+    background-color: #6A3329;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    position: fixed;
+    left: 5rem;
+    bottom: 10rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+div.toTop > i{
+    font-size: 30px;
 }
 footer{
     color: #fff;
