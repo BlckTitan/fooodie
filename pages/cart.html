@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Fooodie</title>
+    <link rel="stylesheet" href="../style/cart.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Kalam:wght@300;400;700&family=Montserrat:wght@100;200;400;500;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="container tab">
+            <h3>Fooodie</h3>
+            <nav class="links">
+                <a href="../index.html">Home</a>
+                <a href="./menu.html">Menu</a>
+                <a href="./cart.html" class="checkout">
+                    <i class="material-icons">
+                        shopping_cart
+                    </i>
+                </a>
+            </nav>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="checkoutSteps">
+            <span class="step order active">Your order</span>
+            <span class="step payment">Payment</span>
+            <span class="step success">Success</span>
+        </div>
+        <section class="cartItems">
+            <div class="header">
+                <h1>REVIEW YOUR ORDER</h1>
+                <a href="../pages/cart.html">
+                    <i class="material-icons">add_shopping_cart</i>
+                    ADD MORE
+                </a>
+            </div>
+            <div class="body">
+                <div class="mealList">
+                    <button>
+                        <i class="material-icons">close</i>
+                    </button>
+                    <img 
+                        src="https://admin.kilimanjaro-restaurants.com/storage/gallery/Fried%20rice_1640804142.JPG" 
+                        alt="Image of meal selected by the customer"
+                    />
+                    <h2>Fried Rice</h2>
+                    <label for="quantity">QUANTITY</label>
+                    <input id="quantity" type="number" min="1" max="9" value="1"/>
+                    <span>₦850</span>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="subTotal">
+                    <span class="label">SUB TOTAL</span>
+                    <span>₦0.00</span>
+                </div>
+                <div class="total">
+                    <span class="label">TOTAL</span>
+                    <span>₦850</span>
+                </div>
+                <button>Proceed to checkout</button>
+            </div>
+        </section>
+        <section class="payment">a</section>
+        <section class="checkoutSuccess">
+            <i class="material-icons">task_alt</i>
+            <p>payment completed successfully</p>
+        </section>
+    </main>
+
+    <script src="../js/menu.js">
+    </script>
+    <script src="../js/cart.js">
+    </script>
+</body>
+</html>
