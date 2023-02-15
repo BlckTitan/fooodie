@@ -7,4 +7,11 @@ const checkoutStepsDisplay = () =>{
     payment.style.visibility = 'hidden';
     checkoutSuccess.style.visibility = 'hidden';
 }
+const messageDisplay = () =>{
+    let displayMessage = document.querySelector('.displayMessage');
+    setTimeout(()=>{
+        displayMessage.style.visibility = 'hidden'
+    }, 1000)
+}
+messageDisplay()
 checkoutStepsDisplay()

@@ -6,7 +6,9 @@ const meals = [
     {food: "White Rice and Stew", price: "₦900", qty: "1",  additionalCost: "₦150 pack cost inclusive.", img: "https://admin.kilimanjaro-restaurants.com/storage/gallery/White%20rice_1640343995.JPG"},
     {food: "Beans", price: "₦987", qty: "1",  additionalCost: "₦200 pack cost inclusive.", img: "https://admin.kilimanjaro-restaurants.com/storage/gallery/Beans_1640879015.JPG"},
     {food: "Okro Soup", price: "₦1,250", qty: "1",  additionalCost: "₦150 pack cost inclusive.", img: "https://admin.kilimanjaro-restaurants.com/storage/gallery/Okro%20soup_1643896740.JPG"},
-]
+];
+let add_to_cart_btn = document.querySelector('.addToCart');
+let display_message = document.querySelector('.displayMessage');
 /*const getMenuItem = () =>{
     let targetHolder = document.querySelector("form.targetHolder");
     let mealItem = document.querySelector('div.mealItem');
@@ -41,6 +43,22 @@ const meals = [
     ));
 }
 */
+const addMessage = (e) =>{
+    e.preventDefault()
+    display_message.style.visibility = 'visible';
+    display_message.innerHTML = 'ADDED SUCCESSFULLY';
+    messageDisplay()
+}
+const addItemsToCart = () =>{
+    add_to_cart_btn.addEventListener('click', addMessage)
+}
+const messageDisplay = () =>{
+    setTimeout(()=>{
+        display_message.style.visibility = 'hidden';
+    }, 6000)
+}
+addItemsToCart()
+messageDisplay()
 const arrowTop = () =>{
     window.scrollTo({
         top:0

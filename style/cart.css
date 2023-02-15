@@ -70,6 +70,20 @@ body header{
     height: 4rem;
     position: fixed;
 }
+body header > div.displayMessage{
+    visibility: hidden;
+    position: absolute;
+    right: 10rem;
+    top: 6rem;
+    width: 12rem;
+    height: 3rem;
+    text-align: center;
+    line-height: 1.7;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    background-color: rgba(0, 128, 0, 0.3);
+
+}
 header > nav.tab{
     display: flex;
     justify-content: space-between;
