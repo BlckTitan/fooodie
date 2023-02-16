@@ -7,7 +7,7 @@ const meals = [
     {food: "Beans", price: "₦987", qty: "1",  additionalCost: "₦200 pack cost inclusive.", img: "https://admin.kilimanjaro-restaurants.com/storage/gallery/Beans_1640879015.JPG"},
     {food: "Okro Soup", price: "₦1,250", qty: "1",  additionalCost: "₦150 pack cost inclusive.", img: "https://admin.kilimanjaro-restaurants.com/storage/gallery/Okro%20soup_1643896740.JPG"},
 ];
-let add_to_cart_btn = document.querySelector('.addToCart');
+let add_to_cart_btn = document.querySelectorAll('.addToCart');
 let display_message = document.querySelector('.displayMessage');
 /*const getMenuItem = () =>{
     let targetHolder = document.querySelector("form.targetHolder");
@@ -50,14 +50,19 @@ const addMessage = (e) =>{
     messageDisplay()
 }
 const addItemsToCart = () =>{
-    add_to_cart_btn.addEventListener('click', addMessage)
+    add_to_cart_btn.forEach(element => element.addEventListener('click', addMessage))
 }
 const messageDisplay = () =>{
+    if (add_to_cart_btn.length > 0) {    
+        add_to_cart_btn.forEach(()=>
+            addItemsToCart()
+        );
+    }
+    
     setTimeout(()=>{
         display_message.style.visibility = 'hidden';
-    }, 6000)
+    }, 4000)
 }
-addItemsToCart()
 messageDisplay()
 const arrowTop = () =>{
     window.scrollTo({
