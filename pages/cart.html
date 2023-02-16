@@ -30,9 +30,9 @@
     
     <main>
         <div class="checkoutSteps">
-            <span class="step order active">Your order</span>
-            <span class="step payment">Payment</span>
-            <span class="step success">Success</span>
+            <span class="step order">YOUR ORDER</span>
+            <span class="step payment">PAYMENT</span>
+            <span class="step success">SUCCESS</span>
         </div>
         <section class="cartItems">
             <div class="header">
@@ -66,18 +66,64 @@
                     <span class="label">TOTAL</span>
                     <span>₦850</span>
                 </div>
-                <button>Proceed to checkout</button>
+                <button class="toCheckout">Proceed to checkout</button>
             </div>
         </section>
-        <section class="payment">a</section>
+        <section class="payment">
+            <form action="">
+                <div class="transaction">
+                    <div class="delivery">
+                        <h2>DELIVERY METHOD</h2>
+                        <label for="">
+                            <input id="delivery" type="radio">
+                            DELIVERY
+                        </label>
+                        <label for="pickup">
+                            <input id="pickup" type="radio">
+                            PICKUP
+                        </label>
+                    </div>
+                    <div class="paymentMethod">
+                        <h2>PAYMENT METHOD</h2>
+                        <label for="">
+                            <input id="delivery" type="radio">
+                            PAY ON DELIVERY
+                        </label>
+                        <label for="pickup">
+                            <input id="pickup" type="radio">
+                            PAY ONLINE
+                        </label>
+                    </div>
+                    <div class="cardDetails">
+                        <label for="cardNumber">
+                            CARD NUMBER
+                            <input id="cardNumber" type="number" placeholder="1234 5678 9012 3456" required>
+                        </label>
+                        <label for="cardNumber">
+                            NAME ON CARD
+                            <input id="cardNumber" type="text" placeholder="JONNY DAINE" required>
+                        </label>
+                        <div>
+                            <label>
+                                EXPIRY DATE
+                                <input type="date" placeholder="01/19" required>
+                            </label>
+                            <label>
+                                SECURITY CODE
+                                <input type="NUMBER" max="3" required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="billingAddress"></div>
+                <div class="paymentPlatforms"></div>
+            </form>
+        </section>
         <section class="checkoutSuccess">
             <i class="material-icons">task_alt</i>
             <p>payment completed successfully</p>
         </section>
     </main>
-
-    <script src="../js/menu.js">
-    </script>
     <script src="../js/cart.js">
     </script>
 </body>
