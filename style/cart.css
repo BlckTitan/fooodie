@@ -284,7 +284,7 @@ section.payment > form > div.transaction > div.paymentMethod > div{
 section.payment > form > div.transaction > div.delivery > div > label,
 section.payment > form > div.transaction > div.paymentMethod > div > label{
     border: 1px solid #6A3329;
-    padding: 1rem;
+    padding: 0.7rem;
     border-radius: 0.3rem;
     margin-right: 2rem;
 }
@@ -370,7 +370,31 @@ section.payment > form > div.billingAddress > div.additionalInfo > input{
 section.payment > form > div.paymentPlatforms{
     flex: 1;
 }
+section.payment > form > div.paymentPlatforms > h2{
+    margin-bottom: 1rem;
+}
+section.payment > form > div.paymentPlatforms > div.orderDetails > div.orderItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+section.payment > form > div.paymentPlatforms > div.orderDetails > div.submit{
+    display: flex;
+    justify-content: center;
+}
+section.payment > form > div.paymentPlatforms > div.orderDetails > div.submit > button{
+    margin: 1rem auto;
+    background-color: #e05f2c;
+    color: #fff;
+    width: 16rem;
+    height: 3.5rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    border: none;
+}
 section.payment > form > div.paymentPlatforms img{
+    margin-top: 4rem;
     width: 400px;
     object-fit: cover;
 }
