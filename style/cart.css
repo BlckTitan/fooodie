@@ -250,7 +250,50 @@ section.cartItems > div.footer > button{
     color: #fff;
     margin-top: 1.5rem;
 }
+section.payment{
+    width: 1400px;
+}
 section.payment > form{
     display: flex;
-    width: 1200px;
+    width: 100%;
+}
+section.payment > form > div.transaction{
+    flex: 2;
+}
+section.payment > form > div.transaction > div.delivery,
+section.payment > form > div.transaction > div.paymentMethod,
+section.payment > form > div.transaction > div.cardDetails{
+    margin-bottom: 0.5rem;
+
+}
+section.payment > form > div.transaction > div.delivery > h2,
+section.payment > form > div.transaction > div.paymentMethod > h2,
+section.payment > form > div.transaction > div.cardDetails > h2{
+    margin-bottom: 1rem;
+}
+section.payment > form > div.transaction > div.delivery,
+section.payment > form > div.transaction > div.paymentMethod{
+    width: 100%;
+    height: 6rem;
+}
+section.payment > form > div.transaction > div.delivery > div,
+section.payment > form > div.transaction > div.paymentMethod > div{
+    margin-top: 2rem;
+}
+section.payment > form > div.transaction > div.delivery > div > label,
+section.payment > form > div.transaction > div.paymentMethod > div > label{
+    border: 1px solid #6A3329;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    margin-right: 2rem;
+}
+section.payment > form > div.transaction > div.cardDetails{
+    display: flex;
+    flex-direction: column;
+}
+section.payment > form > div.billingAddress{
+    flex: 1;
+}
+section.payment > form > div.paymentPlatforms{
+    flex: 1;
 }
