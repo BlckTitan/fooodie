@@ -250,7 +250,7 @@ section.cartItems > div.footer > button{
     color: #fff;
     margin-top: 1.5rem;
 }
-section.payment{
+section.payment > form{
     display: flex;
     width: 1200px;
 }

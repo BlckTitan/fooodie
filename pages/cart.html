@@ -73,7 +73,7 @@
             <form action="">
                 <div class="transaction">
                     <div class="delivery">
-                        <h2>DELIVERY METHOD</h2>
+                        <h2 class="title">DELIVERY METHOD</h2>
                         <label for="">
                             <input id="delivery" type="radio">
                             DELIVERY
@@ -84,8 +84,8 @@
                         </label>
                     </div>
                     <div class="paymentMethod">
-                        <h2>PAYMENT METHOD</h2>
-                        <label for="">
+                        <h2 class="title">PAYMENT METHOD</h2>
+                        <label for="delivery">
                             <input id="delivery" type="radio">
                             PAY ON DELIVERY
                         </label>
@@ -95,9 +95,10 @@
                         </label>
                     </div>
                     <div class="cardDetails">
+                        <h2 class="title">CARD DETAILS</h2>
                         <label for="cardNumber">
                             CARD NUMBER
-                            <input id="cardNumber" type="number" placeholder="1234 5678 9012 3456" required>
+                            <input id="cardNumber" type="text" maxlength="16" placeholder="1234 5678 9012 3456" required>
                         </label>
                         <label for="cardNumber">
                             NAME ON CARD
@@ -106,16 +107,55 @@
                         <div>
                             <label>
                                 EXPIRY DATE
-                                <input type="date" placeholder="01/19" required>
+                                <input type="text" maxlength="4" placeholder="01/19" required>
                             </label>
                             <label>
                                 SECURITY CODE
-                                <input type="NUMBER" max="3" required>
+                                <input type="text" pattern="\d*" placeholder="012" maxlength="4" required>
                             </label>
                         </div>
                     </div>
                 </div>
-                <div class="billingAddress"></div>
+                <div class="billingAddress">
+                    <div class="billingAddress">
+                        <h2>BILLING ADDRESS</h2>
+                        
+                        <div class="name">
+                            <label for="firstName">
+                                FIRST NAME
+                                <input id="firstName" type="name" placeholder="FIRST NAME" required>
+                            </label>
+                            <label for="lastName">
+                                LAST NAME
+                                <input id="lastName" type="name" placeholder="LAST NAME" required>
+                            </label>
+                        </div>
+                        
+                        <label for="email"></label>
+                        <input id="email" type="email" placeholder="EMAIL@EMAIL.com" required>
+                        
+                        <div class="numPass">
+                            <label for="password">
+                                PASSWORD
+                                <input type="password" id="password" required>
+                            </label>
+                            <label for="phoneNumber">
+                                PHONE NUMBER
+                                <input type="tel" required>
+                            </label>
+                        </div>
+
+                        <label for="address">STREET/ESTATE ADDRESS</label>
+                        <input type="text" id="address" required>
+                        <label for="houseNumber">HOUSE NUMBER</label>
+                        <input type="text" id="houseNumber" required>
+                    </div>
+                    <div class="additionalInfo">
+                        <h2>ADDITIONAL INFORMATION</h2>
+                        <textarea name="" id="" cols="30" rows="10" placeholder="ORDER/DELIVERY NOTE"></textarea>
+                        <input type="text" placeholder="PASTE COUPON CODE">
+                    </div>
+                </div>
                 <div class="paymentPlatforms"></div>
             </form>
         </section>
