@@ -291,6 +291,29 @@ section.payment > form > div.transaction > div.cardDetails{
     display: flex;
     flex-direction: column;
 }
+section.payment > form > div.transaction > div.cardDetails input{
+    height: 2rem;
+    border: none;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    color: #6A3329;
+}
+section.payment > form > div.transaction > div.cardDetails input#cardNumber{
+    width: 16rem;
+}
+section.payment > form > div.transaction > div.cardDetails input#name{
+    width: 24rem;
+}
+section.payment > form > div.transaction > div.cardDetails > div.security{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+section.payment > form > div.transaction > div.cardDetails > div.security input{
+    width: 8rem;
+}
 section.payment > form > div.billingAddress{
     flex: 1;
 }

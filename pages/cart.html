@@ -101,17 +101,20 @@
                     <div class="cardDetails">
                         <h2 class="title">CARD DETAILS</h2>
                         <label for="cardNumber">CARD NUMBER</label>
-                        <input id="cardNumber" type="text" maxlength="16" placeholder="1234 5678 9012 3456" required>
+                        <input id="cardNumber" type="text" pattern="\d*" maxlength="16" placeholder="1234 5678 9012 3456" required>
                         
-                        <label for="cardNumber">NAME ON CARD</label>
-                        <input id="cardNumber" type="text" placeholder="JONNY DAINE" required>
+                        <label for="name">NAME ON CARD</label>
+                        <input id="name" type="text" placeholder="JONNY DAINE" required>
                         
-                        <div>
-                            <label>EXPIRY DATE</label>
-                            <input type="text" maxlength="4" placeholder="01/19" required>
-                            
-                            <label>SECURITY CODE</label>
-                            <input type="text" pattern="\d*" placeholder="012" maxlength="4" required>
+                        <div class="security">
+                            <div>
+                                <label>EXPIRY DATE</label>
+                                <input type="text" pattern="\d*" maxlength="4" placeholder="01/19" required>
+                            </div>
+                            <div>
+                                <label>SECURITY CODE</label>
+                                <input type="text" pattern="\d*" placeholder="012" maxlength="3" required>
+                            </div>
                         </div>
                     </div>
                 </div>
