@@ -2,6 +2,7 @@ let cart_items = document.querySelector('section.cartItems');
 let payment = document.querySelector('section.payment');
 let checkout_success = document.querySelector('section.checkoutSuccess');
 let to_checkout = document.querySelector('button.toCheckout');
+let place_order = document.querySelector('button.placeOrder');
 let step_order = document.querySelector('span.order');
 let step_payment = document.querySelector('span.payment');
 let step_success = document.querySelector('span.success');
@@ -13,7 +14,11 @@ const checkoutStepsDisplay = (step) =>{
         cart_items.style.visibility = 'hidden';
         payment.style.visibility = 'visible';
     } else if(step == 'success'){
+        step_order.classList.remove('active');
+        step_payment.classList.remove('active');
         step_success.classList.add('active');
+        payment.style.visibility = 'hidden';
+        cart_items.style.visibility = 'hidden';
         checkout_success.style.visibility = 'visible';
     }else{
         step_order.classList.add('active');
@@ -24,7 +29,7 @@ const selectStep = () =>{
     step_order.classList.add('active');
     cart_items.style.visibility = 'visible';
     to_checkout.addEventListener('click', ()=>checkoutStepsDisplay('payment'))
-    //to_checkout.addEventListener('click', checkoutStepsDisplay('payment'))
+    place_order.addEventListener('click', ()=>checkoutStepsDisplay('success'))
     //to_checkout.addEventListener('click', checkoutStepsDisplay('payment'))
 }
 /*const messageDisplay = () =>{

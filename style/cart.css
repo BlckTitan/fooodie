@@ -130,22 +130,18 @@ main > div.checkoutSteps > span.step{
     font-size: 18px;
     color: #6A3329;
 }
-main > div.checkoutSteps > span::after{
-    content: '';
-    width: 0;
-    height: 2px;
-    background-color: #6A3329;
-}
 main > div.checkoutSteps > span.active{
+    content: '';
+    position: relative;
     transform: scale(1.5);
     font-weight: 600;
-    width: 8rem;
     height: 1.5rem;
     text-align: center;
 }
 main > div.checkoutSteps > span.active::after{
     content: '';
     width: 100%;
+    position: absolute;
 }
 section{
     width: 1000px;
