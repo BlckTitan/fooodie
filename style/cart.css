@@ -124,24 +124,32 @@ main > div.checkoutSteps{
     justify-content: space-between;
     position: absolute;
     top: 0;
-    transition: all 0.4s ease-in-out;
 }
 main > div.checkoutSteps > span.step{
     font-size: 18px;
     color: #6A3329;
 }
-main > div.checkoutSteps > span.active{
+main > div.checkoutSteps > span.step::after{
     content: '';
     position: relative;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: #6A3329;
+}
+main > div.checkoutSteps > span.active{
     transform: scale(1.5);
     font-weight: 600;
+    width: 8rem;
     height: 1.5rem;
     text-align: center;
 }
 main > div.checkoutSteps > span.active::after{
+    position: absolute;
     content: '';
     width: 100%;
-    position: absolute;
+    transition: all 0.9s ease-in-out;
 }
 section{
     width: 1000px;
