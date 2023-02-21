@@ -35,16 +35,35 @@ const paymentMethod = () =>{
     let payOnline = document.querySelector('input.payOnline');
     let payDelivery = document.querySelector('input.payDelivery');
     let cardDetails = document.querySelector('div.cardDetails');
+
     payOnline.addEventListener('click', ()=>{
         if(payOnline.checked == true){
             show(cardDetails)
         }
-    })
+    });
+
     payDelivery.addEventListener('click', ()=>{
         if(payDelivery.checked == true){
             hide(cardDetails)
         }
-    })
+    });
+}
+const deliveryMethod = () =>{
+    let homeDelivery = document.querySelector('input.homeDelivery');
+    let pickup = document.querySelector('input.pickup');
+    let deliveryFee = document.querySelector('div.deliveryFee');
+
+    homeDelivery.addEventListener('click', ()=>{
+        if(homeDelivery.checked == true){
+            deliveryFee.style.display = 'flex'
+        }
+    });
+
+    pickup.addEventListener('click', ()=>{
+        if(pickup.checked == true){
+            deliveryFee.style.display = 'none'
+        }
+    });
 }
 const show = (element) =>{
     element.style.visibility = 'visible';
@@ -52,15 +71,7 @@ const show = (element) =>{
 const hide = (element) =>{
     element.style.visibility = 'hidden';
 }
-/*const deliveryMethod = () =>{
+paymentMethod();
+deliveryMethod()
 
-}*/
-/*const messageDisplay = () =>{
-    let display_message = document.querySelector('.displayMessage');
-    setTimeout(()=>{
-        display_message.style.visibility = 'hidden'
-    }, 1000)
-}*/
-//messageDisplay()
-paymentMethod()
 selectStep()
