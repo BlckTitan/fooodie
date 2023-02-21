@@ -65,6 +65,26 @@ section.payment > form > div.transaction > div.cardDetails > div.security{
 section.payment > form > div.transaction > div.cardDetails > div.security input{
     width: 8rem;
 }
+section.payment > form > div.transaction > button{
+    background-color: #e05f2c;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.3rem;
+    width: 10rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+section.payment > form > div.transaction > button > i{
+    transform: translateX(1rem);
+    margin-right: 1rem;
+}
+section.payment > form > div.transaction > button:hover > i{
+    transform: translateX(0);
+    transition: all 0.4s ease-in;
+}
 section.payment > form > div.billingAddress{
     flex: 2;
     display: flex;

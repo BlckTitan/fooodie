@@ -6,6 +6,7 @@ let place_order = document.querySelector('button.placeOrder');
 let step_order = document.querySelector('span.order');
 let step_payment = document.querySelector('span.payment');
 let step_success = document.querySelector('span.success');
+let back_To_Cart_Items = document.querySelector('button.backToCartItems');
 
 const checkoutStepsDisplay = (step) =>{
     if (step == 'payment') {
@@ -21,7 +22,9 @@ const checkoutStepsDisplay = (step) =>{
         cart_items.style.visibility = 'hidden';
         checkout_success.style.visibility = 'visible';
     }else{
+        step_payment.classList.remove('active');
         step_order.classList.add('active');
+        payment.style.visibility = 'hidden';
         cart_items.style.visibility = 'visible';
     }
 }
@@ -30,6 +33,7 @@ const selectStep = () =>{
     cart_items.style.visibility = 'visible';
     to_checkout.addEventListener('click', ()=>checkoutStepsDisplay('payment'))
     place_order.addEventListener('click', ()=>checkoutStepsDisplay('success'))
+    back_To_Cart_Items.addEventListener('click', ()=>checkoutStepsDisplay('cartItems'))
 }
 const paymentMethod = () =>{
     let payOnline = document.querySelector('input.payOnline');
