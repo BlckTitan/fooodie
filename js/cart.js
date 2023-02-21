@@ -30,8 +30,31 @@ const selectStep = () =>{
     cart_items.style.visibility = 'visible';
     to_checkout.addEventListener('click', ()=>checkoutStepsDisplay('payment'))
     place_order.addEventListener('click', ()=>checkoutStepsDisplay('success'))
-    //to_checkout.addEventListener('click', checkoutStepsDisplay('payment'))
 }
+const paymentMethod = () =>{
+    let payOnline = document.querySelector('input.payOnline');
+    let payDelivery = document.querySelector('input.payDelivery');
+    let cardDetails = document.querySelector('div.cardDetails');
+    payOnline.addEventListener('click', ()=>{
+        if(payOnline.checked == true){
+            show(cardDetails)
+        }
+    })
+    payDelivery.addEventListener('click', ()=>{
+        if(payDelivery.checked == true){
+            hide(cardDetails)
+        }
+    })
+}
+const show = (element) =>{
+    element.style.visibility = 'visible';
+}
+const hide = (element) =>{
+    element.style.visibility = 'hidden';
+}
+/*const deliveryMethod = () =>{
+
+}*/
 /*const messageDisplay = () =>{
     let display_message = document.querySelector('.displayMessage');
     setTimeout(()=>{
@@ -39,4 +62,5 @@ const selectStep = () =>{
     }, 1000)
 }*/
 //messageDisplay()
+paymentMethod()
 selectStep()
