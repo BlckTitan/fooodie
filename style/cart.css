@@ -1,6 +1,7 @@
 @import url('./buttonAnimation.css');
 @import url('./sections//yourOrder.css');
 @import url('./sections/payment.css');
+@import url('./sections/success.css');
 html{
     scroll-behavior: smooth;
 }
