@@ -21,6 +21,7 @@ const checkoutStepsDisplay = (step) =>{
         payment.style.visibility = 'hidden';
         cart_items.style.visibility = 'hidden';
         checkout_success.style.visibility = 'visible';
+        redirectToHome()
     }else{
         step_payment.classList.remove('active');
         step_order.classList.add('active');
@@ -75,7 +76,11 @@ const show = (element) =>{
 const hide = (element) =>{
     element.style.visibility = 'hidden';
 }
+const redirectToHome = () => {
+    setTimeout(()=>{
+        window.location = './menu.html';
+    }, 6000)
+}
 paymentMethod();
 deliveryMethod()
-
 selectStep()
