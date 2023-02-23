@@ -32,7 +32,7 @@
               transform-origin: 50% 84%;
     }
     100% {
-      -webkit-transform: scale(1.25) translateY(15px);
+      -webkit-transform: scale(1.1) translateY(15px);
               transform: scale(1.25) translateY(15px);
       -webkit-transform-origin: bottom;
               transform-origin: bottom;

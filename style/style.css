@@ -1,5 +1,10 @@
 @import url('./buttonAnimation.css');
 @import url('./imageAnimation.css');
+/*
+https://images.unsplash.com/photo-1558030089-02acba3c214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80
+https://images.unsplash.com/photo-1558030137-a56c1b004fa3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80
+https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80
+*/
 *{
     margin: 0;
     padding: 0;
@@ -17,186 +22,64 @@ body{
     height: 100vh;
     position: relative;
 }
-body header,
 body main,
 body footer{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 0;
 }
 body footer{
-    background-color: #6A3329;
+    width: 100%;
+    height: 40vh;
+    padding: 4rem;
+    background-color: #161616;
 }
-body header{
-    background-image: url('https://images.unsplash.com/photo-1673912402587-57ac40f1b4a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=8');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 350px;
+body > nav.tab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     position: relative;
     margin-top: 0;
     padding-top: 0;
-}
-header > img{
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    
-}
-header > nav.tab{
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 0;
-}
-header > nav.tab h3{
-    color: #f9faf8;
-    font-size: 24px;
-}
-header > nav.tab > nav.links a{
+    z-index: 2;
+    background-color: #161616;
     color: #6A3329;
-    font-size: 18px;
-    margin-left: 1rem;
-    font-weight: 300;
 }
-header > nav.tab > nav.links a:hover{
-    color: #6d1818;
-}
-header div.hero{
+body > nav.tab > div.container{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 250px;
-    margin-top: 3rem;
+    padding: 1rem;
 }
-header div.hero > div.heroText{
-    flex: 2;
+body > nav.tab > div.container > h3{
+    font-size: 2rem;
+    font-weight: 600;
 }
-header div.hero > div.heroText h2{
-    font-size: 48px;
-    font-weight: bold;
-    color: #f9faf8;
+body > nav.tab > div.container > nav.links{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 12rem;
 }
-header div.hero > div.heroText p{
-    font-size: 22px;
-    color: #6d1818;
-    margin: 0.3rem 0;
-    width: 40%;
+body > nav.tab > div.container > nav.links > a{
+    font-size: 1.2rem;
+    color: #7a3329;
 }
-header div.hero > div.heroText button{
-    font-size: 18px;
-    background-color: #6A3329;
-    color: #f9faf8;
-    border: none;
-    border-radius: 0.3rem;
-    width: 8rem;
-    height: 2.5rem;
-}
-header div.hero > div.heroText button:hover{
-    background-color: #D1CCC6;
-    color: #6A3329;
-    -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
-    animation: heartbeat 1.5s ease-in-out infinite both;
-}
-header div.hero > figure{
-    flex: 3;
-}
-header div.hero > figure > img{
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background-repeat: no-repeat;
-    border-radius: 0.2rem;
-}
-
 main{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-main section.chefs{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-main section.chefs > h3{
-    font-size: 36px;
-    color: #1f2937;
-    font-weight: 900;
-}
-main section.chefs > div.imageAndCaption{
+main > section.grills{
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-main section.chefs > div.imageAndCaption > figure{
-    text-align: center;
-}
-main section.chefs > div.imageAndCaption > figure > img{
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 0.1px solid #6A3329;
-    margin: 1.5rem 1rem;
-}
-main section.chefs > div.imageAndCaption > figure > figcaption{
-    font-size: 18px;
-    font-weight: light;
-    color: #e05f2c;
-}
-main section.quote{
-    background-color: #e5e7eb;
-    height: 300px;
-    padding: 6rem 12rem;
-    margin-top: 4rem;
-}
-main section.quote > i{
-    font-size: 36px;
-    font-weight: lighter;
-}
-main section.quote > strong{
-    display: block;
-    text-align: end;
-}
-main section.cta{
-    width: 100%;
-    margin: 4rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-main section.cta > div{
-    background-color: #3882f6;
-    width: 800px;
-    height: 120px;
-    border-radius: 0.5rem;
-    padding: 2rem 5rem;
-    color: #fff;
-}
-main section.cta > div > div{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-main section.cta > div > div > button{
-    width: 8rem;
-    height: 3rem;
-    border: 1px solid #fff;
-    background-color: #6A3329;
-    color: #fff;
-    font-size: 18px;
-    border-radius: 0.3rem;
-}
-main section.cta > div > div > button:hover{
-    background-color: #D1CCC6;
-    color: #6A3329;
-    -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
-    animation: heartbeat 1.5s ease-in-out infinite both;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1558030089-02acba3c214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80');
+    background-attachment:fixed ;
+    background-position: center;
+    background-size: cover;
+    background-color: rgba(48, 45, 45, 0.3);
+    color: rgb(48, 45, 45);
 }
 footer{
     bottom: 0;
