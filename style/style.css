@@ -35,11 +35,12 @@ div.backToTop{
     border-radius: 50%;
     width: 3.5rem;
     height: 3.5rem;
-    background-color: #232323;
+    background-color: #e8e8e8;
+    /*background-color: #232323;*/
 }
 div.backToTop > span{
     font-size: 2.5rem;
-    color: #f35f24;
+    color: #6A3329;
 }
 div.backToTop:hover{
     scale: 1.25;
@@ -105,13 +106,72 @@ main > section.grills{
     background-color: rgba(48, 45, 45, 0.3);
     color: rgb(48, 45, 45);
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: flex-start;
 }
-main > section.grills > div{
-    margin-left: 8rem;
+main > section.grills > div.text{
+    margin: 10rem 8rem;
     display: flex;
     flex-direction: column;
+    color: #e8e8e8;
+}
+main > section.grills > div.text > h3{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+main > section.grills > div.text > h1{
+    font-size: 4rem;
+    font-weight: 800;
+}
+main > section.grills > div.text > a{
+    width: 12rem;
+    padding: 0 1rem;
+    position: relative;
+    color: #f35f24;
+    /*color: #161616;*/
+    font-size: 3.5rem;
+    font-weight: 800;
+    background-color: #232323;
+}
+main > section.grills > div.text > a::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #f35f24;
+    transition: all 0.4s ease-in-out;
+}
+main > section.grills > div.text > a:hover::after{
+    content: '';
+    position: absolute;
+    width: 10rem;
+}
+main > section.grills > div.carouselNavigation{
+    display: flex;
+    justify-content: right;
+    align-items:flex-start;
+    padding-right: 4rem;
+    width: 100%;
+    height: 15rem;
+}
+main > section.grills > div.carouselNavigation > button{
+    background-color: #e8e8e8;
+    border: none;
+    margin: 0 0.2rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main > section.grills > div.carouselNavigation > button:hover{
+    transform: scale(1.1);
+}
+main > section.grills > div.carouselNavigation > button > i{
+    font-size: 2rem;
+    color: #6A3329;
 }
 footer{
     bottom: 0;
