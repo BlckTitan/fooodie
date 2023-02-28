@@ -1,0 +1,79 @@
+main > section.grills{
+    width: 100%;
+    height: 100vh;
+    margin-top: 4rem;
+    /*background-image: url('https://images.unsplash.com/photo-1558030089-02acba3c214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80')*/;
+    background-attachment:fixed ;
+    background-position: center;
+    background-size: cover;
+    background-color: rgba(48, 45, 45, 0.3);
+    color: rgb(48, 45, 45);
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: flex-start;
+    transition: all 0.4s ease-in-out;
+}
+main > section.grills > div.text{
+    margin: 10rem 8rem;
+    display: flex;
+    flex-direction: column;
+    color: #e8e8e8;
+}
+main > section.grills > div.text > h3{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+main > section.grills > div.text > h1{
+    font-size: 4rem;
+    font-weight: 800;
+}
+main > section.grills > div.text > a{
+    width: 12rem;
+    padding: 0 1rem;
+    position: relative;
+    color: #f35f24;
+    /*color: #161616;*/
+    font-size: 3.5rem;
+    font-weight: 800;
+    background-color: #232323;
+}
+main > section.grills > div.text > a::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #f35f24;
+    transition: all 0.4s ease-in-out;
+}
+main > section.grills > div.text > a:hover::after{
+    content: '';
+    position: absolute;
+    width: 10rem;
+}
+main > section.grills > div.carouselNavigation{
+    display: flex;
+    justify-content: right;
+    align-items:flex-start;
+    padding-right: 4rem;
+    width: 100%;
+    height: 15rem;
+}
+main > section.grills > div.carouselNavigation > button{
+    background-color: #e8e8e8;
+    border: none;
+    margin: 0 0.2rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main > section.grills > div.carouselNavigation > button:hover{
+    transform: scale(1.1);
+}
+main > section.grills > div.carouselNavigation > button > i{
+    font-size: 2rem;
+    color: #6A3329;
+}
