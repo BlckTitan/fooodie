@@ -101,9 +101,10 @@ main{
 main > section.quote{
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 70vh;
-    padding: 4rem 16rem;
+    padding: 0 16rem;
     background-color: #fff;
 }
 main > section.quote > div.quote,
@@ -114,6 +115,7 @@ main > section.quote > div.quote{
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding-right: 3rem;
 
 }
 main > section.quote > div.quote > h2,
@@ -145,7 +147,7 @@ main > section.quote > div.quote > p{
     font-weight: 300;
 }
 main > div.image{
-
+    border-bottom: 2rem solid red;
 }
 main > section.quote > div.image > figure{
     display: grid;
@@ -154,14 +156,22 @@ main > section.quote > div.image > figure{
     gap: 1rem;
 }
 main > section.quote > div.image > figure > img.mainImg{
+    grid-column-start: 1;
+    grid-column-end: 3;
     width: 100%;
+    height: 250px;
     object-fit: cover;
     object-position: center;
 }
 main > section.quote > div.image > figure > img.subImg{
-    width: 50%;
+    width: 100%;
+    height: 200px;
     object-fit: cover;
     object-position: center;
+}
+main > section.quote > div.image > figure > img.mainImg:hover,
+main > section.quote > div.image > figure > img.subImg:hover{
+    transform: scale(1.05);
 }
 footer{
     bottom: 0;
