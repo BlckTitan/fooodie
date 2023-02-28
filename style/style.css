@@ -144,11 +144,24 @@ main > section.quote > div.quote > p{
     line-height: 1.5;
     font-weight: 300;
 }
-main > section.image{
+main > div.image{
+
+}
+main > section.quote > div.image > figure{
     display: grid;
-    grid-template-areas:
-    'mainImg'
-    'subImg subImg';
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+}
+main > section.quote > div.image > figure > img.mainImg{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+main > section.quote > div.image > figure > img.subImg{
+    width: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 footer{
     bottom: 0;
