@@ -166,6 +166,14 @@ footer > div.moreInfo > div.email_address > div > span{
     font-weight: 300;
 }
 footer > div.copyright_terms{
-
-    
+    display: flex;
+    justify-content: space-between;
+    align-items: end;    
+    width: 70%;
+    height: 100%;
 } 
+footer > div.copyright_terms > span{
+    display: block;
+    margin-right: 5rem;
+    font-size: 0.9rem;
+}
