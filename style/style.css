@@ -24,24 +24,29 @@ body{
     position: relative;
 }
 div.backToTop{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: none;
+    place-items: center;
     position: fixed;
     left: 4rem;
     bottom: 8rem;
     border-radius: 50%;
     width: 3.5rem;
     height: 3.5rem;
-    background-color: #e8e8e8;
+    /*background-color: #6A3329;*/
     /*background-color: #232323;*/
 }
 div.backToTop > span{
-    font-size: 2.5rem;
+    display: grid;
+    place-items: center;
+    font-size: 1.8rem;
     color: #6A3329;
+    background-color: #e8e8e8;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
 }
 div.backToTop:hover{
-    scale: 1.25;
+    scale: 1.05;
 }
 body main,
 body footer{
