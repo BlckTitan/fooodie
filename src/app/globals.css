@@ -7,3 +7,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.pageTitle{
+  @apply text-primaryColor font-semibold text-2xl;
+}
