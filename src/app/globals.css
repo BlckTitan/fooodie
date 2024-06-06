@@ -11,3 +11,7 @@
 .pageTitle{
   @apply text-primaryColor font-semibold text-2xl;
 }
+
+.navbarLink{
+  @apply xl:!bg-primaryColor xl:!text-white rounded-md;
+}
