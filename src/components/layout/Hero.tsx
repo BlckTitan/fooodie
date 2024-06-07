@@ -6,11 +6,11 @@ import { BsArrowRightCircle } from 'react-icons/bs'
 export default function Hero() {
   return (
     <section className='container container-fluid mt-4 flex flex-col-reverse xl:grid xl:grid-cols-2'>
-        <div className='w-full h-full jumbotron jumbotron-fluid d-flex flex-column'>
+        <div className='w-full h-fit jumbotron jumbotron-fluid d-flex flex-column'>
 
             <div className="jumboText">
                 
-                <h2 className='display-4'>Never face your day hungry</h2>
+                <h2 className='display-1'>Never face your day hungry</h2>
                 <p className='lead'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Modi iste consequuntur esse perspiciatis eveniet unde inventore quo recusandae eaque beatae.
@@ -28,7 +28,7 @@ export default function Hero() {
             </div>
         </div>
         
-        <div className="relative w-full h-56 mb-8 xl:mb-0">
+        <div className="relative w-full h-full mb-8 xl:mb-0">
             <Image src={Food1} alt='food image' objectFit='cover' layout='fill' className='h-full w-full'/>
         </div>
         
