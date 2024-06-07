@@ -15,3 +15,6 @@
 .navbarLink{
   @apply xl:!bg-primaryColor xl:!text-white rounded-md;
 }
+.heroButton{
+  @apply flex;
+}
