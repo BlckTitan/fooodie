@@ -16,5 +16,8 @@
   @apply xl:!bg-primaryColor xl:!text-white rounded-md;
 }
 .heroButton{
-  @apply flex;
+  @apply flex text-2xl font-semibold;
+}
+.jumboText__h2{
+  @apply font-bold text-6xl;
 }

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import Food1 from '../../../public/img/food1.jpg'
+import Food2 from '../../../public/img/food2.png'
 import { BsArrowRightCircle } from 'react-icons/bs'
 
 export default function Hero() {
@@ -10,17 +10,16 @@ export default function Hero() {
 
             <div className="jumboText">
                 
-                <h2 className='display-1'>Never face your day hungry</h2>
+                <h2 className='jumboText__h2'>Never face your day hungry.</h2>
                 <p className='lead'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Modi iste consequuntur esse perspiciatis eveniet unde inventore quo recusandae eaque beatae.
+                    We provide best food in town, we provide home delivery and dine in services.
                 </p>
                 <div className="button flex">
                     <button className='btn !bg-primaryColor text-white mr-4 d-flex align-items-center'>
                         <span className='mr-2'>Order now</span>
                         <BsArrowRightCircle />
                     </button>
-                    <button className='btn btn-outline-dark d-flex align-items-center'>
+                    <button className='btn btn-outline-dark d-flex align-items-center w-48'>
                         <span className='mr-2'>Learn more</span>
                         <BsArrowRightCircle />
                     </button>
@@ -29,7 +28,7 @@ export default function Hero() {
         </div>
         
         <div className="relative w-full h-full mb-8 xl:mb-0">
-            <Image src={Food1} alt='food image' objectFit='cover' layout='fill' className='h-full w-full'/>
+            <Image src={Food2} alt='food image' objectFit='cover' layout='fill' className='h-full w-full'/>
         </div>
         
     </section>
