@@ -21,3 +21,10 @@
 .jumboText__h2{
   @apply font-bold text-6xl;
 }
+.text{
+  @apply text-center xl:text-left;
+}
+
+.button__CTA{
+  @apply p-3;
+}
