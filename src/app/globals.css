@@ -15,16 +15,22 @@
 .navbarLink{
   @apply xl:!bg-primaryColor xl:!text-white rounded-md;
 }
-.heroButton{
-  @apply flex text-2xl font-semibold;
-}
 .jumboText__h2{
-  @apply font-bold text-6xl;
+  @apply font-bold xl:text-6xl;
 }
 .text{
-  @apply text-center xl:text-left;
+  @apply text-center xl:text-left w-full h-full xl:h-96 flex flex-col xl:justify-evenly;
 }
 
 .button__CTA{
   @apply p-3;
+}
+.hero{
+  @apply mt-4 w-full h-fit;
+}
+.heroButton{
+  @apply flex text-2xl font-semibold;
+}
+.hero .hero__img__div{
+  @apply relative mt-4 w-full;
 }
