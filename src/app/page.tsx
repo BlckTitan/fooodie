@@ -1,7 +1,7 @@
 import Hero from "@/components/layout/Hero";
-import Menu from "@/components/layout/Menu";
 import Navbar from "@/components/layout/Navbar";
 import PopularDish from "@/components/layout/PopularDish";
+import Menu from "@/components/layout/menu/Menu";
 
 export default function Home() {
   return (

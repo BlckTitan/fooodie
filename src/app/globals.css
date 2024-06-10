@@ -34,3 +34,21 @@
 .hero .hero__img__div{
   @apply relative mt-4 w-full;
 }
+.menu--tab{
+  background-color: #fff;
+  color: black;
+}
+.menu--tab__active{
+  background-color: #f13a01;
+  color: #fff;
+}
+button.nav-link{
+  color: #000 !important;
+}
+button.active{
+  background-color: #f13a01 !important;
+  color: #fff !important;
+}
+a.page-link{
+  color: #000 !important;
+}

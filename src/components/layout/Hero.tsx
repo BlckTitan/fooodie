@@ -10,7 +10,7 @@ export default function Hero() {
 
             <div className="jumboText text">
                 
-                <h2 className='jumboText__h2'>Never face your day hungry.</h2>
+                <h2 className='jumboText__h2'>Never Face Your Day Hungry.</h2>
                 <p className='lead xl:text-left'>
                     We provide best food in town, we provide home delivery and dine in services.
                 </p>

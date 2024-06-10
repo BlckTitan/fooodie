@@ -15,7 +15,7 @@ export default function PopularDish() {
                 This dish is full of flavor and nutrition! Quinoa is a complete protein, 
                 providing all the essential amino acids your body needs, and is also a good source of fiber.
             </p>
-            <button className='button__CTA bg-primaryColor font-semibold text-white rounded-md'>Order now</button>
+            <button className='button__CTA bg-primaryColor text-white rounded-md'>Order now</button>
         </div>
     
     </section>
