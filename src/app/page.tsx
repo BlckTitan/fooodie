@@ -5,17 +5,19 @@ import Menu from "@/components/layout/menu/Menu";
 
 export default function Home() {
   return (
-    <main>
+    <main className="w-full h-full">
       <Navbar/>
-      <div className="mb-4">
-        <Hero/>
-      </div>
-      <div className="mb-4">
-        <PopularDish />
-      </div>
-      <div className="mb-4">
-        <Menu/>
-      </div>
+      <div className="container bg-white">
+        <div className="mb-4">
+          <Hero/>
+        </div>
+        <div className="mb-4">
+          <PopularDish />
+        </div>
+        <div className="">
+          <Menu/>
+        </div>
+    </div>
     </main>
   );
 }

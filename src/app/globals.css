@@ -7,11 +7,15 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body{
+  background-color: #f1f5f9 !important;
+}
 .pageTitle{
   @apply text-primaryColor font-semibold text-2xl;
 }
-
+nav.navbar{
+  background-color: #fff;
+}
 .navbarLink{
   @apply xl:!bg-primaryColor xl:!text-white rounded-md;
 }
@@ -51,4 +55,23 @@ button.active{
 }
 a.page-link{
   color: #000 !important;
+}
+div.card{
+  @apply mb-4 w-72 h-96;
+  border: 0.7px solid #e2e8f0 !important;
+  box-shadow: 0.5 solid;
+}
+div.card div.CTA{
+  border: none !important;
+}
+div.card div.CTA a{
+  background-color: #f13a01 !important;
+  border: none !important;
+}
+div.card div.CTA span{
+  color: #f13a01 !important;
+  @apply font-semibold;
+}
+div.tab-content{
+  background-color: #f1f5f9 !important;
 }
