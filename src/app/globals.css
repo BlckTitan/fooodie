@@ -75,3 +75,14 @@ div.card div.CTA span{
 div.tab-content{
   background-color: #f1f5f9 !important;
 }
+div.menuItems{
+  display: grid;
+  /* grid-gap: 1rem; */
+  justify-content: space-around;
+  align-content: center;
+  grid-template-columns: repeat(auto-fit, 18rem);
+
+}
+h5.card-title.meals{
+ @apply font-bold text-2xl; 
+}

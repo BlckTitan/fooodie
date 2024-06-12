@@ -3,9 +3,11 @@ import Pagination from '../Pagination'
 
 export default function Dessert() {
   return (
-    <nav aria-label="Page navigation example">
-        Dessert 
-        <Pagination/>
-    </nav>
+    <section>
+      Dessert
+      <nav aria-label="Page navigation example"> 
+          <Pagination/>
+      </nav>
+    </section>
   )
 }
