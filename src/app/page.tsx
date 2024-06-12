@@ -1,3 +1,4 @@
+import Chefs from "@/components/layout/Chefs";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
 import PopularDish from "@/components/layout/PopularDish";
@@ -14,8 +15,11 @@ export default function Home() {
         <div className="mb-4">
           <PopularDish />
         </div>
-        <div className="">
+        <div className="mb-4">
           <Menu/>
+        </div>
+        <div className="">
+          <Chefs/>
         </div>
     </div>
     </main>

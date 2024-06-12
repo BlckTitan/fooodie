@@ -75,7 +75,8 @@ div.card div.CTA span{
 div.tab-content{
   background-color: #f1f5f9 !important;
 }
-div.menuItems{
+div.menuItems,
+div.chefs{
   display: grid;
   /* grid-gap: 1rem; */
   justify-content: space-around;

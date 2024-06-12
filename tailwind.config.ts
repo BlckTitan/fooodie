@@ -8,10 +8,6 @@ const config: Config = {
     extend: {
       colors: {
         primaryColor: '#f13a01'
-      },
-      gridTemplateColumns: {
-        // Simple 16 column grid
-        '16': 'repeat(auto-fit, 186px)',
       }
     },
   },
