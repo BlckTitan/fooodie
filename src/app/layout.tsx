@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Open_Sans, Raleway} from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.css'
 import BootstrapClient from '@/components/BootstrapClient'
-import  '@/components/BootstrapHead'
-
-const inter = Inter({ subsets: ["latin"] });
-
-const raleway = Raleway({
-  subsets: ['latin'],
-  display: 'swap'
-})
+import  '@/components/BootstrapHead';
+import { raleway } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Fooodie",
