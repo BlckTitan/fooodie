@@ -5,7 +5,8 @@ import Chef2 from '../../../public/img/chef2.jpg';
 import Chef3 from '../../../public/img/chef3.jpg';
 import Chef4 from '../../../public/img/chef4.jpg';
 import Chef5 from '../../../public/img/chef5.jpg';
-import Chef6 from '../../../public/img/chef6.jpg'
+import Chef6 from '../../../public/img/chef6.jpg';
+import { lora } from '@/app/fonts';
 
 export default function Chefs() {
 
@@ -20,8 +21,8 @@ export default function Chefs() {
 
   return (
     <section className='p-4'>
-        <div className='chefHeaderText text-center mb-8'>
-            <h2 className='text-4xl font-bold'>OUR POPULAR CHEFS</h2>
+        <div className='chefHeaderText text-center mb-14'>
+            <h2 className={lora.className} style={{fontSize: '2.5rem'}}>OUR POPULAR CHEFS</h2>
         </div>
       <div className='chefs'>
       {

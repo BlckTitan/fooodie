@@ -4,7 +4,10 @@ import Menu1 from '../../../../public/img/menu1.png'
 import Menu2 from '../../../../public/img/menu2.png'
 import Menu3 from '../../../../public/img/menu3.png'
 import Menu4 from '../../../../public/img/food2.png'
-import Pagination from '../Pagination'
+import Pagination from '../Pagination';
+
+
+
 
 export default function AllCategories() {
   const dummyText = [
