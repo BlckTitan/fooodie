@@ -1,4 +1,5 @@
 import Chefs from "@/components/layout/Chefs";
+import Footer from "@/components/layout/Footer";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
 import PopularDish from "@/components/layout/PopularDish";
@@ -21,7 +22,8 @@ export default function Home() {
         <div className="">
           <Chefs/>
         </div>
-    </div>
+      </div>
+      <Footer/>
     </main>
   );
 }

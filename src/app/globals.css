@@ -76,7 +76,8 @@ div.tab-content{
   background-color: #f1f5f9 !important;
 }
 div.menuItems,
-div.chefs{
+div.chefs,
+div.info{
   display: grid;
   /* grid-gap: 1rem; */
   justify-content: space-around;
@@ -86,4 +87,17 @@ div.chefs{
 }
 h5.card-title.meals{
  @apply font-bold text-2xl; 
+}
+div.icons a{
+  @apply text-xl bg-slate-400 hover:bg-slate-600 text-slate-950 p-2 rounded-full;
+}
+
+div.links a{
+  @apply text-slate-300 hover:text-slate-600;
+  text-decoration: none;
+}
+div.bio,
+div.links,
+div.contact{
+  @apply mb-8 xl:mb-0;
 }
