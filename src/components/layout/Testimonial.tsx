@@ -1,37 +1,28 @@
+'use client'
 import Image from 'next/image'
 import React from 'react';
 import Person1 from '../../../public/img/person1.jpg';
 import Person2 from '../../../public/img/person2.jpg';
+import { Carousel } from 'react-bootstrap';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 export default function Testimonial() {
 
     const testimonial = [
         {
-            testimonialMessage: `<span >&ldquo;</span>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-            Sed a quos harum suscipit quod cupiditate, aliquid, 
-            pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.
-            <span>&rdquo;</span>`, 
+            testimonialMessage: "1 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed a quos harum suscipit quod cupiditate, aliquid, pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.", 
             testimonialImg: Person1, 
             testimonialProfileName: 'Jim Housecry', 
             testimonialProfileTitle: 'FOA Advisor'
         },
         {
-            testimonialMessage: `<span >&ldquo;</span>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-            Sed a quos harum suscipit quod cupiditate, aliquid, 
-            pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.
-            <span>&rdquo;</span>`, 
+            testimonialMessage: "2 Lorem, ipsum dolor sit amet consectetur adipisicing elit.Sed a quos harum suscipit quod cupiditate, aliquid,  pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.", 
             testimonialImg: Person2, 
             testimonialProfileName: 'Elisha Fisher', 
             testimonialProfileTitle: 'FOA Advisor'
         },
         {
-            testimonialMessage: `<span >&ldquo;</span>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-            Sed a quos harum suscipit quod cupiditate, aliquid, 
-            pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.
-            <span>&rdquo;</span>`, 
+            testimonialMessage: "3 Lorem, ipsum dolor sit amet consectetur adipisicing elit.  Sed a quos harum suscipit quod cupiditate, aliquid, pariatur commodi veritatis natus id omnis possimus voluptatem sint sunt dicta nisi at modi.", 
             testimonialImg: Person1, 
             testimonialProfileName: 'Alan Smith', 
             testimonialProfileTitle: 'FOA Secretary'
@@ -45,45 +36,65 @@ export default function Testimonial() {
             <h2 className='font-bold text-4xl'>Our Testimonials</h2>
         </header>
 
-        <div className='carouselContainer w-full p-8 flex justify-center'>
-            <div id="carouselExampleSlidesOnly" className="carousel slide w-3/5 bg-white p-4 rounded-md" data-bs-ride="carousel">
+        <div className='carouselContainer w-full py-8 flex justify-center'>
+             <div id="carouselExampleSlidesOnly" className="carousel slide w-4/5 bg-white p-0 xl:p-4 rounded-md" data-bs-ride="carousel">
+                
+                <Carousel data-bs-theme="dark" className='carousel w-full h-full'>
+                    {
+                        testimonial.map((data, index) => (
 
-            <div className="carousel-inner">
-                {
-                    testimonial.map((data, index) => (
-                    <div className="carousel-item active" key={index}>
-                        <div>
-                            <p>
-                                {data.testimonialMessage}
-                            </p>
-                        </div>
-    
-                        <div className='testimonialProfile'>
-                            <Image src={data.testimonialImg} className="d-block img" alt="..."/>
-                            <div className='testimonialTitle'>
-                                <h2>{data.testimonialProfileName}</h2>
-                                <span>{data.testimonialProfileTitle}</span>
+                        <Carousel.Item key={index} className=' w-fit h-96 xl:h-72'>
+                            <div className='w-5/6 mx-auto mt-4 xl:mt-8'>
+                                <p>
+                                    {data.testimonialMessage}
+                                </p>
                             </div>
-                        </div>
-    
-                    </div>
-                    ))
-                }
-               
-            </div>
 
-            {/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button> */}
+                            <div className='testimonialProfile'>
+                                <Image src={data.testimonialImg} className="d-block img" alt="..."/>
+                                <div className='testimonialTitle'>
+                                    <h2>{data.testimonialProfileName}</h2>
+                                    <span>{data.testimonialProfileTitle}</span>
+                                </div>
+                            </div>
+
+                        </Carousel.Item>
+                    ))}
+                </Carousel>
 
             </div>
-        </div>
-
+        </div> 
     </section>
   )
 }
+
+{/* <div id="carouselExampleSlidesOnly" className="carousel slide w-3/5 bg-white p-4 rounded-md" data-bs-ride="carousel">
+
+<div className="carousel-inner">
+    {
+        testimonial.map((data, index) => (
+        <Carousel.Item interval={2000} className="carousel-item active" key={index}>
+            <div>
+                <p>
+                    <span >&ldquo;</span>
+                    {data.testimonialMessage}
+                    <span>&rdquo;</span>
+                </p>
+            </div>
+
+            <div className='testimonialProfile'>
+                <Image src={data.testimonialImg} className="d-block img" alt="..."/>
+                <div className='testimonialTitle'>
+                    <h2>{data.testimonialProfileName}</h2>
+                    <span>{data.testimonialProfileTitle}</span>
+                </div>
+            </div>
+
+        </Carousel.Item>
+        ))
+    }
+   
+</div>
+
+</div> */}
+
