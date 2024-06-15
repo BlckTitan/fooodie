@@ -72,7 +72,8 @@ div.card div.CTA span{
   color: #f13a01 !important;
   @apply font-semibold;
 }
-div.tab-content{
+div.tab-content,
+div.carouselContainer{
   background-color: #f1f5f9 !important;
 }
 div.menuItems,
@@ -92,7 +93,8 @@ div.icons a{
   @apply text-xl bg-slate-400 hover:bg-slate-600 text-slate-950 p-2 rounded-full;
 }
 
-div.links a{
+div.links a,
+header a{
   @apply text-slate-300 hover:text-slate-600;
   text-decoration: none;
 }
@@ -100,4 +102,30 @@ div.bio,
 div.links,
 div.contact{
   @apply mb-8 xl:mb-0;
+}
+
+div.carousel-item{
+  width: 48rem;
+  position: relative
+}
+div.carousel-item p{
+  @apply text-3xl;
+}
+div.carousel-item > div > p > span{
+  @apply text-6xl font-bold;
+}
+div.carousel-item img{
+  @apply w-24 h-24 rounded-full object-cover object-center;
+}
+div.testimonialProfile{
+  @apply mt-4 text-lg font-normal  relative flex justify-center items-center;
+}
+div.testimonialTitle{
+  @apply  ml-4;
+}
+div.testimonialTitle h2{
+  @apply  text-xl font-bold;
+}
+div.testimonialTitle span{
+  @apply  text-lg font-normal;
 }
