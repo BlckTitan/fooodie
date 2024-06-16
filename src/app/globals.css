@@ -125,3 +125,12 @@ div.testimonialTitle h2{
 div.testimonialTitle span{
   @apply  text-base xl:text-lg font-normal;
 }
+div.CTA_btn button{
+  @apply p-3 text-2xl font-semibold mt-4;
+}
+div.CTA_btn button.CTA_btn__order{
+  @apply bg-primaryColor hover:bg-orange-700 text-white rounded-md mr-4;
+}
+div.CTA_btn button.CTA_btn__reservation{
+  @apply bg-slate-100 hover:bg-slate-200 text-primaryColor rounded-md;
+}

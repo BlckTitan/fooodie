@@ -4,7 +4,6 @@ import React from 'react';
 import Person1 from '../../../public/img/person1.jpg';
 import Person2 from '../../../public/img/person2.jpg';
 import { Carousel } from 'react-bootstrap';
-import { CLIENT_RENEG_LIMIT } from 'tls';
 
 export default function Testimonial() {
 
@@ -67,34 +66,4 @@ export default function Testimonial() {
     </section>
   )
 }
-
-{/* <div id="carouselExampleSlidesOnly" className="carousel slide w-3/5 bg-white p-4 rounded-md" data-bs-ride="carousel">
-
-<div className="carousel-inner">
-    {
-        testimonial.map((data, index) => (
-        <Carousel.Item interval={2000} className="carousel-item active" key={index}>
-            <div>
-                <p>
-                    <span >&ldquo;</span>
-                    {data.testimonialMessage}
-                    <span>&rdquo;</span>
-                </p>
-            </div>
-
-            <div className='testimonialProfile'>
-                <Image src={data.testimonialImg} className="d-block img" alt="..."/>
-                <div className='testimonialTitle'>
-                    <h2>{data.testimonialProfileName}</h2>
-                    <span>{data.testimonialProfileTitle}</span>
-                </div>
-            </div>
-
-        </Carousel.Item>
-        ))
-    }
-   
-</div>
-
-</div> */}
 

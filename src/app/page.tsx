@@ -1,3 +1,4 @@
+import CallToActiom from "@/components/layout/CallToAction";
 import Chefs from "@/components/layout/Chefs";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/layout/Hero";
@@ -30,10 +31,12 @@ export default function Home() {
           <Chefs/>
         </div>
 
-        <div className="">
+        <div >
           <Testimonial/>
         </div>
-
+        <div className="">
+          <CallToActiom/>
+        </div>
       </div>
 
       <Footer/>
