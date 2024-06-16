@@ -23,7 +23,7 @@ nav.navbar{
 .navbarLink__register{
   @apply xl:!bg-slate-100 hover:!bg-slate-950 !border-solid !border !border-slate-950 hover:!text-slate-200 rounded-md;
 }
-/* jumbotron section */
+/*hero component*/
 .jumboText__h2{
   @apply font-bold text-2xl xl:text-6xl;
 }
@@ -39,6 +39,7 @@ nav.navbar{
 .hero .hero__img__div{
   @apply relative mt-4 w-full;
 }
+/* menu section */
 .menu--tab{
   background-color: #fff;
   color: black;
@@ -58,7 +59,7 @@ a.page-link{
   color: #000 !important;
 }
 div.card{
-  @apply mb-4 w-72 h-96;
+  @apply mb-4 w-72 h-fit;
   border: 0.7px solid #e2e8f0 !important;
   box-shadow: 0.5 solid;
 }

@@ -21,19 +21,20 @@ export default function AllCategories() {
       <div className='menuItems'>
         {
           dummyText.map((dummyData, index) => (
-            <div className="card relative" key={index}>
-              <Image src={dummyData.img} 
-                className="card-img-top w-48 h-48" 
-                alt="type: image; format: jpg; name: menu1;" 
-                layout='cover' 
-                objectFit='cover'
-                objectPosition='left'
-              />
+            <div className="card" key={index}>
+
+              <div className='relative flex justify-center items-center'>
+                <Image src={dummyData.img} 
+                  className="card-img-top w-full h-48 object-cover" 
+                  alt="type: image; format: jpg; name: menu1;" 
+                />
+              </div>
+
               <div className="card-body text-center border-none">
                 <h5 className="card-title meals">{dummyData.title}</h5>
                 <p className="card-text">{dummyData.text}</p>
                 
-                <div className="CTA flex justify-between items-center">
+                <div className="CTA my-4 flex justify-between items-center">
                   <span className="price">{dummyData.price}</span>
                   <a href="#" className="btn btn-primary">Order now</a>  
                 </div>
