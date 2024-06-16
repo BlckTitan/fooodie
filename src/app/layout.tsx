@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapClient from '@/components/BootstrapClient'
 import  '@/components/BootstrapHead';
 import { raleway } from "./fonts";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Fooodie",
@@ -20,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={raleway.className}>
-        {children}
+        <Navbar/>
+          {children}
+        <Footer/>
         <BootstrapClient/>
       </body>
     </html>

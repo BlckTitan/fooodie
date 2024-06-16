@@ -8,6 +8,10 @@ import Drink from './Drink'
 export default function Menu() {
   return (
     <section className='container flex flex-col w-full mt-4 p-2 xl:p-4 menu'>
+      
+        <div className='chefHeaderText text-center mb-14'>
+            <h1 className='text-5xl font-bold'>MENU</h1>
+        </div>
 
        <nav>
             <div className="nav nav-pills nav-fill" id="nav-tab" role="tablist">

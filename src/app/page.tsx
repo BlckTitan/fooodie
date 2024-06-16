@@ -10,11 +10,8 @@ import Menu from "@/components/layout/menu/Menu";
 export default function Home() {
   return (
     <main className="w-full h-full">
-
-      <Navbar/>
-
       <div className="container bg-white">
-
+        
         <div className="mb-4">
           <Hero/>
         </div>
@@ -39,7 +36,6 @@ export default function Home() {
         </div>
       </div>
 
-      <Footer/>
 
     </main>
   );

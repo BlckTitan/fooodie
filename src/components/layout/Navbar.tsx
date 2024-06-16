@@ -26,8 +26,9 @@ export default function Navbar() {
               <li className="nav-item">
                 <a className="nav-link" href="#">Contact</a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link navbarLink" type="button" href="#">Login</a>
+              <li className="nav-item flex flex-col xl:flex-row">
+                <a className="nav-link navbarLink mr-2" type="button" href="#">Login</a>
+                <a className="nav-link navbarLink__register" type="button" href="/register/">Register</a>
               </li>
             </ul>
           </div>
