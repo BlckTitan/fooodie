@@ -32,7 +32,7 @@ export default function Testimonial() {
     <section className='container carouselSlide flex flex-col items-center  pb-8'>
 
         <header className='bg-white text-center w-full p-4'>
-            <h2 className='font-bold text-4xl'>Our Testimonials</h2>
+            <h2 className='font-bold text-4xl'>OUR TESTIMONIALS</h2>
         </header>
 
         <div className='carouselContainer w-full py-8 flex justify-center'>
@@ -42,8 +42,8 @@ export default function Testimonial() {
                     {
                         testimonial.map((data, index) => (
 
-                        <Carousel.Item key={index} className=' w-fit h-96 xl:h-72'>
-                            <div className='w-5/6 mx-auto mt-4 xl:mt-8'>
+                        <Carousel.Item key={index} className='h-96 xl:h-72 py-4 xl:py-0'>
+                            <div className='w-5/6 mx-auto xl:mt-8'>
                                 <p>
                                     {data.testimonialMessage}
                                 </p>

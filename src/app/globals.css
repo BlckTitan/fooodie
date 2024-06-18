@@ -105,6 +105,7 @@ div.links,
 div.contact{
   @apply mb-8 xl:mb-0;
 }
+/* carousel */
 div.carousel-item{
   width: fit;
   position: relative
