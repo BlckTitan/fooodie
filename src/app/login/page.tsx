@@ -66,7 +66,7 @@ export default function LoginPage() {
         </div>
 
         <div className='flex justify-center mt-2 px-8 py-2 rounded-md w-full xl:w-3/5 mx-auto border hover:bg-slate-50'>
-          <a href='#' className='flex items-center hover:underline'>
+          <a href='#' onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
             <Image 
               src={GoogleLogo}
               className='w-6 h-6 object-cover mr-2'

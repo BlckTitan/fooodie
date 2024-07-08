@@ -32,8 +32,8 @@ export default function Navbar() {
                 <a className="nav-link" href="#">Contact</a>
               </li>
               <li className="nav-item flex flex-col xl:flex-row">
-                { (session.status === 'loading') && <a className="nav-link navbarLink mr-2" type="button" href="/login">Login</a> }
-                { (session.status === 'authenticated') && <a className="nav-link navbarLink mr-2" type="button" href="/#" onClick={() => signOut()}>Logout</a> }
+                { (session.status === 'loading' || session.status === 'unauthenticated') && <a className="nav-link navbarLink mr-2" type="button" href="/login">Login</a> }
+                { (session.status === 'authenticated') && <a className="nav-link navbarLink mr-2" type="button" href="#" onClick={() => signOut()}>Logout</a> }
                 <a className="nav-link navbarLink__register" type="button" href="/register">Register</a>
               </li>
             </ul>

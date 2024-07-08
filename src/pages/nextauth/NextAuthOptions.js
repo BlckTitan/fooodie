@@ -1,5 +1,6 @@
 'use client'
 import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from 'bcrypt'
 import { User } from "../../app/models/User";
 
@@ -14,6 +15,11 @@ const  authOptions = {
     },
 
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+          }),
+
         Credentials({
             // id: 'Credentials',
             type: 'credentials',
@@ -30,10 +36,11 @@ const  authOptions = {
 
                 const existingUser = await User.findOne({email})
 
-                console.log(existingUser)
-                
                 const existingPassword = existingUser && bcrypt.compareSync(password, existingUser.password)
                 
+                
+                console.log(existingUser, existingPassword)
+
                 if(existingPassword){
                     return {
                         existingUser
