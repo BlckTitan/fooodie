@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: any) =>{ 
     e.preventDefault()
-    await signIn('credentials', {
+    await signIn('Credentials', {
     email, password,
     redirect: true,
     callbackUrl: '/dashboard'

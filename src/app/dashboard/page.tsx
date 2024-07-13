@@ -4,10 +4,10 @@ import React from 'react';
 
 export default function DashboardPage() {
 
-    const session = useSession()
-    console.log(session)
+  // const session = useSession()
+  // console.log(session)
     
   return (
-    <div>page</div>
+    <div>Dashboard page</div>
   )
 }

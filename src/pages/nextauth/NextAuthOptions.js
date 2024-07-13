@@ -3,16 +3,20 @@ import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from 'bcrypt'
 import { User } from "../../app/models/User";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from '../../lib/mongooseConnect'
 
 const  authOptions = {
 
     secret: process.env.NEXTAUTH_SECRET,
-     
+    
     session: {
         strategy: 'jwt',
         maxAge: 2 * 24 * 60 * 60, //2 days
 
     },
+
+    adapter: MongoDBAdapter(clientPromise),
 
     providers: [
         GoogleProvider({
@@ -21,11 +25,13 @@ const  authOptions = {
           }),
 
         Credentials({
-            // id: 'Credentials',
+            id: 'Credentials',
             type: 'credentials',
+            name: 'credentials',
+            
             credentials: {
-                email: { label: 'Email', type: 'email', placeholder: 'Kindly enter your email'},
-                password: { label: 'Password', type: 'password'}
+                email: { label: 'Email', type: 'email', placeholder: 'Kindly enter your email' },
+                password: { label: 'Password', type: 'password' }
             },
 
             async authorize(credentials, req){
@@ -37,23 +43,25 @@ const  authOptions = {
                 const existingUser = await User.findOne({email})
 
                 const existingPassword = existingUser && bcrypt.compareSync(password, existingUser.password)
-                
-                
-                console.log(existingUser, existingPassword)
+
+                // console.log(existingPassword)
 
                 if(existingPassword){
-                    return {
-                        existingUser
-                    }
+
+                    return existingUser
+
                 } else {
-                    return null
+
+                    return console.log(existingPassword)
+
                 }
             }
         })
     ],
+    
     pages: {
         signIn: '/login',
-        signOut: '/auth/signout',
+        signOut: '/login',
         error: '/auth/error', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // (used for check email message)
         // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)

@@ -8,7 +8,7 @@ import { raleway } from "./fonts";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NextAuthSessionProviders from "../pages/api/auth/NextAuthSessionProviders";
-import '@/app/api/db/db'
+import '@/lib/db'
 
 export const metadata: Metadata = {
   title: "Fooodie",
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
 
 
 export default function RootLayout({
-  children, session
+  children
 }: Readonly<{
-  children: React.ReactNode, session: any
+  children: React.ReactNode
 }>) {
 
   
   return (
       <html lang="en">
         <body className={raleway.className}>
-          <NextAuthSessionProviders session={session}>    
+          <NextAuthSessionProviders>    
             <Navbar/>
               {children}
             <Footer/>
