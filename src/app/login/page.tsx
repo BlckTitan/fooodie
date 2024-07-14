@@ -1,15 +1,22 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loginMessage, setLoginMessage] = useState('')
+  const session = useSession()
+
+  useEffect(() => {
+    setLoginMessage('')
+  }, [loginMessage])
 
   const handleSubmit = async (e: any) =>{ 
     e.preventDefault()
@@ -26,6 +33,9 @@ export default function LoginPage() {
 
       <header className='w-full h-24 flex justify-center items-center mt-4'>
         <h1 className='text-4xl text-center text-primaryColor font-semibold'>Login</h1>
+        
+
+        {(!session) && toast.error('Email or password incorrect', {position: 'top-right', autoClose: 15000, toastId: 1})}
       </header>
 
       <div className='bg-white rounded-md w-full xl:w-2/5 my-8 px-4 py-8'>

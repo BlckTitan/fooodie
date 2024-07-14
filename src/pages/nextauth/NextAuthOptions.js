@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import { User } from "../../app/models/User";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from '../../lib/mongooseConnect'
+import '../../lib/db'
 
 const  authOptions = {
 
@@ -38,8 +39,7 @@ const  authOptions = {
                 
                 const email = credentials?.email;
                 const password = credentials?.password
-
-
+                
                 const existingUser = await User.findOne({email})
 
                 const existingPassword = existingUser && bcrypt.compareSync(password, existingUser.password)
@@ -52,13 +52,13 @@ const  authOptions = {
 
                 } else {
 
-                    return console.log(existingPassword)
+                    return null
 
                 }
             }
         })
     ],
-    
+
     pages: {
         signIn: '/login',
         signOut: '/login',

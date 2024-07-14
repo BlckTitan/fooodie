@@ -9,6 +9,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NextAuthSessionProviders from "../pages/api/auth/NextAuthSessionProviders";
 import '@/lib/db'
+import { ToastContainer } from "react-bootstrap";
 
 export const metadata: Metadata = {
   title: "Fooodie",
@@ -33,6 +34,7 @@ export default function RootLayout({
             <Footer/>
           </NextAuthSessionProviders>
           <BootstrapClient/>
+          <ToastContainer/>
         </body>
       </html>
   );
