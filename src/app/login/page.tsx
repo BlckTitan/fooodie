@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
 import { signIn, useSession } from 'next-auth/react';
+import { AlertsError } from '@/components/layout/Alerts';
 import { toast } from 'react-toastify';
 
 export default function LoginPage() {
@@ -21,7 +22,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: any) =>{ 
     e.preventDefault()
     await signIn('Credentials', {
-    email, password,
+    email, password,  
     redirect: true,
     callbackUrl: '/dashboard'
    })
@@ -35,7 +36,6 @@ export default function LoginPage() {
         <h1 className='text-4xl text-center text-primaryColor font-semibold'>Login</h1>
         
 
-        {(!session) && toast.error('Email or password incorrect', {position: 'top-right', autoClose: 15000, toastId: 1})}
       </header>
 
       <div className='bg-white rounded-md w-full xl:w-2/5 my-8 px-4 py-8'>
@@ -76,14 +76,14 @@ export default function LoginPage() {
         </div>
 
         <div className='flex justify-center mt-2 px-8 py-2 rounded-md w-full xl:w-3/5 mx-auto border hover:bg-slate-50'>
-          <a href='#' onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
+          <button type="button" onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
             <Image 
               src={GoogleLogo}
               className='w-6 h-6 object-cover mr-2'
               alt='alternative signin with google'
             />
             <span>Login with Google</span>
-          </a>
+          </button>
         </div>
         
       </div>

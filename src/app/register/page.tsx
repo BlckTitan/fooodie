@@ -73,14 +73,14 @@ export default function RegisterPage() {
         </div>
 
         <div className='flex justify-center mt-2 px-8 py-2 rounded-md w-full xl:w-3/5 mx-auto border hover:bg-slate-50'>
-          <a href='#' onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
+          <button type="button" onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
             <Image 
               src={GoogleLogo}
               className='w-6 h-6 object-cover mr-2'
               alt='alternative signin with google'
             />
             <span>Login with Google</span>
-          </a>
+          </button>
         </div>
 
         <div className='flex xl:flex-row xl:justify-center xl:items-start justify-center items-center flex-col mt-2 px-8 py-2 w-full'>

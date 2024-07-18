@@ -35,20 +35,20 @@ const  authOptions = {
                 password: { label: 'Password', type: 'password' }
             },
 
-            async authorize(credentials, req){
+            async authorize(credentials, req, res){
                 
                 const email = credentials?.email;
                 const password = credentials?.password
-                
-                const existingUser = await User.findOne({email})
 
-                const existingPassword = existingUser && bcrypt.compareSync(password, existingUser.password)
+                const user = await User.findOne({email})
+
+                const existingPassword = user && bcrypt.compareSync(password, user.password)
 
                 // console.log(existingPassword)
 
                 if(existingPassword){
 
-                    return existingUser
+                    return user;
 
                 } else {
 

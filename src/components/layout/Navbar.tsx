@@ -1,17 +1,18 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
   
   const session = useSession()
-
-  useEffect(() => {
-    session.data && console.log(session.data)
-  }, [session])
-
+  let userData: any  = ''
+  
+  if(session.status === 'authenticated'){
+    userData = session?.data;
+  }
+console.log(userData)
   return (
     <nav className="navbar navbar-expand-lg">
         <div className="container">
