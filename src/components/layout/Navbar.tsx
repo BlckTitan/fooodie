@@ -8,11 +8,17 @@ export default function Navbar() {
   
   const session = useSession()
   let userData: any  = ''
+  let userName: any  = ''
   
   if(session.status === 'authenticated'){
     userData = session?.data;
+    userName = (session?.data?.user) ? 
+                session?.data?.user?.name :
+                session?.data?.user?.username;
   }
-console.log(userData)
+
+console.log(userName, userData)
+
   return (
     <nav className="navbar navbar-expand-lg">
         <div className="container">
@@ -37,10 +43,16 @@ console.log(userData)
               <li className="nav-item">
                 <a className="nav-link" href="#">Contact</a>
               </li>
+              {
+                (session.status === 'authenticated') && 
+                <li className="nav-item">
+                  <a className="nav-link font-bold" href="/profile">Hello {userName.toUpperCase()}</a>
+                </li>
+              }
               <li className="nav-item flex flex-col xl:flex-row">
                 { (session.status === 'loading' || session.status === 'unauthenticated') && <a className="nav-link navbarLink mr-2" type="button" href="/login">Login</a> }
-                { (session.status === 'authenticated') && <a className="nav-link navbarLink mr-2" type="button" href="/login" onClick={() => signOut()}>Logout</a> }
-                <a className="nav-link navbarLink__register" type="button" href="/register">Register</a>
+                { (session.status === 'authenticated') && <button className="nav-link navbarLink logout mr-2" type="button" onClick={() => signOut()}>Logout</button> }
+                { (session.status === 'loading' || session.status === 'unauthenticated') && <a className="nav-link navbarLink__register" type="button" href="/register">Register</a> }
               </li>
             </ul>
           </div>

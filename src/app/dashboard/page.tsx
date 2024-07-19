@@ -8,6 +8,6 @@ export default function DashboardPage() {
   // console.log(session)
     
   return (
-    <div>Dashboard page</div>
+    <section className='container'>Dashboard page</section>
   )
 }

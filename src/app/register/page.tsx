@@ -11,13 +11,19 @@ export default function RegisterPage() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [username, setUsername] = useState('')
 
   const handleSubmit = (e: any) =>{
     e.preventDefault()
 
     axios.post('/api/register', {
+      firstName: firstName,
+      lastName: lastName,
       email: email,
-      password: password
+      username: username,
+      password: password,
     })
     .then(function (response) {
       console.log(response);
@@ -39,18 +45,40 @@ export default function RegisterPage() {
 
         <Form className='w-full' onSubmit={e => handleSubmit(e)}>
 
-          <Form.Group className="mb-8" controlId="formBasicEmail">
+          <Form.Group className="mb-4" controlId="formBasicFirstName">
+
+            <FloatingLabel controlId="floatingInput" label="First Name" className="mb-3">
+              <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)}/>
+            </FloatingLabel>
+
+          </Form.Group>
+
+          <Form.Group className="mb-4" controlId="formBasicLastName">
+
+            <FloatingLabel controlId="floatingInput" label="Last Name" className="mb-3">
+              <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)}/>
+            </FloatingLabel>
+
+          </Form.Group>
+
+          <Form.Group className="mb-4" controlId="formBasicEmail">
 
             <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
               <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)}/>
             </FloatingLabel>
-            {/* <Form.Text className="text-muted !text-red-400">
-              We'll never share your email with anyone else.
-            </Form.Text> */}
 
           </Form.Group>
 
-          <Form.Group className="mb-8" controlId="formBasicPassword">
+
+          <Form.Group className="mb-4" controlId="formBasicUsername">
+
+            <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
+              <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)}/>
+            </FloatingLabel>
+
+          </Form.Group>
+
+          <Form.Group className="mb-4" controlId="formBasicPassword">
 
             <FloatingLabel controlId="floatingPassword" label="Password">
               <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>

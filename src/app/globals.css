@@ -51,6 +51,10 @@ nav.navbar{
 button.nav-link{
   color: #000 !important;
 }
+button.nav-link.logout{
+  @apply text-black xl:!text-white w-fit;
+  /* color: #fff !important; */
+}
 button.active{
   background-color: #f13a01 !important;
   color: #fff !important;
