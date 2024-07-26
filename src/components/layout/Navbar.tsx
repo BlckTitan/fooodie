@@ -7,17 +7,24 @@ import { signOut, useSession } from 'next-auth/react';
 export default function Navbar() {
   
   const session = useSession()
-  let userData: any  = ''
-  let userName: any  = ''
+
+  let userData: any  = '';
+  let userName: any  = '';
+
+  userData = session?.data;
   
-  if(session.status === 'authenticated'){
-    userData = session?.data;
-    userName = (session?.data?.user) ? 
-                session?.data?.user?.name :
-                session?.data?.user?.username;
+  if(session.status === 'authenticated' && session?.data?.user?.name){
+
+    userName = session?.data?.user?.name
+
+  }
+  else{
+    if(session.status === 'authenticated' && session?.data?.user?.email){
+       userName = session?.data?.user?.email
+    }
   }
 
-console.log(userName, userData)
+console.log(userData, userData?.user?.email)
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -46,7 +53,7 @@ console.log(userName, userData)
               {
                 (session.status === 'authenticated') && 
                 <li className="nav-item">
-                  <a className="nav-link font-bold" href="/profile">Hello {userName.toUpperCase()}</a>
+                  <a className="nav-link font-bold" href="/profile">Hello {(userName !== undefined ) && userName.toUpperCase()}</a>
                 </li>
               }
               <li className="nav-item flex flex-col xl:flex-row">

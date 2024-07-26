@@ -2,8 +2,8 @@ import Spinner from 'react-bootstrap/Spinner';
 
 function LoadingSpinner() {
   return (
-    <div className='w-full h-screen flex justify-center items-centers'>
-        <Spinner animation="border" size='lg' variant='primary'/>;
+    <div className='container w-full h-screen flex justify-center items-center'>
+        <Spinner animation="border" size='xl' variant='primary'/>;
     </div>
   )
 }

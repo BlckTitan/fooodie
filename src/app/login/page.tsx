@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
 import { signIn, useSession } from 'next-auth/react';
@@ -13,14 +13,17 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginMessage, setLoginMessage] = useState('')
+  
   const session = useSession()
 
   useEffect(() => {
     setLoginMessage('')
   }, [loginMessage])
 
-  const handleSubmit = async (e: any) =>{ 
+  const handleSubmit = async (e: FormEvent) =>{ 
+
     e.preventDefault()
+
     await signIn('Credentials', {
     email, password,  
     redirect: true,
