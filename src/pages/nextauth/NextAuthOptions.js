@@ -1,4 +1,3 @@
-'use client'
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from 'bcrypt'
@@ -6,6 +5,7 @@ import { User } from "../../app/models/User";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from '../../lib/mongooseConnect'
 import '../../lib/db'
+import mongoose from "mongoose";
 
 const  authOptions = {
 
@@ -37,27 +37,61 @@ const  authOptions = {
 
             async authorize(credentials, req, res){
                 
+                // check for email and password
+                if(!credentials?.email || !credentials?.password){
+                    throw new Error("Please enter email and password")
+                }
+                 
                 const email = credentials?.email;
                 const password = credentials?.password
+                
+                await mongoose.connect(process.env.MONGODB_URI)
 
                 const user = await User.findOne({email})
 
-                const existingPassword = user && bcrypt.compareSync(password, user.password)
+                const existingPassword = await user && bcrypt.compareSync(password, user.password)
 
-                // console.log(existingPassword)
+                if(!existingPassword){
+                    throw new Error("Please enter a correct password")
+                }
+                
+                return user;
+            },
+        })
+    ],
+    
+    callbacks: {
 
-                if(existingPassword){
+        async jwt({ token, user, session }) {
 
-                    return user;
-
-                } else {
-
-                    return null
+            if(user){
+                return{
+                    ...token,
+                    id: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username,
 
                 }
             }
-        })
-    ],
+            
+            return token
+        },
+
+        async session({ session, user, token }) {
+
+            console.log('session callback', {session, user, token})
+            
+            session.user.name = token && `${token.firstName} ${token.lastName}`
+            session.user.firstname = token && token.firstName
+            session.user.lastname = token && token.lastName
+            session.user.username = token && token.username
+
+            return session
+        }
+
+    },
 
     pages: {
         signIn: '/login',
