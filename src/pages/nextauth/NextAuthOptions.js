@@ -81,9 +81,6 @@ const  authOptions = {
 
         async session({ session, user, token }) {
 
-            console.log('session callback', {session, user, token})
-            
-            session.user.name = token && `${token.firstName} ${token.lastName}`
             session.user.firstname = token && token.firstName
             session.user.lastname = token && token.lastName
             session.user.username = token && token.username
@@ -99,7 +96,7 @@ const  authOptions = {
         error: '/auth/error', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // (used for check email message)
         // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-      }
+    }
 
 }
 

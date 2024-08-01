@@ -8,16 +8,14 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import PersonalInfo from '../../components/layout/profile/PersonalInfo'
+import AccountInfo from '../../components/layout/profile/AccountInfo'
+import AddressInfo from '../../components/layout/profile/AddressInfo'
+import BillingInfo from '../../components/layout/profile/BillingInfo'
+import OrderHistory from '../../components/layout/profile/OrderHistory'
 
 export default function ProfilePage() {
 
   const session = useSession();
-
-  useEffect(() => {
-
-    console.log(session)   
-
-  }, [session])
 
   if(session.status === 'loading') return <LoadingSpinner/>
 
@@ -41,6 +39,9 @@ export default function ProfilePage() {
               <Nav.Item>
                 <Nav.Link eventKey="billing">Billing</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="orderHistory">Order History</Nav.Link>
+              </Nav.Item>
             </Nav>
           </Col>
           <Col sm={10}>
@@ -48,9 +49,18 @@ export default function ProfilePage() {
               <Tab.Pane eventKey="personalInfo">
                 <PersonalInfo/>
               </Tab.Pane>
-              <Tab.Pane eventKey="acctInfo">account information</Tab.Pane>
-              <Tab.Pane eventKey="addressInfo">This is address information</Tab.Pane>
-              <Tab.Pane eventKey="billing">Billing information</Tab.Pane>
+              <Tab.Pane eventKey="acctInfo">
+                <AccountInfo/>
+              </Tab.Pane>
+              <Tab.Pane eventKey="addressInfo">
+                <AddressInfo/>
+              </Tab.Pane>
+              <Tab.Pane eventKey="billing">
+                <BillingInfo />
+              </Tab.Pane>
+              <Tab.Pane eventKey="orderHistory">
+                <OrderHistory />
+              </Tab.Pane>
             </Tab.Content>
           </Col>
         </Row>

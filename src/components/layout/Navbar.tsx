@@ -17,13 +17,12 @@ export default function Navbar() {
 
     userName = session?.data?.user?.firstname
 
-  }
-  else{
+  }else{
     if(session.status === 'authenticated' && session?.data?.user?.name){
        userName = session?.data?.user?.name
     }
   }
-
+  
   return (
     <nav className="navbar navbar-expand-lg">
         <div className="container">
