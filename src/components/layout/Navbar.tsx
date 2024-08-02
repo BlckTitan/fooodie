@@ -19,7 +19,7 @@ export default function Navbar() {
 
   }else{
     if(session.status === 'authenticated' && session?.data?.user?.name){
-       userName = session?.data?.user?.name
+      userName = session?.data?.user?.name
     }
   }
   
@@ -50,7 +50,7 @@ export default function Navbar() {
               {
                 (session.status === 'authenticated') && 
                 <li className="nav-item">
-                  <a className="nav-link font-bold" href="/profile">Hello {(userName !== undefined ) && userName.toUpperCase()}</a>
+                  <a className="nav-link font-bold" href="/profile">Welcome, {(userName !== undefined ) && userName.toUpperCase()}</a>
                 </li>
               }
               <li className="nav-item flex flex-col xl:flex-row">
