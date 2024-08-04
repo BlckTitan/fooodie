@@ -3,10 +3,7 @@ import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import LoadingSpinner from '../../components/layout/LoadingSpinner';
 import { redirect } from 'next/navigation';
-import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
-import Row from 'react-bootstrap/Row';
-import Tab from 'react-bootstrap/Tab';
+import Accordion from 'react-bootstrap/Accordion';
 import PersonalInfo from '../../components/layout/profile/PersonalInfo'
 import AccountInfo from '../../components/layout/profile/AccountInfo'
 import AddressInfo from '../../components/layout/profile/AddressInfo'
@@ -23,48 +20,44 @@ export default function ProfilePage() {
 
   return (
     <section className='container h-screen py-8 bg-white'>
-      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-        <Row>
-          <Col sm={2}>
-            <Nav variant="pills" className="flex-column xl:pr-4 xl:border-r xl:border-solid">
-              <Nav.Item>
-                <Nav.Link eventKey="personalInfo">Personal Information</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="acctInfo">Account Information</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="addressInfo">Address Information</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="billing">Billing</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="orderHistory">Order History</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col sm={10}>
-            <Tab.Content>
-              <Tab.Pane eventKey="personalInfo">
-                <PersonalInfo/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="acctInfo">
-                <AccountInfo/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="addressInfo">
-                <AddressInfo/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="billing">
-                <BillingInfo />
-              </Tab.Pane>
-              <Tab.Pane eventKey="orderHistory">
-                <OrderHistory />
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+      <Accordion>
+
+        <Accordion.Item eventKey="0">
+          <Accordion.Header className='font-semibold'>Personal Information</Accordion.Header>
+          <Accordion.Body className='visible'>
+            <PersonalInfo/>
+          </Accordion.Body>
+        </Accordion.Item>
+
+        <Accordion.Item eventKey="1">
+          <Accordion.Header className='font-semibold'>Account Information</Accordion.Header>
+          <Accordion.Body className='visible'>
+            <AccountInfo/>
+          </Accordion.Body>
+        </Accordion.Item>
+
+        <Accordion.Item eventKey="2">
+          <Accordion.Header className='font-semibold'>Address Information</Accordion.Header>
+          <Accordion.Body className='visible'>
+            <AddressInfo/>
+          </Accordion.Body>
+        </Accordion.Item>
+
+        <Accordion.Item eventKey="3">
+          <Accordion.Header className='font-semibold'>Billing</Accordion.Header>
+          <Accordion.Body className='visible'>
+            <BillingInfo />
+          </Accordion.Body>
+        </Accordion.Item>
+
+        <Accordion.Item eventKey="4">
+          <Accordion.Header className='font-semibold'>Order History</Accordion.Header>
+          <Accordion.Body className='visible'>
+            <OrderHistory />
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
     </section>
   )
 }

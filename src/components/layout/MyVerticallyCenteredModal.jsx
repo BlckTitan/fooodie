@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 export default function MyVerticallyCenteredModal(props) {
@@ -13,6 +14,7 @@ export default function MyVerticallyCenteredModal(props) {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [id, setId] = useState('')
 
     const session = useSession()
     const userData = session?.data?.user
@@ -21,7 +23,8 @@ export default function MyVerticallyCenteredModal(props) {
         setFirstName(userData?.name || userData?.firstname)
         setLastName(userData?.name || userData?.lastname)
         setEmail(userData?.email)
-        setPhone(userData?.phone )
+        setPhone(userData?.phone)
+        setId(userData?.id)
     }, [session])
 
     const handleEdit = () =>{
@@ -29,16 +32,18 @@ export default function MyVerticallyCenteredModal(props) {
             method: 'put',
             url: `/api/user/`,
             data: {
+              id,
               firstName,
               lastName,
               email, 
               phone
             }
           }).then(function (response) {
-            console.log(response);
+            toast.success(response)
+            signOut()
           })
           .catch(function (error) {
-            console.log(error);
+            toast.error(error)
           });
     }
 

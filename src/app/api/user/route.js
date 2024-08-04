@@ -26,15 +26,14 @@ export async function POST(req){
     
 }
 
-export async function PUT(req){
+export async function PUT(req, res){
 
     const body = await req.json()
+    const id = body?.id
 
-    // const existingUser = await User.findOne({email: body?.email})
+    let existingUser = await User.findByIdAndUpdate(id, body)
 
-    const updatedUser = await User.updateOne({email: body?.email}, body)
-
-    return Response.json(updatedUser)
+    return Response.json(existingUser, {status: 200}, {message: 'User updated successfully'})
     
 }
 
