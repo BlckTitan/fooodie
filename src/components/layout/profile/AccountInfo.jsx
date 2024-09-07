@@ -10,10 +10,18 @@ export default function AccountInfo() {
 
   return (
     <section className='container bg-white'>
+
         <ul>
-          <li>Email: {userData && userData?.email}</li>
-          <li>Username: {userData && userData?.username}</li>
+          <li className='mb-4 flex items-center'>
+            <h2 className='font-semibold w-24'>Email: </h2>
+            <span className='text-left mr-2'>{userData && userData?.email}</span>
+          </li>
+          <li className='mb-4 flex items-center'>
+            <h2 className='font-semibold w-24'>Username: </h2>
+            <span>{userData && userData?.username}</span>
+          </li>
         </ul>
+        
     </section>
   )
 }
