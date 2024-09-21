@@ -4,6 +4,7 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import os from 'node:os';
 import cloudinary from 'cloudinary'
+import { revalidatePath } from 'next/cache';
 
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -28,8 +29,14 @@ export async function POST(req){
         //save a copy of the uploaded file to cloudinary
         await saveFilesToCloudinary(newUpload)
 
+        //delete photos after upload to cloudinary
+        newUpload.map(data => fs.unlink(data.filepath))
+
+        revalidatePath('/')
+        return Response.json({message: 'Upload successful!'})
+
     }else{
-        console.log('no file')
+        return Response.json({message: 'Upload failed, file too large!'})
     }
 
     return Response.json(true)
