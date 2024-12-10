@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import profileAvatar from '../../../../public/img/Profile_avatar_placeholder.png'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import { CldUploadWidget } from 'next-cloudinary';
 import { FiEdit, FiExternalLink } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { getPhotos } from '@/app/api/upload/route';
 
 export default function Avatar() {
 
@@ -32,7 +33,16 @@ export default function Avatar() {
   //   }
   // }
 
-  
+  const getProfileAvatar = async () => {
+    const data = await getPhotos()
+    setImg(data[0]?.secure_url)
+  }
+
+  useEffect(() => {
+    
+    getProfileAvatar()
+
+  }, [])
 
   //handle upload using api
   const handleUpload = async (formData) => {
@@ -67,6 +77,7 @@ export default function Avatar() {
 
   return (
     <div className='relative w-12 xl:w-24 h-12 xl:h-24 mb-4'>
+      {/* if we have an existing profile avatar, display it. */}
       { (userData && userData?.image) && 
 
         <Image 
@@ -80,10 +91,25 @@ export default function Avatar() {
         />
       }
 
+      {/* if we have an uploaded avatar, display it. for testing concerns*/}
+      { img && 
+
+        <Image 
+            src={img} 
+            alt='This is the user profile image; format: png;'
+            className='w-full h-full rounded-full'
+            objectFit='cover'
+            layout='contain'
+            width={100}
+            height={100}
+        />
+      }
+
+      {/* if there is no exiting profile avatar, display the default avatar */}
       { (userData && !userData?.image) && 
 
         <Image 
-            src={profileAvatar} 
+            src={profileAvatar || img} 
             alt='This is a user placeholder image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'
@@ -113,7 +139,6 @@ export default function Avatar() {
         </Form>
          <div>
             
-
           {/* <CldUploadWidget uploadPreset="fooodie_food_ordering_app"> */}
           {/* <CldUploadWidget signatureEndpoint='/api/sign-image'>
             {({ open }) => {

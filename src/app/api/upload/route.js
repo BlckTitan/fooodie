@@ -11,7 +11,9 @@ cloudinary.config({
     api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
-
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms))
+}
 export async function POST(req){
 
     const data = await req.formData()
@@ -32,8 +34,11 @@ export async function POST(req){
         //delete photos after upload to cloudinary
         newUpload.map(data => fs.unlink(data.filepath))
 
+        //delay 2s to update cloudinary database
+        await delay(2000)
+
         revalidatePath('/')
-        return Response.json({message: 'Upload successful!'})
+        return Response.json({message: 'Upload successfull!'})
 
     }else{
         return Response.json({message: 'Upload failed, file too large!'})
@@ -42,7 +47,7 @@ export async function POST(req){
     return Response.json(true)
     
 }
-
+//   npx update-browserslist-db@latest
 //save files to local
 const saveFilesToLocal = async (formData) =>{
     const file = formData
@@ -52,6 +57,8 @@ const saveFilesToLocal = async (formData) =>{
       .then(data => {
         //creating a buffer file from the upload image
         const buffer = Buffer.from(data)
+
+        //renaming the upload file
         const name = uuidv4()
         const ext = file.type.split('/')[1]
 
@@ -75,13 +82,29 @@ const saveFilesToLocal = async (formData) =>{
   }
 
 //   upload photos to cloudinary
-const saveFilesToCloudinary = async (files) =>{
+const saveFilesToCloudinary = async (newUpload) =>{
 
-    const file = files
+    const file = newUpload;
 
     const bufferPromise = file.map(data => (
         cloudinary.v2.uploader.upload(data.filepath, { folder: 'fooodie_food_ordering_app'})
     ))
     
+    revalidatePath('/')
     return await Promise.all(bufferPromise)
+}
+
+//get images from the cloud
+export const getPhotos = async () => {
+    try {
+        const { resources } = await cloudinary.v2.search.expression(
+            'folder: fooodie_food_ordering_app/*'
+        ).sort_by('created_at', 'desc').max_results(1).execute()
+
+        return resources
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+    
 }
