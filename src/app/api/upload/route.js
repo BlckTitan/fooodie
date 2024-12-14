@@ -6,6 +6,7 @@ import os from 'node:os';
 import cloudinary from 'cloudinary'
 import { revalidatePath } from 'next/cache';
 import { User } from '@/app/models/User';
+import { signOut } from 'next-auth/react';
 // import { userAgent } from 'next/server';
 
 cloudinary.config({
