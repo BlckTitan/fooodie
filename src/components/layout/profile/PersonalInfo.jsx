@@ -31,8 +31,14 @@ export default function PersonalInfo() {
         <ul>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-24'>Name: </h2>
-            <span className='text-left mr-2'>{userName && userName?.lastname.toUpperCase()} </span>
-            <span>{userName && userName?.firstname.toUpperCase()}</span>
+            {
+              (userData.name) ?
+              <span className='text-left mr-2'>{userData.name.toUpperCase()} </span> :
+              <>
+                <span className='text-left mr-2'>{userName && userName?.lastname.toUpperCase()} </span>
+                <span>{userName && userName?.firstname.toUpperCase()}</span>
+              </>
+            }
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-24'>Email: </h2>

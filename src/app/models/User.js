@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema({
     firstName: { type: String, required: true},
     lastName: { type: String, required: true},
     username: { type: String, required: true},
-    image: { type: String },
     phone: { type: String},
     password: {
         type: String, 
@@ -17,6 +16,10 @@ const UserSchema = new mongoose.Schema({
         minlength: 8,
         validate: [isAlphanumeric, 'Password should contain letters and numbers']
     },
+    image: {type: new mongoose.Schema({
+        public_id: String,
+        secure_url: String, 
+    })},
     // address: {type: new mongoose.Schema({
     //     country: { type: String, required: true, validate: [isAlpha, 'Country must be alphabets']},
     //     state: { type: String, required: true, validate: [isAlpha, 'State must be alphabets']},

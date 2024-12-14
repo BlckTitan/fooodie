@@ -6,8 +6,8 @@ import { useSession } from 'next-auth/react';
 import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
-import { CldUploadWidget } from 'next-cloudinary';
-import { FiEdit, FiExternalLink } from 'react-icons/fi';
+// import { CldUploadWidget } from 'next-cloudinary';
+// import { FiEdit, FiExternalLink } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { getPhotos } from '@/app/api/upload/route';
 
@@ -16,22 +16,7 @@ export default function Avatar() {
   const [img, setImg] = useState('')
   const session = useSession()
   const userData = session?.data?.user
-
-  // const handleUpload = (e) =>{
-  //   const files = e.target.files
-
-  //   if(files.length > 0){
-  //     const data = new FormData;
-  //     data.set('files', files[0])
-
-  //     axios({
-  //       method: 'post',
-  //       url: '/api/upload/',
-  //       data: data,
-  //       // headers: {'Content-Type': 'multipart/form-data'} 
-  //     });
-  //   }
-  // }
+  const user_id = session?.data?.user?.id
 
   const getProfileAvatar = async () => {
     const data = await getPhotos()
@@ -57,6 +42,7 @@ export default function Avatar() {
       const data = new FormData; 
       data.set('file', file[0])
       data.set('url', url)
+      data.set('user_id', user_id)
 
       axios({
         method: 'post',
@@ -79,9 +65,9 @@ export default function Avatar() {
     <div className='relative w-12 xl:w-24 h-12 xl:h-24 mb-4'>
       {/* if we have an existing profile avatar, display it. */}
       { (userData && userData?.image) && 
-
+       
         <Image 
-            src={userData?.image} 
+            src={(userData?.image?.secure_url) ? userData?.image?.secure_url : userData?.image} 
             alt='This is the user profile image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'
@@ -90,26 +76,12 @@ export default function Avatar() {
             height={100}
         />
       }
-
-      {/* if we have an uploaded avatar, display it. for testing concerns*/}
-      { img && 
-
-        <Image 
-            src={img} 
-            alt='This is the user profile image; format: png;'
-            className='w-full h-full rounded-full'
-            objectFit='cover'
-            layout='contain'
-            width={100}
-            height={100}
-        />
-      }
-
+      
       {/* if there is no exiting profile avatar, display the default avatar */}
       { (userData && !userData?.image) && 
 
         <Image 
-            src={profileAvatar || img} 
+            src={profileAvatar} 
             alt='This is a user placeholder image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'

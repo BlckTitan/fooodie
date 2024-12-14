@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import os from 'node:os';
 import cloudinary from 'cloudinary'
 import { revalidatePath } from 'next/cache';
+import { User } from '@/app/models/User';
+// import { userAgent } from 'next/server';
 
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -24,13 +26,33 @@ export async function POST(req){
     // extracting url from formData
     const url = data.get('url')
 
+    // extracting user_id from formData
+    const user_id = data.get('user_id')
+
     if(data.get('file')){
         //send a copy of the uploaded file to be saved in public/img dir
         const newUpload = await saveFilesToLocal(file)
 
         //save a copy of the uploaded file to cloudinary
-        await saveFilesToCloudinary(newUpload)
+        const profileAvatar = await saveFilesToCloudinary(newUpload)
 
+        // //save photo to mongoDB
+        // const newProfileAvatar = profileAvatar.map(avatar => {
+        //     const newAvatar = ProfileAvatar({public_id: avatar.public_id, secure_url: avatar.secure_url})
+        //     newAvatar.save()
+
+        //     return newAvatar
+        // }) 
+
+        if(user_id && profileAvatar)(
+            updateProfilePhotoInMongoDB(user_id, profileAvatar)
+        )
+        else{
+            return Response.json({message: 'Profile photo cannot be updated in the cloud!'})
+
+        }
+
+       
         //delete photos after upload to cloudinary
         newUpload.map(data => fs.unlink(data.filepath))
 
@@ -47,7 +69,7 @@ export async function POST(req){
     return Response.json(true)
     
 }
-//   npx update-browserslist-db@latest
+
 //save files to local
 const saveFilesToLocal = async (formData) =>{
     const file = formData
@@ -107,4 +129,41 @@ export const getPhotos = async () => {
         console.log(error.message)
     }
     
+}
+
+//delete images from cloud
+export const deletePhoto = async (public_id) => {
+    try {
+        const resources = await cloudinary.v2.uploader.destroy(public_id)
+        return {message: 'deleted successfully'}
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+const updateProfilePhotoInMongoDB = async (user_id, profileAvatar) => {
+    //save user profile photo to mongoDB
+
+     try {
+            const newAvatar = await User.findByIdAndUpdate(
+                user_id,
+                {
+                    $set: {
+                        'image.public_id': profileAvatar[0].public_id,
+                        'image.secure_url': profileAvatar[0].secure_url
+                    }
+                }, { new: true }
+            )
+            if (!newAvatar) {
+                console.log('User not found');
+            } else {
+                revalidatePath('/')
+            }
+
+            return newAvatar
+
+    } catch (error) {
+        console.log(error, error.message)
+    }
 }
