@@ -72,7 +72,6 @@ const  authOptions = {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     username: user.username,
-                    image: user.image,
                 }
             }
             
@@ -85,7 +84,6 @@ const  authOptions = {
             session.user.firstname = token && token.firstName
             session.user.lastname = token && token.lastName
             session.user.username = token && token.username
-            session.user.image = token && token.image
 
             return session
         }

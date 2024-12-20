@@ -1,9 +1,8 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from './Avatar';
-
 
 export default function PersonalInfo() {
 
@@ -11,6 +10,7 @@ export default function PersonalInfo() {
     const userData = session?.data?.user
     let userName = ''
 
+    
     if(session.status === 'authenticated' && (session?.data?.user?.firstname && session?.data?.user?.lastname)){
 
       userName = session?.data?.user
@@ -20,7 +20,7 @@ export default function PersonalInfo() {
          userName = session?.data?.user?.name
       }
     }
-
+    
   return (
     <section className='container bg-white'>
 

@@ -5,8 +5,8 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
 import { signIn, useSession } from 'next-auth/react';
-import { AlertsError } from '@/components/layout/Alerts';
-import { toast } from 'react-toastify';
+// import { AlertsError } from '@/components/layout/Alerts';
+// import { toast } from 'react-toastify';
 
 export default function LoginPage() {
 

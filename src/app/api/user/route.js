@@ -1,13 +1,17 @@
 import {User} from '@/app/models/User';
+import { NextRequest, NextResponse } from 'next/server';
+
 // import '@/app/api/db/db'
 
-export async function GET(req, res){
+export async function GET(NextRequest, NextResponse){
 
-    const body = await req.json()
+    // const body = await req.json()
     let data = '';
+    const searchParams = NextRequest.nextUrl.searchParams
+    const id = searchParams.get('_id')
 
-    if(req.body){
-        data = await User.findOne({body: body?.email})
+    if(id){
+        data = await User.findOne({_id: id})
     }else{
         data = await User.find()
     }

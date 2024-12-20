@@ -22,7 +22,8 @@ export default function ProfilePage() {
 
     const handleEdit = async () => {
       setModalShow(true)
-    }
+  }
+
   return (
     <section className='container h-screen py-8 bg-white'>
       <header className='py-4'>

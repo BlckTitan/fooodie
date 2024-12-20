@@ -6,10 +6,9 @@ import { useSession } from 'next-auth/react';
 import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
-// import { CldUploadWidget } from 'next-cloudinary';
-// import { FiEdit, FiExternalLink } from 'react-icons/fi';
 import { toast } from 'react-toastify';
-import { getPhotos } from '@/app/api/upload/route';
+// import { getPhotos } from '@/app/api/upload/route';
+// import { redirect } from 'next/navigation';
 
 export default function Avatar() {
 
@@ -19,8 +18,19 @@ export default function Avatar() {
   const user_id = session?.data?.user?.id
 
   const getProfileAvatar = async () => {
-    const data = await getPhotos()
-    setImg(data[0]?.secure_url)
+    await axios.get(`/api/user?_id=${user_id}`)
+    .then(function (response) {
+      // handle success
+      setImg(response.data.image.secure_url);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
   }
 
   useEffect(() => {
@@ -48,26 +58,22 @@ export default function Avatar() {
         method: 'post',
         url: '/api/upload/',
         data: data,
-        // headers: {'Content-Type': 'multipart/form-data'} 
       });
-
-      // return file 
-      // setImg(file[0])
 
       return toast.success('Profile photo successfully updated', {position: 'top-right', autoClose: 3000, toastId: 1});
     }else{
       return toast.error('Image file too large', {position: 'top-right', autoClose: 3000, toastId: 1});
     }
-
+    
   }
 
   return (
     <div className='relative w-12 xl:w-24 h-12 xl:h-24 mb-4'>
       {/* if we have an existing profile avatar, display it. */}
-      { (userData && userData?.image) && 
+      { img && 
        
         <Image 
-            src={(userData?.image?.secure_url) ? userData?.image?.secure_url : userData?.image} 
+            src={img} 
             alt='This is the user profile image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'
@@ -110,49 +116,8 @@ export default function Avatar() {
           </Form.Group>
         </Form>
          <div>
-            
-          {/* <CldUploadWidget uploadPreset="fooodie_food_ordering_app"> */}
-          {/* <CldUploadWidget signatureEndpoint='/api/sign-image'>
-            {({ open }) => {
-              return (
-                <button 
-                  className='text-xl xl:text-2xl cursor-pointer absolute border text-gray-500 -right-2.5 xl:-right-0.5 -bottom-1.5 bg-white rounded-full'
-                  onClick={() => open()}>
-                  <BsPlusLg />
-                </button>
-              );
-            }}
-          </CldUploadWidget> */}
 
           </div>
     </div>
   )
 }
-
-// const { resources: sneakers } = await cloudinary.api.resources_by_tag('nextjs-server-actions-upload-sneakers', { context: true });
-
-//     // 'use server'
-
-//     const file = formData.get('image');
-//     const arrayBuffer = await file.arrayBuffer();
-//     const buffer = Buffer.from(arrayBuffer);
-
-//     await new Promise((resolve, reject) => {
-
-//       cloudinary.uploader.upload_stream({
-//         tags: ['nextjs-server-actions-upload-sneakers'],
-//         upload_preset: 'fooodie_food_ordering_app'
-//       }, function (error, result) {
-
-//         if (error) {
-//           reject(error);
-//           return;
-//         }
-
-//         resolve(result);
-
-//       })
-//       .end(buffer);
-//     });
-
-//     revalidatePath('/')

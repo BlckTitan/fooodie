@@ -6,7 +6,9 @@ import os from 'node:os';
 import cloudinary from 'cloudinary'
 import { revalidatePath } from 'next/cache';
 import { User } from '@/app/models/User';
+import { ProfileAvatar } from '@/app/models/profileAvatar'
 import { signOut } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 // import { userAgent } from 'next/server';
 
 cloudinary.config({
@@ -135,7 +137,11 @@ export const getPhotos = async () => {
 //delete images from cloud
 export const deletePhoto = async (public_id) => {
     try {
-        const resources = await cloudinary.v2.uploader.destroy(public_id)
+        
+        await promise.all([
+            ProfileAvatar.findOneAndDelete({public_id}),
+            cloudinary.v2.uploader.destroy(public_id)
+        ])
         return {message: 'deleted successfully'}
     } catch (error) {
         console.log(error.message)
@@ -159,7 +165,7 @@ const updateProfilePhotoInMongoDB = async (user_id, profileAvatar) => {
             if (!newAvatar) {
                 console.log('User not found');
             } else {
-                revalidatePath('/')
+                revalidatePath('/login')
             }
 
             return newAvatar
