@@ -10,7 +10,7 @@ import AddressInfo from '../../components/layout/profile/AddressInfo'
 import BillingInfo from '../../components/layout/profile/BillingInfo'
 import OrderHistory from '../../components/layout/profile/OrderHistory'
 import MyVerticallyCenteredModal from '@/components/layout/MyVerticallyCenteredModal';
-import useFetch from '@/customHooks/useFetch';
+// import useFetch from '@/customHooks/useFetch';
 import axios from 'axios';
 
 export default function ProfilePage() {
@@ -26,6 +26,12 @@ export default function ProfilePage() {
   const [email, setEmail] = useState()
   const [phone, setPhone] = useState('')
   const [img, setImg] = useState('')
+  const [username, setUsername] = useState('')
+  const [country, setCountry] = useState('')
+  const [state, setState] = useState('')
+  const [city, setCity] = useState('')
+  const [region, setRegion] = useState('')
+  const [street, setStreet] = useState('')
 
   const session = useSession();
 
@@ -50,6 +56,12 @@ export default function ProfilePage() {
         setEmail(response.data?.email); // Set email on ok response
         setPhone(response.data?.phone); // Set phone on ok response
         setImg(response.data?.image?.secure_url); // Set img on ok response
+        setUsername(response.data?.username); // Set username on ok response
+        setCountry(response.data?.country); // Set country on ok response
+        setState(response.data?.state); // Set state on ok response
+        setCity(response.data?.city); // Set city on ok response
+        setRegion(response.data?.region)// Set region on ok response
+        setStreet(response.data?.street)// Set street on ok response
       }
 
     } catch (err) {
@@ -70,6 +82,8 @@ export default function ProfilePage() {
   const handleEdit = async () => {
     setModalShow(true)
   } 
+
+  console.log(data)
 
   return (
     <section className='container h-screen py-8 bg-white'>
@@ -109,14 +123,25 @@ export default function ProfilePage() {
         <Accordion.Item eventKey="1">
           <Accordion.Header className='font-semibold'>Account Information</Accordion.Header>
           <Accordion.Body className='visible'>
-            <AccountInfo/>
+            <AccountInfo  
+              account_email={email}
+              username={username}
+              loadingState={isLoading}
+            />
           </Accordion.Body>
         </Accordion.Item>
 
         <Accordion.Item eventKey="2">
           <Accordion.Header className='font-semibold'>Address Information</Accordion.Header>
           <Accordion.Body className='visible'>
-            <AddressInfo/>
+            <AddressInfo
+              country={country}
+              state={state}
+              city={city}
+              region={region}
+              street={street}
+              loadingState={isLoading}
+            />
           </Accordion.Body>
         </Accordion.Item>
 

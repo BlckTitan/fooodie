@@ -74,7 +74,7 @@ export default function Avatar({img, loadingState}) {
       { img && 
        
         <Image 
-            src={img} 
+            src={(img === null) ? '' : img} 
             alt='This is the user profile image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'
