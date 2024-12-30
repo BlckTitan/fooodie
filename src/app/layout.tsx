@@ -11,7 +11,7 @@ import NextAuthSessionProviders from "../pages/api/auth/NextAuthSessionProviders
 import '@/lib/db'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Providers from '@/app/GlobalRedux/provider'
 export const metadata: Metadata = {
   title: "Fooodie",
   description: "Foodie food ordering platform.",
@@ -29,10 +29,12 @@ export default function RootLayout({
   return (
       <html lang="en">
         <body className={raleway.className}>
-          <NextAuthSessionProviders>    
-            <Navbar/>
-              {children}
-            <Footer/>
+          <NextAuthSessionProviders>   
+            <Providers>
+              <Navbar/>
+                {children}
+              <Footer/>
+            </Providers>
           </NextAuthSessionProviders>
           <BootstrapClient/>
           <ToastContainer/> 

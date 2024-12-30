@@ -1,56 +1,43 @@
 'use client'
-
-import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react';
 import Avatar from './Avatar';
+import LoadingSpinner from '../LoadingSpinner';
+import { useSession } from 'next-auth/react';
 
-export default function PersonalInfo() {
+export default function PersonalInfo({name, firstname, email, lastname, phone, loadingState, img}) {
 
-    const session = useSession()
-    const userData = session?.data?.user
-    let userName = ''
+  const session = useSession();
 
-    
-    if(session.status === 'authenticated' && (session?.data?.user?.firstname && session?.data?.user?.lastname)){
+  if(session.status === 'loading' || loadingState === true) return <LoadingSpinner/>
 
-      userName = session?.data?.user
-  
-    }else{
-      if(session.status === 'authenticated' && session?.data?.user?.name){
-         userName = session?.data?.user?.name
-      }
-    }
-    
   return (
     <section className='container bg-white'>
 
         <div>
-            <Avatar/>
+            <Avatar img={img} loadingState={loadingState}/>
         </div>
 
         <ul>
-          <li className='mb-4 flex items-center'>
+            <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-24'>Name: </h2>
             {
-              (userData.name) ?
-              <span className='text-left mr-2'>{userData.name.toUpperCase()} </span> :
+              (name) ?
+              <span className='text-left mr-2'>{(firstname === null) ? '' : name.toUpperCase()} </span> :
               <>
-                <span className='text-left mr-2'>{userName && userName?.lastname.toUpperCase()} </span>
-                <span>{userName && userName?.firstname.toUpperCase()}</span>
+                <span className='text-left mr-2'>{(lastname === null) ? '' : lastname.toUpperCase()} </span>
+                <span>{(firstname === null) ? '' : firstname.toUpperCase()}</span>
               </>
             }
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-24'>Email: </h2>
-            <span>{userData && userData?.email}</span>
-          </li>
+            <span>{(email === null) ? '' : email}</span>
+          </li> 
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-24'>Phone: </h2>
-            <span className='text-start'>+234 813 000 1111</span>
+            <span className='text-start'>{(phone === null) ? '' : phone}</span>
           </li>
         </ul>
-
-        
 
     </section>
   )

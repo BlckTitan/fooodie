@@ -7,37 +7,36 @@ import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import { getPhotos } from '@/app/api/upload/route';
-// import { redirect } from 'next/navigation';
+import LoadingSpinner from '../LoadingSpinner';
 
-export default function Avatar() {
+export default function Avatar({img, loadingState}) {
 
-  const [img, setImg] = useState('')
+  // const [img, setImg] = useState('')
   const session = useSession()
   const userData = session?.data?.user
   const user_id = session?.data?.user?.id
 
-  const getProfileAvatar = async () => {
-    await axios.get(`/api/user?_id=${user_id}`)
-    .then(function (response) {
-      // handle success
-      setImg(response.data.image.secure_url);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
+  // const getProfileAvatar = async () => {
+  //   await axios.get(`/api/user?_id=${user_id}`)
+  //   .then(function (response) {
+  //     // handle success
+  //     setImg(response.data.image.secure_url);
+  //   })
+  //   .catch(function (error) {
+  //     // handle error
+  //     console.log(error);
+  //   })
+  //   .finally(function () {
+  //     // always executed
+  //   });
 
-  }
+  // }
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    getProfileAvatar()
+  //   getProfileAvatar()
 
-  }, [])
+  // }, [])
 
   //handle upload using api
   const handleUpload = async (formData) => {
@@ -66,6 +65,8 @@ export default function Avatar() {
     }
     
   }
+
+  if(session.status === 'loading' || loadingState === true) return <LoadingSpinner/>
 
   return (
     <div className='relative w-12 xl:w-24 h-12 xl:h-24 mb-4'>

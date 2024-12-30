@@ -1,22 +1,39 @@
 import {User} from '@/app/models/User';
-import { NextRequest, NextResponse } from 'next/server';
 
 // import '@/app/api/db/db'
 
-export async function GET(NextRequest, NextResponse){
+export async function GET(req){
 
     // const body = await req.json()
-    let data = '';
-    const searchParams = NextRequest.nextUrl.searchParams
-    const id = searchParams.get('_id')
+    try {
+        // extract the url parameter
+        let data;
+        const searchParams = new URL(req.url).searchParams;
+        const id = searchParams.get('_id')
 
-    if(id){
-        data = await User.findOne({_id: id})
-    }else{
-        data = await User.find()
+        if(id){
+            // fetch user data if there is a url param url param(user id)
+            data = await User.findOne({_id: id})
+            if (!data) {
+                return Response.json(
+                  { message: 'User not found' },
+                  { status: 404 }
+                );
+            }
+    
+            return Response.json(data, {status: 200})
+        }else{
+            // if there is no url param, fetch all user data
+            data = await User.find()
+        }
+
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        return Response.json(
+            { message: 'Internal Server Error', error: error.message },
+            { status: 500 }
+        )
     }
-
-    return Response.json(data)
     
 }
 

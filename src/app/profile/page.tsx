@@ -10,27 +10,74 @@ import AddressInfo from '../../components/layout/profile/AddressInfo'
 import BillingInfo from '../../components/layout/profile/BillingInfo'
 import OrderHistory from '../../components/layout/profile/OrderHistory'
 import MyVerticallyCenteredModal from '@/components/layout/MyVerticallyCenteredModal';
+import useFetch from '@/customHooks/useFetch';
+import axios from 'axios';
 
 export default function ProfilePage() {
 
   const [modalShow, setModalShow] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('')
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [email, setEmail] = useState()
+  const [phone, setPhone] = useState('')
+  const [img, setImg] = useState('')
+
   const session = useSession();
 
-  if(session.status === 'loading') return <LoadingSpinner/>
+  useEffect(() => {
+    (session.status === 'loading') ? <LoadingSpinner/> : fetchUser()
+  }, [session]);
+
+  const fetchUser = async () =>{
+
+    setUserId(session?.data?.user?.id)
+    setIsLoading(true); // Set loading to true before making the request
+    setError(null); // Reset error before each fetch
+
+    try {
+      
+      if(userId !== null){
+        const response = await axios.get(`/api/user?_id=${userId}`);
+        setData(response.data)
+        setName(response.data?.name); // Set name on ok response
+        setFirstName(response.data?.firstName); // Set firstname on ok response
+        setLastName(response.data?.lastName); // Set lastname on ok response
+        setEmail(response.data?.email); // Set email on ok response
+        setPhone(response.data?.phone); // Set phone on ok response
+        setImg(response.data?.image?.secure_url); // Set img on ok response
+      }
+
+    } catch (err) {
+
+      setError(err); // Capture and set error
+      console.log(error)
+
+    } finally {
+
+      setIsLoading(false); // Set loading to false when the request completes
+
+    }
+  }
 
   if(session.status === 'unauthenticated') return redirect('/login')
+  if(session.status === 'loading' || isLoading === true) return <LoadingSpinner/>
 
-    const handleEdit = async () => {
-      setModalShow(true)
-  }
+  const handleEdit = async () => {
+    setModalShow(true)
+  } 
 
   return (
     <section className='container h-screen py-8 bg-white'>
       <header className='py-4'>
         
         <MyVerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
         />
 
         <div>
@@ -47,7 +94,15 @@ export default function ProfilePage() {
         <Accordion.Item eventKey="0">
           <Accordion.Header className='text-5xl font-semibold'>Personal Information</Accordion.Header>
           <Accordion.Body className='visible'>
-            <PersonalInfo/>
+            <PersonalInfo 
+              name={name}
+              firstname={firstname}
+              lastname={lastname}
+              email={email}
+              phone={phone}
+              img={img}
+              loadingState={isLoading}
+            />
           </Accordion.Body>
         </Accordion.Item>
 

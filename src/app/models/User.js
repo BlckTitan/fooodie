@@ -20,13 +20,13 @@ const UserSchema = new mongoose.Schema({
         public_id: String,
         secure_url: String, 
     })},
-    // address: {type: new mongoose.Schema({
-    //     country: { type: String, required: true, validate: [isAlpha, 'Country must be alphabets']},
-    //     state: { type: String, required: true, validate: [isAlpha, 'State must be alphabets']},
-    //     city: { type: String, required: true, validate: [isAlpha, 'City must be alphabets']},
-    //     region: { type: String, required: true, validate: [isAlpha, 'Region must be alphabets']},
-    //     street: { type: String, required: true, validate: [isAlpha, 'Street must be alphabets']},
-    // })},
+    address: {type: new mongoose.Schema({
+        country: { type: String, required: true, validate: [isAlpha, 'Country must be alphabets']},
+        state: { type: String, required: true, validate: [isAlpha, 'State must be alphabets']},
+        city: { type: String, required: true, validate: [isAlpha, 'City must be alphabets']},
+        region: { type: String, required: true, validate: [isAlpha, 'Region must be alphabets']},
+        street: { type: String, required: true, validate: [isAlpha, 'Street must be alphabets']},
+    })},
     // billing: { type: new mongoose.Schema({
     //     cardNumber: { type: String, required: true, validate: [isCreditCard, 'Card number must be a number']},
     //     securityNumber: { type: Number, required: true, validate: [isInt, 'Security code must be a number']},
