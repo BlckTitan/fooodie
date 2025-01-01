@@ -1,8 +1,8 @@
 import {Mongoose, mongoose} from "mongoose";
 import bcrypt from 'bcrypt'
 import { isEmail, isAlphanumeric, isAlpha, isCreditCard, isInt} from 'validator';
-import {AddressSchema} from './Address';
-import {BillingSchema} from './Billing';
+// import {AddressSchema} from './Address';
+// import {BillingSchema} from './Billing';
 
 const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, validate: [isEmail, 'Please enter a valid email address']},
@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
         region: { type: String, required: true, validate: [isAlpha, 'Region must be alphabets']},
         street: { type: String, required: true, validate: [isAlpha, 'Street must be alphabets']},
     })},
+    
     // billing: { type: new mongoose.Schema({
     //     cardNumber: { type: String, required: true, validate: [isCreditCard, 'Card number must be a number']},
     //     securityNumber: { type: Number, required: true, validate: [isInt, 'Security code must be a number']},

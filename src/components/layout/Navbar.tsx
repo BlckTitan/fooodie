@@ -13,9 +13,9 @@ export default function Navbar() {
 
   userData = session?.data;
   
-  if(session.status === 'authenticated' && session?.data?.user?.firstname){
+  if(session.status === 'authenticated' && session?.data?.user?.username){
 
-    userName = session?.data?.user?.firstname
+    userName = session?.data?.user?.username
 
   }else{
     if(session.status === 'authenticated' && session?.data?.user?.name){

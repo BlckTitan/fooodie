@@ -7,7 +7,7 @@ import { signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
-
+import { redirect, useRouter } from 'next/navigation';
 
 export default function MyVerticallyCenteredModal(props) {
 
@@ -22,17 +22,26 @@ export default function MyVerticallyCenteredModal(props) {
     const [city, setCity] = useState('')
     const [region, setRegion] = useState('')
     const [street, setStreet] = useState('')
+    const [userId, setUserId] = useState('')
 
+    const { push } = useRouter();
     const session = useSession()
     const userData = session?.data?.user
 
     useEffect(() => {
-        setFirstName(userData?.name || userData?.firstname)
-        setLastName(userData?.name || userData?.lastname)
-        setUsername(userData?.usernane)
-        setEmail(userData?.email)
-        setPhone(userData?.phone)
+        
+        setFirstName(props.editName || props.editFirstname)
+        setLastName(props.editName || props.editLastname)
+        setUsername(props.editUsername)
+        setEmail(props.editEmail)
+        setPhone(props.editPhone)
+        setCountry(props.editCountry)
+        setState(props.editState)
+        setCity(props.editCity)
+        setRegion(props.editRegion)
+        setStreet(props.editStreet)
         setId(userData?.id)
+
     }, [session])
 
     const handleEdit = (e) =>{
@@ -46,13 +55,15 @@ export default function MyVerticallyCenteredModal(props) {
             }
           }).then(function (response) {
             toast.success(response)
-            signOut()
+            // signOut()
           })
           .catch(function (error) {
             toast.error(error)
+          })
+          .finally(function () {
+            // always executed
+            push('/dashboard')
           });
-
-        console.log(e, img)
     }
 
   return (
@@ -72,7 +83,7 @@ export default function MyVerticallyCenteredModal(props) {
 
             <Modal.Body>
                 <Form className='flex justify-between'>
-                    <Tab.Container id="left-tabs-example" defaultActiveKey="first" className='w-full'>
+                    <Tab.Container id="left-tabs-example" defaultActiveKey="personal" className='w-full'>
                         <Row className='w-full'>
                             <Col sm={3}>
                                 <Nav variant="pills" className="flex-column">
@@ -132,7 +143,7 @@ export default function MyVerticallyCenteredModal(props) {
                                             <Form.Group className="mb-3" controlId="formBasicText">
                                                 <Form.Label>Phone</Form.Label>
                                                 <Form.Control 
-                                                    type="text" 
+                                                    type="tel" 
                                                     placeholder="Edit phone" 
                                                     value={phone} 
                                                     onChange={(e) => setPhone(e.target.value)}

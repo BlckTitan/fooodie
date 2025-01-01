@@ -69,8 +69,6 @@ const  authOptions = {
                     ...token,
                     id: user.id,
                     email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
                     username: user.username,
                 }
             }
@@ -81,8 +79,6 @@ const  authOptions = {
         async session({ session, user, token }) {
 
             session.user.id = token && token.id
-            session.user.firstname = token && token.firstName
-            session.user.lastname = token && token.lastName
             session.user.username = token && token.username
 
             return session

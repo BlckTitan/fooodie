@@ -13,7 +13,7 @@ const useFetch = (url) => {
         setError(null); // Reset error before each fetch
         try {
           const response = await axios.get(url);
-          setData(response.data); // Set data on successful response
+          setData(response.data); // Set data on successful response 
         } catch (err) {
           setError(err); // Capture and set error
         } finally {

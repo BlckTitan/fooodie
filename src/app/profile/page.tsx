@@ -57,11 +57,11 @@ export default function ProfilePage() {
         setPhone(response.data?.phone); // Set phone on ok response
         setImg(response.data?.image?.secure_url); // Set img on ok response
         setUsername(response.data?.username); // Set username on ok response
-        setCountry(response.data?.country); // Set country on ok response
-        setState(response.data?.state); // Set state on ok response
-        setCity(response.data?.city); // Set city on ok response
-        setRegion(response.data?.region)// Set region on ok response
-        setStreet(response.data?.street)// Set street on ok response
+        setCountry(response.data?.address?.country); // Set country on ok response
+        setState(response.data?.address?.state); // Set state on ok response
+        setCity(response.data?.address?.city); // Set city on ok response
+        setRegion(response.data?.address?.region)// Set region on ok response
+        setStreet(response.data?.address?.street)// Set street on ok response
       }
 
     } catch (err) {
@@ -82,9 +82,7 @@ export default function ProfilePage() {
   const handleEdit = async () => {
     setModalShow(true)
   } 
-
-  console.log(data)
-
+  
   return (
     <section className='container h-screen py-8 bg-white'>
       <header className='py-4'>
@@ -92,6 +90,19 @@ export default function ProfilePage() {
         <MyVerticallyCenteredModal
           show={modalShow}
           onHide={() => setModalShow(false)}
+
+          editName={name}
+          editFirstname={firstname}
+          editLastname={lastname}
+          editEmail={email}
+          editPhone={phone}
+          editUsername={username}
+          editCountry={country}
+          editState={state}
+          editCity={city}
+          editRegion={region}
+          editStreet={street}
+          loadingState={isLoading}
         />
 
         <div>

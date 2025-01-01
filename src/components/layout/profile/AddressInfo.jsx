@@ -18,23 +18,23 @@ export default function AddressInfo({country, state, city, region, street, loadi
         <ul>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-30'>Country: </h2>
-            <span className='text-left mr-2'>{(country === null) ? '' : country}</span>
+            <span className='text-right ml-2'>{(country === null) ? '' : country}</span>
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-30'>State: </h2>
-            <span>{(state === null) ? '' : state}</span>
+            <span className='text-right ml-2'>{(state === null) ? '' : state}</span>
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-30'>City: </h2>
-            <span>{(city === null) ? '' : city}</span>
+            <span className='text-right ml-2'>{(city === null) ? '' : city}</span>
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-30'>LGA or Region: </h2>
-            <span>{(region === null) ? '' : region}</span>
+            <span className='text-right ml-2'>{(region === null) ? '' : region}</span>
           </li>
           <li className='mb-4 flex items-center'>
             <h2 className='font-semibold w-30'>Street: </h2>
-            <span>{(street === null) ? '' : street}</span>
+            <span className='text-right ml-2'>{(street === null) ? '' : street}</span>
           </li>
         </ul>
 
