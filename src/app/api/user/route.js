@@ -26,6 +26,7 @@ export async function GET(req){
         }else{
             // if there is no url param, fetch all user data
             data = await User.find()
+            return Response.json(data, {status: 200})
         }
 
     } catch (error) {

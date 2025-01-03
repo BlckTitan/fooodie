@@ -141,3 +141,17 @@ div.CTA_btn button.CTA_btn__order{
 div.CTA_btn button.CTA_btn__reservation{
   @apply bg-slate-100 hover:bg-slate-200 text-primaryColor rounded-md;
 }
+
+/* styling the sidebar navigation */
+ul.sidebar_navigation{
+  @apply text-lg relative mt-20;
+}
+ul.sidebar_navigation > li{
+  @apply px-4 py-2 mb-4 hover:border-l-blue-600 border-l-4 hover:!text-blue-600;
+}
+ul.sidebar_navigation > li > a{
+  @apply flex items-center no-underline font-medium;
+}
+ul.sidebar_navigation > li > a > i{
+  @apply mr-3;
+}

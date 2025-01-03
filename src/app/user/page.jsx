@@ -3,19 +3,28 @@ import LoadingSpinner from '@/components/layout/LoadingSpinner';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import React, { useEffect } from 'react';
+import useFetch from '@/customHooks/useFetch'
 import { BsBell, BsCalculator, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPencilSquare, BsPeople, BsQuestionCircle, BsTicketPerforated } from 'react-icons/bs'
 
-export default function DashboardPage() {
+export default function UserPage() {
 
   const session = useSession()
 
   useEffect(() => {
+    
     (session.status === 'loading') && <LoadingSpinner/> 
+    
   }, [session]);
 
 
+  const {data, error, isLoading } = useFetch('/api/user');
+  
+  if(isLoading) return <LoadingSpinner/>
+
   if(session.status === 'unauthenticated') return redirect('/login')
     
+    console.log(data, error, isLoading)
+
   return (
     <section className='flex flex-col lg:flex-row w-full h-screen bg-white'>
       <aside className='w-2/12 hidden lg:block'>
@@ -33,7 +42,7 @@ export default function DashboardPage() {
               </a>
           </li>
           <li>
-              <a href='/user'>
+              <a href=''>
                   <i><BsPeople /></i>
                   <span>Users</span>
               </a>
