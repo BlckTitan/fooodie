@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
         region: { type: String, required: true, validate: [isAlpha, 'Region must be alphabets']},
         street: { type: String, required: true, validate: [isAlpha, 'Street must be alphabets']},
     })},
+    isAdmin: { type: Boolean, required: true, default: false}
     
     // billing: { type: new mongoose.Schema({
     //     cardNumber: { type: String, required: true, validate: [isCreditCard, 'Card number must be a number']},

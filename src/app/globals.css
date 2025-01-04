@@ -147,7 +147,7 @@ ul.sidebar_navigation{
   @apply text-lg relative mt-20;
 }
 ul.sidebar_navigation > li{
-  @apply px-4 py-2 mb-4 hover:border-l-blue-600 border-l-4 hover:!text-blue-600;
+  @apply px-4 py-2 mb-4 hover:border-l-blue-600 border-l-4 border-white hover:!text-blue-600;
 }
 ul.sidebar_navigation > li > a{
   @apply flex items-center no-underline font-medium;

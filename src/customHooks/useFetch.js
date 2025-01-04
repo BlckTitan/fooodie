@@ -18,8 +18,6 @@ const useFetch = (url) => {
         try {
 
           const response = await axios.get(url);
-          
-          console.log(response);
 
           if(isMounted){
             setData(response.data); // Set data on successful response 
@@ -28,6 +26,7 @@ const useFetch = (url) => {
         } catch (error) {
 
           console.error(error);
+          
           if(isMounted){
             setIsLoading(false); // Set loading to false when the request completes
           }

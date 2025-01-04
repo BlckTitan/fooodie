@@ -6,6 +6,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from '../../lib/mongooseConnect'
 import '../../lib/db'
 import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
 
 const  authOptions = {
 
@@ -70,6 +71,7 @@ const  authOptions = {
                     id: user.id,
                     email: user.email,
                     username: user.username,
+                    isAdmin: user.isAdmin,
                 }
             }
             
@@ -80,15 +82,15 @@ const  authOptions = {
 
             session.user.id = token && token.id
             session.user.username = token && token.username
+            session.user.isAdmin = token && token.isAdmin
 
             return session
         }
-
     },
 
     pages: {
         signIn: '/login',
-        signOut: '/login',
+        // signOut: '/login',
         error: '/auth/error', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // (used for check email message)
         // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
