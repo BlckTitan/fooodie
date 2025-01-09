@@ -41,7 +41,7 @@ import LoadingSpinner from './LoadingSpinner';
                 </a>
             </li>
              <li>
-                <a href=''>
+                <a href='/category'>
                     <i><BsGrid /></i>
                     <span>Categories</span>
                 </a>
