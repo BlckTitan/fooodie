@@ -2,7 +2,7 @@
 import LoadingSpinner from '@/components/layout/LoadingSpinner';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/layout/sidebar';
 import useFetch from '@/customHooks/useFetch';
 import { Table } from 'react-bootstrap';
@@ -11,26 +11,25 @@ import Image from 'next/image';
 
 export default function UserPage() {
 
+  // const [isAdmin, setIsAdmin] = useState(false)
   const session = useSession()
 
   useEffect(() => {
-    
+    // setIsAdmin(session?.data?.user?.isAdmin)
     if(session.status === 'unauthenticated') return redirect('/login')
     (session.status === 'loading') && <LoadingSpinner/> 
     
-  }, [session]);
+  }, [session]); 
 
   const {data, error, isLoading } = useFetch('/api/user');
 
   if(isLoading) return <LoadingSpinner/>;
+  if(session?.data?.user?.isAdmin === false) return redirect('/login')
 
   const handleDelete = async (e, id) => {
     confirm(`Are you sure to delete user`)
   }
-
   
-  console.log(session?.data?.user?.isAdmin)
-
   return (
     <section className='flex flex-col lg:flex-row w-full h-screen bg-white'>
 
@@ -62,7 +61,7 @@ export default function UserPage() {
                         (data !== null) && data.map((userData, index) => (
 
                             <tr key={index}>
-                                <td>{index.length}</td>
+                                <td>{index}</td>
                                 <td>
                                     <Image 
                                         src={userData?.image?.secure_url} 
@@ -77,11 +76,11 @@ export default function UserPage() {
                                 <td>{userData?.phone}</td>
                                 <td>{(userData?.isAdmin === true) ? "Administrator" : "Customer"}</td>
                                 <td>
-                                    <a href='/profile' className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
+                                    <a href={`/profile/?id=${userData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
                                     <button 
                                       type='button' 
                                       className='text-red-500 ml-4' 
-                                      onClick={(e) => {handleDelete(e, userData._id)}}
+                                      onClick={(e) => {handleDelete(e, userData?._id)}}
                                     >
                                       <BsTrash3 />
                                     </button>

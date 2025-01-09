@@ -22,7 +22,7 @@ const  authOptions = {
 
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientId: process.env.GOOGLE_CLIENT_ID, 
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
           }),
 
@@ -63,16 +63,19 @@ const  authOptions = {
     
     callbacks: {
 
-        async jwt({ token, user, session }) {
+        async jwt({ token, user, session, trigger}) {
             
             if(user){
                 return{
                     ...token,
                     id: user.id,
-                    email: user.email,
                     username: user.username,
                     isAdmin: user.isAdmin,
                 }
+            }
+
+            if(trigger === 'update'){
+                return { ...token}
             }
             
             return token
@@ -85,12 +88,13 @@ const  authOptions = {
             session.user.isAdmin = token && token.isAdmin
 
             return session
-        }
+        },
+
     },
 
     pages: {
         signIn: '/login',
-        // signOut: '/login',
+        signOut: '/login',
         error: '/auth/error', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // (used for check email message)
         // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)

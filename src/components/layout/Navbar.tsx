@@ -49,7 +49,7 @@ export default function Navbar() {
               </li>
               {
                 (session.status === 'authenticated') && 
-                <li className="nav-item">
+                <li className="nav-item hidden lg:block">
                   <a className="nav-link font-bold" href="/profile">Welcome, {(userName !== undefined ) && userName.toUpperCase()}</a>
                 </li>
               }

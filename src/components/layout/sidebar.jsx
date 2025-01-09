@@ -1,16 +1,26 @@
+'use client'
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsBell, BsCalculator, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPencilSquare, BsPeople, BsQuestionCircle, BsTicketPerforated } from 'react-icons/bs'
+import LoadingSpinner from './LoadingSpinner';
 
-export default function Sidebar() {
+    export default function Sidebar() {
 
-    // const session = useSession()
+    const[isAdmin, setIsAdmin] = useState(true)
+    const session = useSession()
 
+  useEffect(() => {
+    
+    (session.status === 'loading') && <LoadingSpinner/> 
+    setIsAdmin(session?.data?.user?.isAdmin)
+
+  }, [session, isAdmin]);
+  
   return (
-    <aside className='w-2/12 hidden lg:block'>
+    <aside className='w-2/12 hidden lg:inline-block'>
         <ul className='sidebar_navigation'>
           <li>
-              <a href=''>
+              <a href='/dashboard'>
                   <i><BsColumnsGap /></i>
                   <span>Dashboard</span>
               </a>
@@ -21,30 +31,35 @@ export default function Sidebar() {
                   <span>Coupons</span>
               </a>
           </li>
-          <li>
-              <a href=''>
-                  <i><BsPeople /></i>
-                  <span>Users</span>
-              </a>
-          </li>
-          <li>
-              <a href=''>
-                  <i><BsGrid /></i>
-                  <span>Categories</span>
-              </a>
-          </li>
-          <li>
-              <a href=''>
-                  <i><BsPencilSquare /></i>
-                  <span>Items</span>
-              </a>
-          </li>
-          <li>
-              <a href=''>
-                  <i><BsCart4 /></i>
-                  <span>Orders</span>
-              </a>
-          </li>
+          
+          {(isAdmin === true) &&
+          <>
+            <li>
+                <a href='/user'>
+                    <i><BsPeople /></i>
+                    <span>Users</span>
+                </a>
+            </li>
+             <li>
+                <a href=''>
+                    <i><BsGrid /></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href=''>
+                    <i><BsPencilSquare /></i>
+                    <span>Items</span>
+                </a>
+            </li>
+            <li>
+                <a href=''>
+                    <i><BsCart4 /></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+          </>
+          }
           <li>
               <a href=''>
                   <i><BsCalculator /></i>
