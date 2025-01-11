@@ -1,6 +1,6 @@
-//function to trigger page reload after 10 seconds
-export default function reloadPageAfterTenSeconds() {
+//function to trigger page reload after 4.5 seconds
+export default function reloadPage() {
     setTimeout(() => {
         window.location.reload(); // Reloads the current page
-    }, 4500); // 10 seconds = 10000 milliseconds
+    }, 4500); // 4.5 seconds = 4500 milliseconds
 }

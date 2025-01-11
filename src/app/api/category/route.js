@@ -39,14 +39,24 @@ export async function GET(req){
 }
 
 export async function POST(req){
-
   
     try {
         const body = await req.json()
 
-        const createdCategory = await Category.create(body)
+        const existingCategory = Category.findOne({title: body.title})
+
+        if(existingCategory){
+            return Response.json(
+                { message: 'Category already exists'},
+                { status: 401 }
+            )
+        }else{
+
+            const createdCategory = await Category.create(body)
     
-        return Response.json(createdCategory)
+            return Response.json(createdCategory)
+        }
+
     } catch (error) {
         console.error('Error creating category data:', error);
         return Response.json(
@@ -123,7 +133,7 @@ export async function DELETE(req) {
 
         // If no category is found, return a 404 response
         if (!deletedCategory) {
-            return new Response(JSON.stringify({ error: "Category not found" }), { status: 404 });
+            return new Response(JSON.stringify({message: 'Internal Server Error: Category not found.' }, { error: "Category not found" }), { status: 404 });
         }
 
         // Return the deleted category as a response

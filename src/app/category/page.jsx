@@ -58,18 +58,21 @@ export default function CategoryPage() {
         await axios.delete(`/api/category/?_id=${id}`)
         .then(function (response) {
           console.log(response)
+
           if(response.status === 200) return toast.success('Category deleted succesfully')
+            
+          // trigger reload after successful delete
+          if(response.status === 200) return reload()
         })
         .catch(function(error) {
           console.log(error)
         })
         
-        // trigger reload after successful delete
-        reload()
 
       } catch (error) {
 
         console.log(error)
+        if(error.response.data.message) return toast.error(error.response.data.message)
 
       }
 
@@ -169,17 +172,18 @@ function CategoryModal(props){
           .then(function (response) {
 
             console.log(response);
-            if(response.status) return toast.success('category created successfully')
+            if(response.status === 200) return toast.success('category created successfully')
+              
+              // trigger page reload after successful save to db
+              if(response.status === 200) return reload()
 
           })
           .catch(function (error) {
 
             console.log(error);
-
+            if(error.response.data.message) return toast.error(error.response.data.message)
           });
           
-          // trigger page reload after successful save to db
-          reload()
 
         } catch (error) {
 
