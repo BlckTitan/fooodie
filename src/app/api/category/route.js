@@ -104,3 +104,32 @@ export async function PATCH(req){
     return Response.json(createdCategory)
     
 }
+
+export async function DELETE(req) {
+
+    const searchParams = new URL(req.url).searchParams;
+    const id = searchParams.get('_id')
+    
+    try {
+        // Parse the request body
+
+        // Validate the presence of 'id' in the body
+        if (!id) {
+            return new Response(JSON.stringify({ error: "ID is required" }), { status: 400 });
+        }
+
+        // Find and delete the category by ID
+        const deletedCategory = await Category.deleteOne({_id: id});
+
+        // If no category is found, return a 404 response
+        if (!deletedCategory) {
+            return new Response(JSON.stringify({ error: "Category not found" }), { status: 404 });
+        }
+
+        // Return the deleted category as a response
+        return new Response(JSON.stringify(deletedCategory), { status: 200, headers: { "Content-Type": "application/json" } });
+    } catch (error) {
+        // Catch and handle any unexpected errors
+        return new Response(JSON.stringify({ error: "An error occurred", details: error.message }), { status: 500 });
+    }
+}

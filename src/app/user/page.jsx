@@ -61,7 +61,7 @@ export default function UserPage() {
                         (data !== null) && data.map((userData, index) => (
 
                             <tr key={index}>
-                                <td>{index}</td>
+                                <td>{index+1}</td>
                                 <td>
                                     <Image 
                                         src={userData?.image?.secure_url} 

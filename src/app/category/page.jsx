@@ -5,17 +5,19 @@ import Sidebar from '@/components/layout/sidebar';
 import useFetch from '@/customHooks/useFetch';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap';
 import { createRoot } from 'react-dom/client';
 import { BsTrash3 } from 'react-icons/bs';
 import { toast } from 'react-toastify';
+import reload from '../../lib/reload'
 
 export default function CategoryPage() {
 
  const [modalShow, setModalShow] = React.useState(false);
  const session = useSession()
+ const router = useRouter()
 
  useEffect(() => {
     //user authentication check
@@ -40,14 +42,44 @@ export default function CategoryPage() {
 //  fetch Category dta from the database
  const {data, error, isLoading } = useFetch('/api/category');
 
- if(isLoading) return <LoadingSpinner/>;
+ if(isLoading) return <LoadingSpinner/>
  if(session?.data?.user?.isAdmin === false) return redirect('/login')
 
-// delete category handller
+// delete category handler
  const handleDelete = async (e, id) => {
-   confirm(`Are you sure to delete category`)
+
+   const deleted = confirm(`Are you sure to delete category`);
+    
+  //  check if there is a category ID
+   if((id !== '') && (deleted === true)){
+
+      try {
+
+        await axios.delete(`/api/category/?_id=${id}`)
+        .then(function (response) {
+          console.log(response)
+          if(response.status === 200) return toast.success('Category deleted succesfully')
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+        
+        // trigger reload after successful delete
+        reload()
+
+      } catch (error) {
+
+        console.log(error)
+
+      }
+
+   }else{
+      if(deleted === false) return false
+      if(id === '') return toast.error('Invalid category ID')
+   }
+
  }
- 
+
  return (
    <section className='flex flex-col lg:flex-row w-full h-screen bg-white' id='root'>
 
@@ -78,35 +110,35 @@ export default function CategoryPage() {
             <Table striped bordered hover>
 
                 <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Action</th>
+                    <tr className='text-center'>
+                        <th style={{width: '5%'}}>SN</th>
+                        <th style={{width: '30%'}}>Title</th>
+                        <th style={{width: '45%'}}>Description</th>
+                        <th style={{width: '20%'}}>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {
-                        (data !== null) && data.map((categoryData, index) => (
+                      (data !== null) && data.map((categoryData, index) => (
 
-                            <tr key={index}>
-                                <td>{index}</td>
-                                <td>{(categoryData?.title) && categoryData.title.toUpperCase()}</td>
-                                <td>{categoryData?.description}</td>
-                                <td>
-                                    <a href={`/profile/?id=${categoryData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view category</a>
-                                    <button 
-                                        type='button' 
-                                        className='text-red-500 ml-4' 
-                                        onClick={(e) => {handleDelete(e, userData?._id)}}
-                                    >
-                                    <BsTrash3 />
-                                    </button>
-                                </td>
-                            </tr>
+                          <tr key={index}>
+                              <td style={{width: '5%', textAlign: 'center'}}>{index+1}</td>
+                              <td style={{width: '30%'}}>{(categoryData?.title) && categoryData.title}</td>
+                              <td style={{width: '45%'}} className='overflow-ellipsis text-wrap'>{categoryData?.description.slice(0, 150)}</td>
+                              <td style={{width: '20%', textAlign: 'center'}}>
+                                  <a href={`/profile/?id=${categoryData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view category</a>
+                                  <button 
+                                      type='button' 
+                                      className='text-red-500 ml-6' 
+                                      onClick={(e) => {handleDelete(e, categoryData?._id)}}
+                                  >
+                                  <BsTrash3 />
+                                  </button>
+                              </td>
+                          </tr>
 
-                        ))
+                      ))
                     }
                 </tbody>
             </Table>  
@@ -126,8 +158,7 @@ function CategoryModal(props){
     const handleSave = async () => {
         
       if(title === ''){
-        toast.error('title cannot be empty')
-        return false
+        return toast.error('Title cannot be empty')
       }else{
 
         try {
@@ -138,6 +169,7 @@ function CategoryModal(props){
           .then(function (response) {
 
             console.log(response);
+            if(response.status) return toast.success('category created successfully')
 
           })
           .catch(function (error) {
@@ -145,16 +177,17 @@ function CategoryModal(props){
             console.log(error);
 
           });
+          
+          // trigger page reload after successful save to db
+          reload()
 
         } catch (error) {
 
           console.log('failed to create post', error)
 
         }
-
       }
 
-      return redirect('/category')
     }
 
     return(
