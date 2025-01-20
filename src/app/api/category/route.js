@@ -10,6 +10,12 @@ export async function GET(req){
         let data;
         const searchParams = new URL(req.url).searchParams;
         const id = searchParams.get('_id')
+        const size = searchParams.get('size')
+        const page = searchParams.get('page')
+        
+        // Calculate the starting index for the data slice
+        const startIndex = (page - 1) * size;
+        const endIndex = page * size;
 
         if(id){
             // fetch Category data if there is a url param url param(category id)
@@ -24,8 +30,17 @@ export async function GET(req){
             return Response.json(data, {status: 200})
         }else{
             // if there is no url param, fetch all Category data
-            data = await Category.find()
-            return Response.json(data, {status: 200})
+            // data = await Category.find().limit(size).sort({'createdAt': -1})
+
+            data = await Category.find().sort({'createdAt': -1})
+            
+            // total items sent from the db
+            const totalItems = data.length
+
+            // Slice the dataset to return only the data for the requested page
+            data = data.slice(startIndex, endIndex);
+
+            return Response.json({data, totalItems}, {status: 200})
         }
 
     } catch (error) {
@@ -43,7 +58,7 @@ export async function POST(req){
     try {
         const body = await req.json()
 
-        const existingCategory = Category.findOne({title: body.title})
+        const existingCategory = await Category.findOne({title: body.title})
 
         if(existingCategory){
             return Response.json(

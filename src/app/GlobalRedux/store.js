@@ -1,10 +1,10 @@
 'use client'
-import { configureStore } from '@reduxjs/toolkit';
-import userProfileReducer from '@/app/GlobalRedux/userProfileSlice/userProfileSlice'
+import { configureStore, current } from '@reduxjs/toolkit';
+import paginationReducer from '@/app/GlobalRedux/paginationSlice/paginationSlice'
 
 const store = configureStore({
   reducer: {
-    userProfileData: userProfileReducer,
+    currentPageData: paginationReducer,
   },
 });
 export default  store;
