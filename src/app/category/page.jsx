@@ -70,7 +70,6 @@ useEffect(() => {
       
       if(isMounted){
         setData(response.data); // Set data on successful response 
-        console.log(response.data)
       }
 
     } catch (error) {
@@ -104,15 +103,6 @@ return () => {
 };
 
 }, [currentPageData.currentPage, pageSize]);
-
-//  fetch Category data from the database
-//  const {data, error, isLoading } = useFetch('/api/category', 
-//   {
-//     params: {
-//       page: currentPageData.currentPage, 
-//       size: pageSize
-//     } 
-//   });
 
  if(isLoading) return <LoadingSpinner/>
  if(session?.data?.user?.isAdmin === false) return unauthorized()
@@ -209,15 +199,17 @@ const handleDelete = async (e, id) => {
        .then(function (response) {
          console.log(response)
 
-         if(response.status === 200) return toast.success('Category deleted succesfully')
-           
-         // trigger reload after successful delete
-         if(response.status === 200) return reload()
+         if(response.status === 200){
+          return (
+            toast.success('Category deleted succesfully'),
+            // trigger reload after successful delete
+            reload()
+          )
+        }
        })
        .catch(function(error) {
          console.log(error)
        })
-       
 
      } catch (error) {
 
@@ -253,18 +245,20 @@ function CategoryModal(props){
           })
           .then(function (response) {
 
-            if(response.status === 200) return toast.success('category created successfully')
-              
-              // trigger page reload after successful save to db
-              if(response.status === 200) return reload()
+            if(response.status === 200){
+              return(
+                // trigger page reload after successful save to db
+                reload(),
+                toast.success('category created successfully')
+              )
+            }
 
           })
           .catch(function (error) {
 
             console.log(error);
             if(error.response.data.message) return toast.error(error.response.data.message)
-          });
-          
+          })
 
         } catch (error) {
 

@@ -30,6 +30,7 @@ export default function PaginationComponent({data, loadingState, pageSize, total
   // Handle page change
   const handlePageChange = (pageNumber) => {
     // setCurrentPage(pageNumber);
+    console.log(pageNumber)
     dispatch(setCurrentPage(pageNumber))
   };
   
