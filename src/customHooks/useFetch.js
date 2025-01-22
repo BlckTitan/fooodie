@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useFetch = (url, {params}) => {
+const useFetch = (url, param = '') => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ const useFetch = (url, {params}) => {
 
         try {
 
-          (params) ? response = await axios.get(url,  {params}) : response = await axios.get(url);
+          (param) ? response = await axios.get(url,  {param}) : response = await axios.get(url);
 
           if(isMounted){
             setData(response.data); // Set data on successful response 

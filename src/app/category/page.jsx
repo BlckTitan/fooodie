@@ -23,7 +23,7 @@ export default function CategoryPage() {
  // pagination states
  const currentPageData = useSelector((state) => state.currentPageData)//which pagination page to display
 
- const [pageSize, setPageSize] = useState(5); // Number of rows per page
+ const [pageSize, setPageSize] = useState(8); // Number of rows per page
 
  const [modalShow, setModalShow] = React.useState(false);
  const session = useSession()
