@@ -2,7 +2,6 @@
 
 import LoadingSpinner from '@/components/layout/LoadingSpinner';
 import Sidebar from '@/components/layout/sidebar';
-import useFetch from '@/customHooks/useFetch';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
@@ -23,7 +22,7 @@ export default function CategoryPage() {
 
  // pagination states
  const currentPageData = useSelector((state) => state.currentPageData)//which pagination page to display
-//  const [currentPage, setCurrentPage] = useState(2)//which pagination page to display
+
  const [pageSize, setPageSize] = useState(5); // Number of rows per page
 
  const [modalShow, setModalShow] = React.useState(false);
@@ -53,7 +52,7 @@ useEffect(() => {
   let isMounted = true;
   let response;
 
-  const fetchData = async () => {
+  const fetchData = async (page) => {
 
     setIsLoading(true); // Set loading to true before making the request
     setError(null); // Reset error before each fetch
@@ -63,7 +62,7 @@ useEffect(() => {
       response = await axios.get('/api/category', 
       {
         params: {
-          page: currentPageData.currentPage, 
+          page, 
           size: pageSize
         } 
       })
@@ -82,7 +81,6 @@ useEffect(() => {
 
 
     } finally {
-
       // always executed
       if(isMounted){
         setIsLoading(false); // Set loading to false when the request completes
@@ -92,21 +90,18 @@ useEffect(() => {
 
   };
 
+  fetchData(currentPageData.currentPage)
 
   // unmounting the component hook
-return () => {
-
-  return fetchData(); // Only fetch if a URL is provided
-
-  isMounted = false; // Avoids state updates on unmounted component
-
-};
+  return () => {
+    isMounted = false; // Avoids state updates on unmounted component
+  };
 
 }, [currentPageData.currentPage, pageSize]);
 
  if(isLoading) return <LoadingSpinner/>
  if(session?.data?.user?.isAdmin === false) return unauthorized()
-  
+
  return (
    <section className='flex flex-col lg:flex-row w-full h-screen bg-white' id='root'>
 

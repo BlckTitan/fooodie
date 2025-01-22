@@ -10,8 +10,6 @@ export default function PaginationComponent({data, loadingState, pageSize, total
 
     const dispatch = useDispatch()
     
-    // pagination states
-    // const [currentPage, setCurrentPage] = useState(currentPageData.currentPage)
     const [totalItems, setTotalItems] = useState(0); // Total number of items
 
     useEffect(() => {
@@ -29,13 +27,12 @@ export default function PaginationComponent({data, loadingState, pageSize, total
 
   // Handle page change
   const handlePageChange = (pageNumber) => {
-    // setCurrentPage(pageNumber);
-    console.log(pageNumber)
     dispatch(setCurrentPage(pageNumber))
   };
   
   return (
-        
+        // create an array using the total number of pages calulated from totalItems/pageSize
+        // iterate through the rarry items on click 
     <Pagination>
         <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPageData.currentPage === 1} />
         <Pagination.Prev onClick={() => handlePageChange(currentPageData.currentPage - 1)} disabled={currentPageData.currentPage === 1} />
