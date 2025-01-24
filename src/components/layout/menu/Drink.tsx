@@ -6,7 +6,7 @@ export default function Drink() {
     <section>
       Drink
       <nav aria-label="Page navigation example"> 
-          <Pagination/>
+          {/* <Pagination/> */}
       </nav>
     </section>
   )

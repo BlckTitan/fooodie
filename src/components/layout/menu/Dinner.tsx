@@ -1,12 +1,12 @@
 import React from 'react'
 import Pagination from '../Pagination'
 
-export default function Diner() {
+export default function Dinner() {
   return (
     <section>
-      Diner
+      Dinner
       <nav aria-label="Page navigation example"> 
-          <Pagination/>
+          {/* <Pagination/> */}
       </nav>
     </section>
   )

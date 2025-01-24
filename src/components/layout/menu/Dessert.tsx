@@ -6,7 +6,7 @@ export default function Dessert() {
     <section>
       Dessert
       <nav aria-label="Page navigation example"> 
-          <Pagination/>
+          {/* <Pagination/> */}
       </nav>
     </section>
   )

@@ -1,16 +1,16 @@
 'use client'
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import { BsBell, BsCalculator, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPencilSquare, BsPeople, BsQuestionCircle, BsTicketPerforated } from 'react-icons/bs'
+import { BsBell, BsCalculator, BsCardList, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPeople, BsQuestionCircle, BsTicketPerforated } from 'react-icons/bs'
 import LoadingSpinner from './LoadingSpinner';
 import { usePathname } from 'next/navigation';
 
     export default function Sidebar() {
 
     const [isAdmin, setIsAdmin] = useState(true)
-    const [path, setPath] = useState('')
     const session = useSession()
     let pathname = usePathname()
+    
     pathname = pathname.slice(1, pathname.length)
 
   useEffect(() => {
@@ -50,10 +50,10 @@ import { usePathname } from 'next/navigation';
                     <span>Categories</span>
                 </a>
             </li>
-            <li className={(pathname === 'items') ? '!border-l-blue-600 border-l-4' : 'border-l-white'}>
-                <a href='' className={(pathname === 'items') ? 'text-blue-600' : 'text-black'}>
-                    <i><BsPencilSquare /></i>
-                    <span>Items</span>
+            <li className={(pathname === 'menu') ? '!border-l-blue-600 border-l-4' : 'border-l-white'}>
+                <a href='/menu' className={(pathname === 'menu') ? 'text-blue-600' : 'text-black'}>
+                    <i><BsCardList /></i>
+                    <span>Menu</span>
                 </a>
             </li>
             <li className={(pathname === 'orders') ? '!border-l-blue-600 border-l-4' : 'border-l-white'}>

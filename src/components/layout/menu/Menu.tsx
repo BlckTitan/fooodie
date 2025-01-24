@@ -1,6 +1,6 @@
 import React from 'react'
 import AllCategories from './AllCategories'
-import Diner from './Diner'
+import Dinner from './Dinner'
 import Lunch from './Lunch'
 import Dessert from './Dessert'
 import Drink from './Drink'
@@ -28,7 +28,7 @@ export default function Menu() {
             <AllCategories/>
           </div>
           <div className="tab-pane fade" id="nav-dinner" role="tabpanel" aria-labelledby="nav-dinner-tab" tabindex="1">
-            <Diner/>
+            <Dinner/>
           </div>
           <div className="tab-pane fade" id="nav-lunch" role="tabpanel" aria-labelledby="nav-lunch-tab" tabindex="2">
             <Lunch/>

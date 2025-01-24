@@ -6,7 +6,7 @@ export default function Lunch() {
     <section>
       Lunch
       <nav aria-label="Page navigation example"> 
-          <Pagination/>
+          {/* <Pagination/> */}
       </nav>
     </section>
   )

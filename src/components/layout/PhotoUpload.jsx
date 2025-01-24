@@ -1,15 +1,14 @@
 'use client'
-import React, { useEffect, useState } from 'react';
-import profileAvatar from '../../../../public/img/Profile_avatar_placeholder.png'
+import React from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '@/components/layout/LoadingSpinner';
 
-export default function Avatar({img, loadingState}) {
+export default function PhotoUpload({img, loadingState}) {
 
   // const [img, setImg] = useState('')
   const session = useSession()
@@ -48,25 +47,12 @@ export default function Avatar({img, loadingState}) {
 
   return (
     <div className='relative w-12 xl:w-24 h-12 xl:h-24 mb-4'>
-      {/* if we have an existing profile avatar, display it. */}
-      { img && 
-       
-        <Image 
-            src={(img === null) ? '' : img} 
-            alt='This is the user profile image; format: png;'
-            className='w-full h-full rounded-full'
-            objectFit='cover'
-            layout='contain'
-            width={100}
-            height={100}
-        />
-      }
-      
+     
       {/* if there is no exiting profile avatar, display the default avatar */}
       { (userData && !userData?.image) && 
 
         <Image 
-            src={profileAvatar} 
+            src={profileAvatar}  
             alt='This is a user placeholder image; format: png;'
             className='w-full h-full rounded-full'
             objectFit='cover'
@@ -88,15 +74,12 @@ export default function Avatar({img, loadingState}) {
                 type='file'
                 accept='image/*'
                 // value={img}
-                onChange={handleUpload}
+                onChange={handleUpload} 
                 className='hidden'
                 name='image'
               />
           </Form.Group>
         </Form>
-         <div>
-
-          </div>
     </div>
   )
 }

@@ -47,7 +47,7 @@ export default function AllCategories() {
       
       <nav aria-label="Menu navigation">
           <footer className='flex items-center justify-center'>
-            <Pagination/>
+            {/* <Pagination/> */}
           </footer>
       </nav>
       
