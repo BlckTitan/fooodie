@@ -1,87 +1,119 @@
 import { Menu } from '../../models/Menu';
 import { revalidatePath } from 'next/cache';
+import { saveFilesToLocal, saveFilesToCloudinary } from "@/app/api/upload/route";
+import cloudinary from 'cloudinary'
+import fs from 'fs/promises';
+import delay from '@/lib/delay';
 
 export async function GET(req){
 
-    try {
+    // try {
 
-        // extract the url parameter
-        let data;
+    //     const { resources } = await cloudinary.v2.search.expression(
+    //                 'folder: fooodie_food_ordering_app/*'
+    //     ).sort_by('created_at', 'desc').max_results(1).execute()
 
-        const searchParams = new URL(req.url).searchParams;
-        const id = searchParams.get('_id')
-        const size = searchParams.get('size')
-        const page = searchParams.get('page')
+    //     // extract the url parameter
+    //     let data;
+
+    //     const searchParams = new URL(req.url).searchParams;
+    //     const id = searchParams.get('_id')
+    //     const size = searchParams.get('size')
+    //     const page = searchParams.get('page')
         
-        // Calculate the starting index for the data slice
-        const startIndex = (page - 1) * size;
-        const endIndex = page * size;
+    //     // Calculate the starting index for the data slice
+    //     const startIndex = (page - 1) * size;
+    //     const endIndex = page * size;
 
-        if(id){
-            // fetch Menu data if there is a url param url param(Menu id)
-            data = await Menu.findOne({_id: id})
-            if (!data) {
-                return Response.json(
-                  { message: 'Menu not found' },
-                  { status: 404 }
-                );
-            }
+    //     if(id){
+    //         // fetch Menu data if there is a url param url param(Menu id)
+    //         data = await Menu.findOne({_id: id})
+    //         if (!data) {
+    //             return Response.json(
+    //               { message: 'Menu not found' },
+    //               { status: 404 }
+    //             );
+    //         }
     
-            return Response.json(data, {status: 200})
-        }else{
+    //         return Response.json({data, resources}, {status: 200})
+    //     }else{
 
-            data = await Menu.find().sort({'createdAt': -1})
+    //         data = await Menu.find().sort({'createdAt': -1})
             
-            // total items sent from the db
-            const totalItems = data.length
+    //         // total items sent from the db
+    //         const totalItems = data.length
 
-            // Slice the dataset to return only the data for the requested page
-            data = data.slice(startIndex, endIndex);
+    //         // Slice the dataset to return only the data for the requested page
+    //         data = data.slice(startIndex, endIndex);
 
-            return Response.json({data, totalItems}, {status: 200})
-        }
+    //         return Response.json({data, totalItems, resources}, {status: 200})
+    //     }
 
-    } catch (error) {
+    // } catch (error) {
 
-        console.error('Error fetching Menu data:', error);
+    //     console.error('Error fetching Menu data:', error);
 
-        return Response.json(
-            { message: 'Internal Server Error', error: error.message },
-            { status: 500 }
-        )
-    }
-    
+    //     return Response.json(
+    //         { message: 'Internal Server Error', error: error.message },
+    //         { status: 500 }
+    //     )
+    // }
+    return Response.json('nothing for now')
 }
 
 export async function POST(req){
-  
-    try {
-        const body = await req.json()
 
-        const existingMenu = await Menu.findOne({title: body.title})
+    const data = await req.formData()
 
-        if(existingMenu){
-            return Response.json(
-                { message: 'Menu already exists'},
-                { status: 401 }
-            )
-        }else{
+    // extracting the file from formData
+    const image = data.get('file');
+    const title = data.get('title')
+    const description = data.get('description')
+    const price = data.get('price')
+    const url = data.get('url')
 
-            const createdMenu = await Menu.create(body)
-    
-            return Response.json(createdMenu)
+    if (data) {
+        try {
+            const existingMenu = await Menu.findOne({title: title})
+
+            if(existingMenu){
+                return Response.json(
+                    { message: 'Menu already exists'},
+                    { status: 401 }
+                )
+            }else{
+                //send a copy of the uploaded file to be saved in public/img dir
+                const newUpload = await saveFilesToLocal(image)
+                //save a copy of the uploaded file to cloudinary
+                const menuPicture = await saveFilesToCloudinary(newUpload);
+
+                let newMenu;
+
+                if(menuPicture){
+
+                    newMenu = await Menu.create(
+                        {
+                            title: title, description: description, price: price,
+                            image:{
+                                public_id: menuPicture[0].public_id,
+                                secure_url: menuPicture[0].secure_url,
+                            }
+                        }
+                    )
+                    
+                }
+                //delete photos after upload to cloudinary
+                newUpload.map(data => fs.unlink(data.filepath))
+                //delay 2s to update cloudinary database
+                await delay(2000)
+
+                return Response.json(newMenu)
+            }
+        } catch (error) {
+            console.log(error)
+            return Response.json({error: 'Failed to create menu'}, {status: 500})
         }
-
-    } catch (error) {
-
-        console.error('Error creating Menu data:', error);
-
-        return Response.json(
-            { message: 'Internal Server Error', error: error.message },
-            { status: 500 }
-        )
     }
-    
 }
 
 export async function PUT(req, res){

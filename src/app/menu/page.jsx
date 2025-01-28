@@ -128,104 +128,11 @@ useEffect(() => {
 
      </header>
 
-        {/* table to list out components */}
-        {(isLoading) && <LoadingSpinner/>}
-        {(data === null || data?.data.length === 0) ? <h2 className='font-semibold text-center text-gray-400 text-2xl'>No menu yet</h2> :
-            
-            <Table striped bordered hover>
-
-                <thead>
-                    <tr className='text-center'>
-                        <th style={{width: '5%'}}>SN</th>
-                        <th style={{width: '20%'}}>Image</th>
-                        <th style={{width: '20%'}}>Title</th>
-                        <th style={{width: '20%'}}>Description</th>
-                        <th style={{width: '5%'}}>Price</th>
-                        <th style={{width: '10%'}}>Rating</th>
-                        <th style={{width: '10%'}}>Action</th>
-                    </tr>
-                </thead>
-
-                  <tbody>
-                      {
-                        (data !== null) && data?.data.map((menuData, index) => (
-
-                            <tr key={index}>
-                                <td style={{width: '5%', textAlign: 'center'}}>{index+1}</td>
-                                <td style={{width: '20%'}}>{(menuData?.image) && menuData?.image?.secure_url}</td>
-                                <td style={{width: '20%'}}>{(menuData?.title) && menuData.title}</td>
-                                <td style={{width: '20%'}} className='overflow-ellipsis text-wrap'>{menuData?.description.slice(0, 150)}</td>
-                                <td style={{width: '5%'}}>{(menuData?.price) && menuData.price}</td>
-                                <td style={{width: '10%'}}>{(menuData?.rating) && menuData.rating}</td>
-                                <td style={{width: '10%', textAlign: 'center'}}>
-                                    <a href={`/profile/?id=${menuData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view category</a>
-                                    <button 
-                                        type='button' 
-                                        className='text-red-500 ml-6' 
-                                        onClick={(e) => {handleDelete(e, menuData?._id)}}
-                                    >
-                                    <BsTrash3 />
-                                    </button>
-                                </td>
-                            </tr>
-
-                        ))
-                      }
-                  </tbody>
-                
-            </Table>  
-        }
-      
-     <PaginationComponent 
-        data={data?.data} 
-        loadingState={isLoading} 
-        pageSize={pageSize}
-        totalItemsNum={data?.totalItems}
-      />
+       
 
      </main>
    </section>
  )
-}
-
-// delete category handler
-const handleDelete = async (e, id) => {
-
-  const deleted = confirm(`Are you sure to delete menu`);
-   
- //  check if there is a menu ID
-  if((id !== '') && (deleted === true)){
-
-     try {
-
-       await axios.delete(`/api/menu/?_id=${id}`)
-       .then(function (response) {
-         console.log(response)
-
-         if(response.status === 200){
-          return (
-            toast.success('Menu deleted succesfully'),
-            // trigger reload after successful delete
-            reload()
-          )
-        }
-       })
-       .catch(function(error) {
-         console.log(error)
-       })
-
-     } catch (error) {
-
-       console.log(error)
-       if(error.response.data.message) return toast.error(error.response.data.message)
-
-     }
-
-  }else{
-     if(deleted === false) return false
-     if(id === '') return toast.error('Invalid menu ID')
-  }
-
 }
 
 // modal component
@@ -233,67 +140,71 @@ function MenuModal(props){
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState(0.00)
+    const [price, setPrice] = useState()
+    const [imageData, setImageData] = useState('')
 
     // handle upload
-    const handleUpload = async (formData) => {
-        
-        const file = formData.target.files
-       
+    const handleUpload = async () => {
+
+        const file = await imageData.target.files;
+        let data; 
+
+        if(!file){
+          return toast.error(
+            'No file selected', 
+            {position: 'top-right', autoClose: 3000, toastId: 1}
+          )
+        }
+          if(title === '' || price === ''){
+            return toast.error('Title or Price cannot be empty', {position: 'top-right', autoClose: 3000, toastId: 1})
+          }   
         //checking for file size and type(image files)
         if(file[0].size < 1024 * 1024 && file[0].type.startsWith('image/')){
     
-            //creating a link for the upload file
-            const url = URL.createObjectURL(file[0])
+          //creating a link for the upload file
+          const url = URL.createObjectURL(file[0])
 
-            const data = new FormData; 
-            data.set('file', file[0])
-            data.set('url', url)
+          data = new FormData(); 
 
-            console.log(formData.target.files, data) 
+          data.set('file', file[0])
+          data.set('url', url)
+          data.set('title', title)
+          data.set('description', description)
+          data.set('price', price)
 
+          try {
+
+            axios({
+
+              method: 'post',
+              url: '/api/menu/',
+              data: data,
+
+            })
+            .then(function (response) {
+  
+              if(response.status === 200){
+                return(
+                  // trigger page reload after successful save to db
+                  reload(),
+                  toast.success('Menu created successfully', {position: 'top-right', autoClose: 3000, toastId: 1})
+                )
+              }
+  
+            })
+            .catch(function (error) {
+  
+              console.log(error);
+              if(error.response.data.message) return toast.error(error.response.data.message)
+            
+            })
+  
+          } catch (error) {
+  
+            console.log('failed to create post', error)
+  
+          }
         }
-
-    }
-
-    //db menu save handler
-    const handleSave = async (formData) => {
-
-        handleUpload(formData)
-
-        
-    //   if(title === ''){
-    //     return toast.error('Title cannot be empty')
-    //   }else{
-
-    //     try {
-
-    //       await axios.post('/api/menu', {
-    //         title, description
-    //       })
-    //       .then(function (response) {
-
-    //         if(response.status === 200){
-    //           return(
-    //             // trigger page reload after successful save to db
-    //             reload(),
-    //             toast.success('Menu created successfully')
-    //           )
-    //         }
-
-    //       })
-    //       .catch(function (error) {
-
-    //         console.log(error);
-    //         if(error.response.data.message) return toast.error(error.response.data.message)
-    //       })
-
-    //     } catch (error) {
-
-    //       console.log('failed to create post', error)
-
-    //     }
-    //   }
     }
 
     return(
@@ -313,36 +224,37 @@ function MenuModal(props){
   
         </Modal.Header>
   
-        <Modal.Body className='w-full !flex flex-column lg:flex-row'>
-            <header className='w-1/3 relative'>
+        <Modal.Body className='w-full flex flex-col lg:flex-row'>
 
-                <Image 
-                    src={holder_img}  
-                    alt='This is a user placeholder image; format: png;'
-                    className='w-full h-full cover'
-                />
+          <header className='w-full h-80 lg:h-96 lg:w-2/5 relative'>
 
-                <Form.Label 
-                    htmlFor='uploadImg' 
-                    className='text-2xl xl:text-4xl cursor-pointer absolute left-36 lg:left-1/2 -bottom-1.5 lg:bottom-1/2 border text-gray-500 bg-white'
-                >
-                    <BsPlusLg />
-                </Form.Label>
+            <Image 
+                src={holder_img}  
+                alt='This is a user placeholder image; format: png;'
+                className='w-full h-full cover'
+            />
 
-            </header>
+            <Form.Label 
+                htmlFor='uploadImg' 
+                className='text-2xl xl:text-4xl cursor-pointer absolute left-36 lg:left-1/2 bottom-1/2 lg:bottom-1/2 border text-gray-500 bg-white'
+            >
+                <BsPlusLg />
+            </Form.Label>
 
-          <Form className='w-2/3 ml-2' action={handleSave}>
+          </header>
+
+          <Form className='w-full lg:w-3/5 lg:ml-2' action={handleUpload}>
             
             <Form.Group className="mb-3" controlId="formBasicText">
             
                 <Form.Control 
-                    id='uploadImg'
-                    type='file'
-                    accept='image/*'
-                    // value={img}
-                    onChange={handleUpload}
-                    className='hidden'
-                    name='image'
+                  id='uploadImg'
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => setImageData(e)}
+                  className='hidden'
+                  name='image'
+                  required
                 />
 
             </Form.Group>
@@ -350,7 +262,7 @@ function MenuModal(props){
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
   
               <Form.Label>Title</Form.Label>
-              <Form.Control required type="text" placeholder="New Menu" value={title} onChange={(e) => setTitle(e.target.value)}/>
+              <Form.Control required type="text" placeholder="Meal name" value={title} onChange={(e) => setTitle(e.target.value)}/>
   
             </Form.Group>
   
@@ -364,7 +276,7 @@ function MenuModal(props){
             <Form.Group className="mb-3 w-1/3" controlId="exampleForm.ControlInput1">
   
               <Form.Label>Price</Form.Label>
-              <Form.Control required type="number" placeholder="New Menu" value={price} onChange={(e) => setPrice(e.target.value)}/>
+              <Form.Control required type="number" placeholder="0.00" value={price} onChange={(e) => setPrice(e.target.value)}/>
   
             </Form.Group>
             
@@ -374,7 +286,7 @@ function MenuModal(props){
   
         <Modal.Footer>
   
-          <Button variant='primary' onClick={handleSave}>Save</Button>
+          <Button variant='primary' onClick={handleUpload}>Save</Button>
           <Button variant='secondary' onClick={props.onHide}>Close</Button>
   
         </Modal.Footer>

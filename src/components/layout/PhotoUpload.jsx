@@ -30,13 +30,16 @@ export default function PhotoUpload({img, loadingState}) {
       data.set('url', url)
       data.set('user_id', user_id)
 
-      axios({
+      await axios({
         method: 'post',
         url: '/api/upload/',
         data: data,
-      });
+      }).then(function(response){
+        if (response.status === 200) {
+          return toast.success('Profile photo successfully updated', {position: 'top-right', autoClose: 3000, toastId: 1});
+        }
+      })
 
-      return toast.success('Profile photo successfully updated', {position: 'top-right', autoClose: 3000, toastId: 1});
     }else{
       return toast.error('Image file too large', {position: 'top-right', autoClose: 3000, toastId: 1});
     }

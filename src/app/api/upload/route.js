@@ -3,27 +3,26 @@ import fs from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import os from 'node:os';
-import cloudinary from 'cloudinary'
 import { revalidatePath } from 'next/cache';
 import { User } from '@/app/models/User';
 import { ProfileAvatar } from '@/app/models/profileAvatar'
-import { signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 // import { userAgent } from 'next/server';
+import cloudinary from 'cloudinary'
+import cloudinaryConfig from '../../../lib/cloudinaryConfig'
+import delay from '../../../lib/delay'
+import reloadPage from '@/lib/reload';
 
-cloudinary.config({
-    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-})
-const delay = (delayInms) => {
-    return new Promise(resolve => setTimeout(resolve, delayInms))
-}
+// calling the cloudinary configuration
+cloudinaryConfig;
+
+// calling the delay timer
+
+
 export async function POST(req){
 
     const data = await req.formData()
 
-    // extracting the file from formData
+    // extracting the file from formData b 
     const file = data.get('file');
 
     // extracting url from formData
@@ -63,18 +62,20 @@ export async function POST(req){
         await delay(2000)
 
         revalidatePath('/')
-        return Response.json({message: 'Upload successfull!'})
+
+        return( 
+            reloadPage(),
+            Response.json({message: 'Upload successfull!'}, true)
+        )
 
     }else{
         return Response.json({message: 'Upload failed, file too large!'})
     }
-
-    return Response.json(true)
     
 }
 
 //save files to local
-const saveFilesToLocal = async (formData) =>{
+export const saveFilesToLocal = async (formData) =>{
     const file = formData
     // const url = formData.get('url')
 
@@ -107,7 +108,7 @@ const saveFilesToLocal = async (formData) =>{
   }
 
 //   upload photos to cloudinary
-const saveFilesToCloudinary = async (newUpload) =>{
+export const saveFilesToCloudinary = async (newUpload) =>{
 
     const file = newUpload;
 
