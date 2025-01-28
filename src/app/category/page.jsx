@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap';
 import { createRoot } from 'react-dom/client';
 import { BsTrash3 } from 'react-icons/bs';
-import { toast } from 'react-toastify';
+import { AlertError, AlertSuccess } from '../../components/layout/Alerts';
 import reload from '../../lib/reload'
 import PaginationComponent from '@/components/layout/Pagination';
 import { unauthorized } from 'next/server'
@@ -196,7 +196,7 @@ const handleDelete = async (e, id) => {
 
          if(response.status === 200){
           return (
-            toast.success('Category deleted succesfully'),
+            AlertSuccess('Category deleted succesfully'),
             // trigger reload after successful delete
             reload()
           )
@@ -209,13 +209,13 @@ const handleDelete = async (e, id) => {
      } catch (error) {
 
        console.log(error)
-       if(error.response.data.message) return toast.error(error.response.data.message)
+       if(error.response.data.message) return AlertError(error.response.data.message)
 
      }
 
   }else{
      if(deleted === false) return false
-     if(id === '') return toast.error('Invalid category ID')
+     if(id === '') return AlertError('Invalid category ID')
   }
 
 }
@@ -230,7 +230,7 @@ function CategoryModal(props){
     const handleSave = async () => {
         
       if(title === ''){
-        return toast.error('Title cannot be empty')
+        return AlertError('Title cannot be empty')
       }else{
 
         try {
@@ -244,7 +244,7 @@ function CategoryModal(props){
               return(
                 // trigger page reload after successful save to db
                 reload(),
-                toast.success('category created successfully')
+                AlertSuccess('category created successfully')
               )
             }
 
@@ -252,7 +252,7 @@ function CategoryModal(props){
           .catch(function (error) {
 
             console.log(error);
-            if(error.response.data.message) return toast.error(error.response.data.message)
+            if(error.response.data.message) return AlertError(error.response.data.message)
           })
 
         } catch (error) {

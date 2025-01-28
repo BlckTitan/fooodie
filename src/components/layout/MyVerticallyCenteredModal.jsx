@@ -7,7 +7,8 @@ import { signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { AlertError, AlertSuccess } from './Alerts';
 
 export default function MyVerticallyCenteredModal(props) {
 
@@ -22,7 +23,6 @@ export default function MyVerticallyCenteredModal(props) {
     const [city, setCity] = useState('')
     const [region, setRegion] = useState('')
     const [street, setStreet] = useState('')
-    const [userId, setUserId] = useState('')
 
     const { push } = useRouter();
     const session = useSession()
@@ -54,11 +54,13 @@ export default function MyVerticallyCenteredModal(props) {
               country, state, city, region, street
             }
           }).then(function (response) {
-            toast.success(response)
+            if(response.status === 200){
+                AlertSuccess('Success')
+            }
             // signOut()
           })
           .catch(function (error) {
-            toast.error(error)
+            AlertError(error)
           })
           .finally(function () {
             // always executed

@@ -16,6 +16,7 @@ import { unauthorized } from 'next/server'
 import { useSelector } from 'react-redux';
 import holder_img from '../../../public/img/holder_image.webp'; 
 import Image from 'next/image';
+import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
 
 export default function MenuPage() {
   const [data, setData] = useState(null);
@@ -146,18 +147,17 @@ function MenuModal(props){
     // handle upload
     const handleUpload = async () => {
 
+        if(!imageData){
+          return AlertError('No file selected')
+        }
+
+        if(title === '' || price === ''){
+          return AlertError('Title or Price cannot be empty')
+        } 
+
         const file = await imageData.target.files;
         let data; 
-
-        if(!file){
-          return toast.error(
-            'No file selected', 
-            {position: 'top-right', autoClose: 3000, toastId: 1}
-          )
-        }
-          if(title === '' || price === ''){
-            return toast.error('Title or Price cannot be empty', {position: 'top-right', autoClose: 3000, toastId: 1})
-          }   
+  
         //checking for file size and type(image files)
         if(file[0].size < 1024 * 1024 && file[0].type.startsWith('image/')){
     
@@ -187,7 +187,7 @@ function MenuModal(props){
                 return(
                   // trigger page reload after successful save to db
                   reload(),
-                  toast.success('Menu created successfully', {position: 'top-right', autoClose: 3000, toastId: 1})
+                  AlertSuccess('Menu created successfully')
                 )
               }
   
@@ -195,7 +195,7 @@ function MenuModal(props){
             .catch(function (error) {
   
               console.log(error);
-              if(error.response.data.message) return toast.error(error.response.data.message)
+              if(error.response.data.message) return AlertError(error.response.data.message)
             
             })
   

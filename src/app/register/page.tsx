@@ -6,6 +6,8 @@ import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
 
 export default function RegisterPage() {
 
@@ -26,10 +28,17 @@ export default function RegisterPage() {
       password: password,
     })
     .then(function (response) {
-      console.log(response);
+      if(response.status === 200){
+        return(
+          redirect('/login'),
+          AlertSuccess('User successfully registered')
+        )
+
+      }
     })
     .catch(function (error) {
       console.log(error);
+      AlertError('User registration failed!')
     });
 
   }

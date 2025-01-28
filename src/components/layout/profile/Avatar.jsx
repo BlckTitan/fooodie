@@ -1,13 +1,13 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import profileAvatar from '../../../../public/img/Profile_avatar_placeholder.png'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import LoadingSpinner from '../LoadingSpinner';
+import { AlertError, AlertSuccess } from '../Alerts';
 
 export default function Avatar({img, loadingState}) {
 
@@ -37,9 +37,9 @@ export default function Avatar({img, loadingState}) {
         data: data,
       });
 
-      return toast.success('Profile photo successfully updated', {position: 'top-right', autoClose: 3000, toastId: 1});
+      return AlertSuccess('Profile photo successfully updated');
     }else{
-      return toast.error('Image file too large', {position: 'top-right', autoClose: 3000, toastId: 1});
+      return AlertError('Image file too large');
     }
     
   }

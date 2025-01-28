@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Form } from 'react-bootstrap';
 import { BsPlusLg } from 'react-icons/bs';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { AlertError, AlertSuccess } from '../layout/Alerts';
 import LoadingSpinner from '@/components/layout/LoadingSpinner';
 
 export default function PhotoUpload({img, loadingState}) {
@@ -36,12 +36,12 @@ export default function PhotoUpload({img, loadingState}) {
         data: data,
       }).then(function(response){
         if (response.status === 200) {
-          return toast.success('Profile photo successfully updated', {position: 'top-right', autoClose: 3000, toastId: 1});
+          return AlertSuccess('Profile photo successfully updated');
         }
       })
 
     }else{
-      return toast.error('Image file too large', {position: 'top-right', autoClose: 3000, toastId: 1});
+      return AlertError('Image file too large');
     }
     
   }
