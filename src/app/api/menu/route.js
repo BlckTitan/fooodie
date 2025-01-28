@@ -7,58 +7,53 @@ import delay from '@/lib/delay';
 
 export async function GET(req){
 
-    // try {
+    try {
 
-    //     const { resources } = await cloudinary.v2.search.expression(
-    //                 'folder: fooodie_food_ordering_app/*'
-    //     ).sort_by('created_at', 'desc').max_results(1).execute()
+        // extract the url parameter
+        let data;
 
-    //     // extract the url parameter
-    //     let data;
-
-    //     const searchParams = new URL(req.url).searchParams;
-    //     const id = searchParams.get('_id')
-    //     const size = searchParams.get('size')
-    //     const page = searchParams.get('page')
+        const searchParams = new URL(req.url).searchParams;
+        const id = searchParams.get('_id')
+        const size = searchParams.get('size')
+        const page = searchParams.get('page')
         
-    //     // Calculate the starting index for the data slice
-    //     const startIndex = (page - 1) * size;
-    //     const endIndex = page * size;
+        // Calculate the starting index for the data slice
+        const startIndex = (page - 1) * size;
+        const endIndex = page * size;
 
-    //     if(id){
-    //         // fetch Menu data if there is a url param url param(Menu id)
-    //         data = await Menu.findOne({_id: id})
-    //         if (!data) {
-    //             return Response.json(
-    //               { message: 'Menu not found' },
-    //               { status: 404 }
-    //             );
-    //         }
+        if(id){
+            // fetch Menu data if there is a url param url param(Menu id)
+            data = await Menu.findOne({_id: id})
+            if (!data) {
+                return Response.json(
+                  { message: 'Menu not found' },
+                  { status: 404 }
+                );
+            }
     
-    //         return Response.json({data, resources}, {status: 200})
-    //     }else{
+            return Response.json({data, resources}, {status: 200})
+        }else{
 
-    //         data = await Menu.find().sort({'createdAt': -1})
+            data = await Menu.find().sort({'createdAt': -1})
             
-    //         // total items sent from the db
-    //         const totalItems = data.length
+            // total items sent from the db
+            const totalItems = data.length
 
-    //         // Slice the dataset to return only the data for the requested page
-    //         data = data.slice(startIndex, endIndex);
+            // Slice the dataset to return only the data for the requested page
+            data = data.slice(startIndex, endIndex);
 
-    //         return Response.json({data, totalItems, resources}, {status: 200})
-    //     }
+            return Response.json({data, totalItems}, {status: 200})
+        }
 
-    // } catch (error) {
+    } catch (error) {
 
-    //     console.error('Error fetching Menu data:', error);
+        console.error('Error fetching Menu data:', error);
 
-    //     return Response.json(
-    //         { message: 'Internal Server Error', error: error.message },
-    //         { status: 500 }
-    //     )
-    // }
-    return Response.json('nothing for now')
+        return Response.json(
+            { message: 'Internal Server Error', error: error.message },
+            { status: 500 }
+        )
+    }
 }
 
 export async function POST(req){

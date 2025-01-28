@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap';
 import { createRoot } from 'react-dom/client';
 import { BsPlusLg, BsTrash3 } from 'react-icons/bs';
-import { toast } from 'react-toastify';
 import reload from '../../lib/reload'
 import PaginationComponent from '@/components/layout/Pagination';
 import { unauthorized } from 'next/server'
@@ -104,7 +103,7 @@ useEffect(() => {
 
  if(isLoading) return <LoadingSpinner/>
  if(session?.data?.user?.isAdmin === false) return unauthorized()
-
+  
  return (
    <section className='flex flex-col lg:flex-row w-full h-screen bg-white' id='root'>
 
@@ -129,7 +128,66 @@ useEffect(() => {
 
      </header>
 
-       
+     {/* table to list out components */}
+     {(isLoading) && <LoadingSpinner/>}
+        {(data === null || data?.data.length === 0) ? <h2 className='font-semibold text-center text-gray-400 text-2xl'>No category yet</h2> :
+            
+            <Table striped bordered hover>
+
+                <thead>
+                    <tr className='text-center'>
+                        <th style={{width: '5%'}}>SN</th>
+                        <th style={{width: '20%'}}>Image</th>
+                        <th style={{width: '20%'}}>Title</th>
+                        <th style={{width: '30%'}}>Description</th>
+                        <th style={{width: '10%'}}>price</th>
+                        <th style={{width: '15%'}}>Action</th>
+                    </tr>
+                </thead>
+
+                  <tbody>
+                      {
+                        (data !== null) && data?.data.map((menuData, index) => (
+
+                            <tr key={index}>
+                                <td style={{width: '5%', textAlign: 'center'}}>{index+1}</td>
+                                <td style={{width: '20%'}}>
+                                  <Image
+                                    width={100}
+                                    height={100}
+                                    alt=''
+                                    src={(menuData?.image?.secure_url) && menuData?.image?.secure_url}
+                                  />
+                                </td>
+                                <td style={{width: '20%'}}>{(menuData?.title) && menuData?.title}</td>
+                                <td style={{width: '30%'}} className='overflow-ellipsis text-wrap'>{menuData?.description.slice(0, 150)}</td>
+                                <td style={{width: '10%'}}>{(menuData?.price) && menuData?.price}</td>
+                                <td style={{width: '15%', textAlign: 'center'}}>
+                                    <a href={`/profile/?id=${menuData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view Menu</a>
+                                    <button 
+                                        type='button' 
+                                        className='text-red-500 ml-6' 
+                                        onClick={(e) => {handleDelete(e, menuData?._id)}}
+                                    >
+                                    <BsTrash3 />
+                                    </button>
+                                </td>
+                            </tr>
+
+                        ))
+                      }
+                  </tbody>
+                
+            </Table>  
+        }
+      
+     <PaginationComponent 
+        data={data?.data} 
+        loadingState={isLoading} 
+        pageSize={pageSize}
+        totalItemsNum={data?.totalItems}
+      />
+
 
      </main>
    </section>
