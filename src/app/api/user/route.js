@@ -116,3 +116,36 @@ export async function PATCH(req){
     return Response.json(createdUser)
     
 }
+
+export async function DELETE(req) {
+
+    const searchParams = new URL(req.url).searchParams;
+    const id = searchParams.get('_id')
+    
+    try {
+
+        // Validate the presence of 'id' in the body
+        if (!id) {
+            return new Response(JSON.stringify({ error: "ID is required" }), { status: 400 });
+        }
+
+        // find existing user
+        const existingUser = await User.findOne({_id: id})
+        deletePhoto(existingUser.image.public_id)
+        
+        // Find and delete the user by ID
+        const deletedUser = await User.deleteOne({_id: id});
+
+        // If no user is found, return a 404 response
+        if (!deletedUser) {
+            return new Response(JSON.stringify({message: 'Internal Server Error: User not found.' }, { error: "User not found" }), { status: 404 });
+        }
+
+        // Return the deleted User as a response
+        return new Response(JSON.stringify(deletedUser), { status: 200, headers: { "Content-Type": "application/json" } });
+        
+    } catch (error) {
+        // Catch and handle any unexpected errors
+        return new Response(JSON.stringify({ error: "An error occurred", details: error.message }), { status: 500 });
+    }
+}
