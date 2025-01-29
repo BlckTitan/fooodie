@@ -139,8 +139,8 @@ useEffect(() => {
                         <th style={{width: '5%'}}>SN</th>
                         <th style={{width: '20%'}}>Image</th>
                         <th style={{width: '20%'}}>Title</th>
-                        <th style={{width: '30%'}}>Description</th>
-                        <th style={{width: '10%'}}>price</th>
+                        <th style={{width: '35%'}}>Description</th>
+                        <th style={{width: '5%'}}>price</th>
                         <th style={{width: '15%'}}>Action</th>
                     </tr>
                 </thead>
@@ -153,15 +153,16 @@ useEffect(() => {
                                 <td style={{width: '5%', textAlign: 'center'}}>{index+1}</td>
                                 <td style={{width: '20%'}}>
                                   <Image
-                                    width={100}
+                                    width={150}
                                     height={100}
-                                    alt=''
+                                    style={{display: 'flex', flexDirection:'justify-center',  objectFit:'cover'}}
+                                    alt='Menu image'
                                     src={(menuData?.image?.secure_url) && menuData?.image?.secure_url}
                                   />
                                 </td>
                                 <td style={{width: '20%'}}>{(menuData?.title) && menuData?.title}</td>
-                                <td style={{width: '30%'}} className='overflow-ellipsis text-wrap'>{menuData?.description.slice(0, 150)}</td>
-                                <td style={{width: '10%'}}>{(menuData?.price) && menuData?.price}</td>
+                                <td style={{width: '35%'}} className='overflow-ellipsis text-wrap'>{menuData?.description.slice(0, 150)}</td>
+                                <td style={{width: '5%'}}>{(menuData?.price) && menuData?.price}</td>
                                 <td style={{width: '15%', textAlign: 'center'}}>
                                     <a href={`/profile/?id=${menuData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view Menu</a>
                                     <button 
@@ -194,6 +195,46 @@ useEffect(() => {
  )
 }
 
+// delete menu handler
+const handleDelete = async (e, id) => {
+
+  const deleted = confirm(`Are you sure to delete menu`);
+   
+ //  check if there is a menu ID
+  if((id !== '') && (deleted === true)){
+
+     try {
+
+       await axios.delete(`/api/menu/?_id=${id}`)
+       .then(function (response) {
+         console.log(response)
+
+         if(response.status === 200){
+          return (
+            AlertSuccess('Menu deleted succesfully'),
+            // trigger reload after successful delete
+            reload()
+          )
+        }
+       })
+       .catch(function(error) {
+         console.log(error)
+       })
+
+     } catch (error) {
+
+       console.log(error)
+       if(error.response.data.message) return AlertError(error.response.data.message)
+
+     }
+
+  }else{
+     if(deleted === false) return false
+     if(id === '') return AlertError('Invalid menu ID')
+  }
+
+}
+
 // modal component
 function MenuModal(props){
 
@@ -201,7 +242,19 @@ function MenuModal(props){
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState()
     const [imageData, setImageData] = useState('')
+    const [newUploadUrl, setNewUploadUrl] = useState('')
 
+    const handleHolderImg = async (e) =>{
+
+      const file = await e.target.files;
+      const url = URL.createObjectURL(file[0])
+
+      // set new url if we have selected a new image
+      if(url){
+        setNewUploadUrl(url)
+      } 
+
+    }
     // handle upload
     const handleUpload = async () => {
 
@@ -221,7 +274,7 @@ function MenuModal(props){
     
           //creating a link for the upload file
           const url = URL.createObjectURL(file[0])
-
+          
           data = new FormData(); 
 
           data.set('file', file[0])
@@ -264,7 +317,7 @@ function MenuModal(props){
           }
         }
     }
-
+    
     return(
 
         <Modal
@@ -287,7 +340,9 @@ function MenuModal(props){
           <header className='w-full h-80 lg:h-96 lg:w-2/5 relative'>
 
             <Image 
-                src={holder_img}  
+                src={(newUploadUrl) ? newUploadUrl : holder_img}  
+                width={200}
+                height={100}
                 alt='This is a user placeholder image; format: png;'
                 className='w-full h-full cover'
             />
@@ -309,7 +364,7 @@ function MenuModal(props){
                   id='uploadImg'
                   type='file'
                   accept='image/*'
-                  onChange={(e) => setImageData(e)}
+                  onChange={(e) => {setImageData(e), handleHolderImg(e)}}
                   className='hidden'
                   name='image'
                   required
