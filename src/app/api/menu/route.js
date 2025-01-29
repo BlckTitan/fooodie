@@ -1,6 +1,6 @@
 import { Menu } from '../../models/Menu';
 import { revalidatePath } from 'next/cache';
-import { saveFilesToLocal, saveFilesToCloudinary } from "@/app/api/upload/route";
+import { saveFilesToLocal, saveFilesToCloudinary, deletePhoto } from "@/app/api/upload/route";
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises';
 import delay from '@/lib/delay';
@@ -178,6 +178,10 @@ export async function DELETE(req) {
             return new Response(JSON.stringify({ error: "ID is required" }), { status: 400 });
         }
 
+        // find existing menu
+        const existingMenu = await Menu.findOne({_id: id})
+        deletePhoto(existingMenu.image.public_id)
+        
         // Find and delete the Menu by ID
         const deletedMenu = await Menu.deleteOne({_id: id});
 
@@ -188,6 +192,7 @@ export async function DELETE(req) {
 
         // Return the deleted Menu as a response
         return new Response(JSON.stringify(deletedMenu), { status: 200, headers: { "Content-Type": "application/json" } });
+        
     } catch (error) {
         // Catch and handle any unexpected errors
         return new Response(JSON.stringify({ error: "An error occurred", details: error.message }), { status: 500 });

@@ -130,7 +130,7 @@ useEffect(() => {
 
      {/* table to list out components */}
      {(isLoading) && <LoadingSpinner/>}
-        {(data === null || data?.data.length === 0) ? <h2 className='font-semibold text-center text-gray-400 text-2xl'>No category yet</h2> :
+        {(data === null || data?.data.length === 0) ? <h2 className='font-semibold text-center text-gray-400 text-2xl'>No menu yet</h2> :
             
             <Table striped bordered hover>
 

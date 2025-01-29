@@ -136,13 +136,19 @@ export const getPhotos = async () => {
 }
 
 //delete images from cloud
-export const deletePhoto = async (public_id) => {
+export const deletePhoto = async (public_id, ProfileAvatar) => {
     try {
-        
-        await promise.all([
-            ProfileAvatar.findOneAndDelete({public_id}),
+        if(ProfileAvatar){
+            await Promise.all([
+                ProfileAvatar.findOneAndDelete({public_id}),
+                cloudinary.v2.uploader.destroy(public_id)
+            ])
+        }else{
+            
+        await Promise.all([
             cloudinary.v2.uploader.destroy(public_id)
         ])
+        }
         return {message: 'deleted successfully'}
     } catch (error) {
         console.log(error.message)
