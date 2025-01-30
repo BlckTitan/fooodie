@@ -118,6 +118,7 @@ useEffect(() => {
             onClick={() => setModalShow(true)}
         >Add Category</Button>
 
+        {/* modal to add a new category */}
        <CategoryModal
             title='Add New Category'
             show={modalShow}

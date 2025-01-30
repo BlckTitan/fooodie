@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import holder_img from '../../../public/img/holder_image.webp'; 
 import Image from 'next/image';
 import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
+import CardModal from '@/components/layout/cardModal'
 
 export default function MenuPage() {
   const [data, setData] = useState(null);
@@ -28,6 +29,7 @@ export default function MenuPage() {
  const [pageSize, setPageSize] = useState(8); // Number of rows per page
 
  const [modalShow, setModalShow] = React.useState(false);
+  const [cardModalShow, setCardModalShow] = React.useState(false);
  const session = useSession()
 
  useEffect(() => {
@@ -120,12 +122,19 @@ useEffect(() => {
             onClick={() => setModalShow(true)}
         >Add Menu</Button>
 
+        {/* modal to add a new menu */}
        <MenuModal
             title='Add New Menu'
             show={modalShow}
             onHide={() => setModalShow(false)}
         />
 
+       {/* modal to view menu */}
+       <CardModal
+            data={data?.data}
+            show={cardModalShow}
+            onHide={() => setCardModalShow(false)}
+        />
      </header>
 
      {/* table to list out components */}
@@ -164,7 +173,14 @@ useEffect(() => {
                                 <td style={{width: '35%'}} className='overflow-ellipsis text-wrap'>{menuData?.description.slice(0, 150)}</td>
                                 <td style={{width: '5%'}}>{(menuData?.price) && menuData?.price}</td>
                                 <td style={{width: '15%', textAlign: 'center'}}>
-                                    <a href={`/profile/?id=${menuData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view Menu</a>
+
+                                    <Button 
+                                      variant='primary'
+                                      onClick={() => setCardModalShow(true)}
+                                    >
+                                      view Menu
+                                    </Button>
+
                                     <button 
                                         type='button' 
                                         className='text-red-500 ml-6' 
