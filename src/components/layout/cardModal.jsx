@@ -18,19 +18,23 @@ export default function CardModal(props) {
     >
         
         <Modal.Body>
-            <Card border="light" style={{ width: '100%'}}>
-                <Card.Img variant="top" src={props?.data[0]?.image?.secure_url} />
-                <Card.Body>
-                    <Card.Title>{props?.data[0]?.title}</Card.Title>
-                    <Card.Text>
-                        {props?.data[0]?.description}
-                    </Card.Text>
-                    <Card.Text>
-                        &#8358;
-                        {props?.data[0]?.price}
-                    </Card.Text>
-                </Card.Body>
-            </Card>
+            
+            <Card.Img 
+                variant="top" 
+                src={props?.data[0]?.image?.secure_url} 
+                className='w-full h-52 object-cover object-center mb-12'
+            />
+            <Card.Body>
+                <Card.Title className='text-3xl'>{props?.data[0]?.title}</Card.Title>
+                <Card.Text  className='my-4'>
+                    {props?.data[0]?.description}
+                </Card.Text>
+                <Card.Text  className='text-2xl text-primaryColor'>
+                    &#8358;
+                    {props?.data[0]?.price}
+                </Card.Text>
+            </Card.Body>
+                
         </Modal.Body>
 
         <Modal.Footer>
