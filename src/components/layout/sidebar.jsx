@@ -1,7 +1,7 @@
 'use client'
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import { BsBell, BsCalculator, BsCardList, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPeople, BsQuestionCircle, BsTicketPerforated } from 'react-icons/bs'
+import { BsBell, BsCalculator, BsCardList, BsCart4, BsColumnsGap, BsGear, BsGrid, BsPeople, BsPerson, BsQuestionCircle } from 'react-icons/bs'
 import LoadingSpinner from './LoadingSpinner';
 import { usePathname } from 'next/navigation';
 
@@ -29,10 +29,10 @@ import { usePathname } from 'next/navigation';
                   <span>Dashboard</span>
               </a>
           </li>
-          <li className={(pathname === 'coupon') ? '!border-l-blue-600 border-l-4' : 'border-l-white'}>
-              <a href='' className={(pathname === 'coupon') ? 'text-blue-600' : 'text-black'}>
-                  <i><BsTicketPerforated /></i>
-                  <span>Coupons</span>
+          <li className={(pathname === 'admin') ? '!border-l-blue-600 border-l-4' : 'border-l-white'}>
+              <a href='/admin' className={(pathname === 'admin') ? 'text-blue-600' : 'text-black'}>
+                  <i><BsPerson /></i>
+                  <span>Administrators</span>
               </a>
           </li>
           
