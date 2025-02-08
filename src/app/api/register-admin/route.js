@@ -1,5 +1,4 @@
 import {Admin} from '@/app/models/admin';
-// import '@/app/api/db/db'
 
 export async function POST(req){
 

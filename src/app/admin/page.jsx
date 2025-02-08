@@ -4,17 +4,28 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/layout/sidebar';
-import useFetch from '@/customHooks/useFetch';
 import { Button, FloatingLabel, Form, Modal, Table } from 'react-bootstrap';
 import { BsPlusLg, BsTrash3 } from 'react-icons/bs';
 import Image from 'next/image';
-import holder_img from '../../../public/img/holder_image.webp'; 
+import holder_img from '../../../public/img/Profile_avatar_placeholder.png'; 
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function AdminPage() {
+
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // const [isAdmin, setIsAdmin] = useState(false)
   const [modalShow, setModalShow] = React.useState(false);
   const session = useSession()
+
+  // pagination states
+  const currentPageData = useSelector((state) => state.currentPageData)//which pagination page to display
+
+  const [pageSize, setPageSize] = useState(8); // Number of rows per page
+
 
   useEffect(() => {
     // setIsAdmin(session?.data?.user?.isAdmin)
@@ -23,7 +34,57 @@ export default function AdminPage() {
     
   }, [session]); 
 
-  const {data, error, isLoading } = useFetch('/api/admin');
+  useEffect(() => {
+
+    let isMounted = true;
+    let response;
+  
+    const fetchData = async (page) => {
+  
+      setIsLoading(true); // Set loading to true before making the request
+      setError(null); // Reset error before each fetch
+  
+      try {
+  
+        response = await axios.get('/api/admin', 
+        {
+          params: {
+            page, 
+            size: pageSize
+          } 
+        })
+        
+        if(isMounted){
+          setData(response.data); // Set data on successful response 
+        }
+  
+      } catch (error) {
+  
+        console.error(error);
+        
+        if(isMounted){
+          setIsLoading(false); // Set loading to false when the request completes
+        }
+  
+  
+      } finally {
+        // always executed
+        if(isMounted){
+          setIsLoading(false); // Set loading to false when the request completes
+        }
+  
+      }
+  
+    };
+  
+    fetchData(currentPageData.currentPage)
+  
+    // unmounting the component hook
+    return () => {
+      isMounted = false; // Avoids state updates on unmounted component
+    };
+  
+  }, [currentPageData.currentPage, pageSize]);
 
   if(isLoading) return <LoadingSpinner/>;
   if(session?.data?.user?.isAdmin === false) return redirect('/login')
@@ -31,7 +92,7 @@ export default function AdminPage() {
   const handleDelete = async (e, id) => {
     confirm(`Are you sure to delete administrator`)
   }
-  
+  // console.log(data?.data)
   return (
     <section className='flex flex-col lg:flex-row w-full h-screen bg-white'>
 
@@ -74,35 +135,35 @@ export default function AdminPage() {
 
                 <tbody>
                     {
-                        Array.isArray(data) && data.length > 0 && data.map((userData, index) => (
+                        Array.isArray(data?.data) && data?.data.length > 0 && data?.data.map((adminData, index) => (
+                          
                             <tr key={index}>
-                              {console.log(data)}
                                 <td>{index+1}</td>
                                 <td>
                                     <Image 
-                                        src={userData?.image?.secure_url} 
-                                        alt=''
-                                        width={60}
-                                        height={60}
-                                        style={{width: '45', height: '45'}}
-                                        className='object-cover rounded-full'
+                                      src={(adminData?.image) ? adminData?.image?.secure_url : holder_img} 
+                                      alt=''
+                                      width={60}
+                                      height={60}
+                                      style={{width: '45', height: '45'}}
+                                      className='object-cover rounded-full'
                                     />
                                 </td>
-                                <td>{(userData?.name) ? userData.name.toUpperCase() : `${userData?.firstName.toUpperCase()} ${userData?.firstName.toUpperCase()}`}</td>
-                                <td>{userData?.phone}</td>
-                                <td>{(userData?.isAdmin === true) ? "Administrator" : "Customer"}</td>
+                                <td>{(adminData?.name) ? adminData.name.toUpperCase() : `${adminData?.firstName.toUpperCase()} ${adminData?.firstName.toUpperCase()}`}</td>
+                                <td>{adminData?.phone}</td>
+                                <td>{(adminData?.isAdmin === true) ? "Administrator" : "Customer"}</td>
                                 <td>
-                                    <a href={`/profile/?id=${userData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
+                                    <a href={`/profile/?id=${adminData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
                                     <button 
                                       type='button' 
                                       className='text-red-500 ml-4' 
-                                      onClick={(e) => {handleDelete(e, userData?._id)}}
+                                      onClick={(e) => {handleDelete(e, adminData?._id)}}
                                     >
                                       <BsTrash3 />
                                     </button>
                                 </td>
                             </tr>
-
+                            
                         ))
                     }
                 </tbody>

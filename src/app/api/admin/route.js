@@ -1,6 +1,5 @@
 import { revalidatePath } from 'next/cache';
 import { saveFilesToLocal, saveFilesToCloudinary, deletePhoto } from "@/app/api/upload/route";
-import cloudinary from 'cloudinary'
 import fs from 'fs/promises';
 import delay from '@/lib/delay';
 import { Admin } from '../../models/admin';
@@ -41,7 +40,7 @@ export async function GET(req){
 
             // Slice the dataset to return only the data for the requested page
             data = data.slice(startIndex, endIndex);
-
+            
             return Response.json({data, totalItems}, {status: 200})
         }
 
