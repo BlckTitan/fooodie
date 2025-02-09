@@ -1,4 +1,5 @@
 'use client';
+
 import LoadingSpinner from '@/components/layout/LoadingSpinner';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
@@ -10,6 +11,7 @@ import Image from 'next/image';
 import holder_img from '../../../public/img/Profile_avatar_placeholder.png'; 
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import PaginationComponent from '@/components/layout/Pagination';
 
 export default function AdminPage() {
 
@@ -92,7 +94,7 @@ export default function AdminPage() {
   const handleDelete = async (e, id) => {
     confirm(`Are you sure to delete administrator`)
   }
-  // console.log(data?.data)
+  
   return (
     <section className='flex flex-col lg:flex-row w-full h-screen bg-white'>
 
@@ -120,15 +122,14 @@ export default function AdminPage() {
 
         { (isLoading) ? <LoadingSpinner/> :
             
-            <Table striped bordered hover>
+            <Table striped bordered hover className='overflow-x-scroll'>
 
                 <thead>
                     <tr>
                         <th>SN</th>
                         <th></th>
                         <th>Name</th>
-                        <th>Phone</th>
-                        <th>Role</th>
+                        <th>Email</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -150,10 +151,9 @@ export default function AdminPage() {
                                     />
                                 </td>
                                 <td>{(adminData?.name) ? adminData.name.toUpperCase() : `${adminData?.firstName.toUpperCase()} ${adminData?.firstName.toUpperCase()}`}</td>
-                                <td>{adminData?.phone}</td>
-                                <td>{(adminData?.isAdmin === true) ? "Administrator" : "Customer"}</td>
-                                <td>
-                                    <a href={`/profile/?id=${adminData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
+                                <td>{(adminData?.email) && adminData?.email}</td>
+                                <td className='w-64 text-center text-wrap'>
+                                    <a href={`/profile/?id=${adminData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view admin profile</a>
                                     <button 
                                       type='button' 
                                       className='text-red-500 ml-4' 
@@ -170,6 +170,13 @@ export default function AdminPage() {
 
             </Table>
         }
+
+      <PaginationComponent 
+        data={data?.data} 
+        loadingState={isLoading} 
+        pageSize={pageSize}
+        totalItemsNum={data?.totalItems}
+      />
       </main>
     </section>
   )
