@@ -125,7 +125,7 @@ export default function AdminPage() {
             <Table striped bordered hover className='overflow-x-scroll'>
 
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                         <th>SN</th>
                         <th></th>
                         <th>Name</th>
@@ -234,7 +234,7 @@ function UserModal(props){
             method: 'post',
             url: '/api/register/',
             data: data,
-
+            headers: {'Content-Type': 'multipart/form-data'}
           })
           .then(function (response) {
 
@@ -282,25 +282,26 @@ function UserModal(props){
 
       <Modal.Body>
 
-        <header className='w-full h-80 lg:h-48 relative bg-red-200'>
+        <header className='w-full h-80 lg:h-48 relative'>
 
-        <Image 
-            src={(newUploadUrl) ? newUploadUrl : holder_img}  
-            width={200}
-            height={100}
-            alt='This is a user placeholder image; format: png;'
-            className='w-full h-full cover'
-        />
+          <Image 
+              src={(newUploadUrl) ? newUploadUrl : holder_img}  
+              width={200}
+              height={100}
+              alt='This is a user placeholder image; format: png;'
+              className='w-full h-full object-cover object-center'
+          />
 
-        <Form.Label 
-          htmlFor='uploadImg' 
-          className='text-2xl xl:text-4xl cursor-pointer absolute left-1/2 bottom-1/2 border text-gray-500 bg-white'
-        >
-            <BsPlusLg />
+          <Form.Label 
+            htmlFor='uploadImg' 
+            className='text-2xl xl:text-4xl cursor-pointer absolute left-1/2 bottom-1/2 border text-gray-500 bg-white'
+          >
+              <BsPlusLg />
 
-        </Form.Label>
+          </Form.Label>
 
-</header>
+        </header>
+        
       <Form className='w-full' onSubmit={e => handleSubmit(e)}>
 
         <Form.Group className="mb-3" controlId="formBasicText">

@@ -8,6 +8,9 @@ import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
 import { useRouter } from 'next/navigation';
+import { BsPlusLg } from 'react-icons/bs';
+import holder_img from '../../../public/img/Profile_avatar_placeholder.png'; 
+import reloadPage from '@/lib/reload';
 
 export default function RegisterAdminPage() {
 
@@ -16,102 +19,209 @@ export default function RegisterAdminPage() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
+  const [phone, setPhone] = useState('')
+  const [newUploadUrl, setNewUploadUrl] = useState('')
+  const [imageData, setImageData] = useState('')
+  
+  const handleHolderImg = async (e: any) =>{
+
+    const file = e.target.files[0];
+    setImageData(file)
+    const url = URL.createObjectURL(file)
+
+    // set new url if we have selected a new image
+    if(url){
+      setNewUploadUrl(url)
+    } 
+
+  }
+
 
   const router = useRouter()
 
-  const handleSubmit = (e: any) =>{
-    e.preventDefault()
+  //db admin save handler
+  const handleSave = async () => {
+    let file;
 
-    axios.post('/api/register-admin', {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      username: username,
-      password: password,
-    })
-    .then(function (response) {
-      if(response.status === 200){
-        return(
-          router.push('/login'),
-          AlertSuccess('Admin successfully registered')
-        )
+    if(imageData === ''){
+      return AlertError('First name cannot be empty')
+    }else{
+        file = imageData;
 
+        let data; 
+  
+        //checking for file size and type(image files)
+        if(file.size < 1024 * 1024 && file.type.startsWith('image/')){
+          
+          data = new FormData(); 
+
+          data.set('file', file)
+          data.set('firstName', firstName)
+          data.set('lastName', lastName)
+          data.set('username', username)
+          data.set('email', email)
+          data.set('phone', phone)
+          data.set('password', password)
+
+        try {
+
+          await axios({
+            method: 'post',
+            url: '/api/admin/',
+            data: data,
+            headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(function (response) {
+
+            if(response.status === 200){
+              return(
+                // trigger page reload after successful save to db
+                reloadPage(),
+                AlertSuccess('user created successfully')
+              )
+            }
+
+          })
+          .catch(function (error) {
+
+            console.log(error);
+            if(error.response.data.message) return AlertError(error.response.data.message)
+          })
+
+        } catch (error) {
+
+          console.log('failed to create post', error)
+
+        }
       }
-    })
-    .catch(function (error) {
-      console.log(error);
-      AlertError('Admin registration failed!')
-    });
+    }
 
   }
+
 
   return (
     <section className='container flex flex-col items-center w-full h-fit'>
 
-      <header className='w-full h-24 flex justify-center items-center mt-4'>
-        <h1 className='text-4xl text-center flex-wrap text-primaryColor font-semibold'>REGISTER ADMINISTRATOR</h1>
+      <header className='w-full h-14 flex justify-center items-center mt-4'>
+        <h1 className='text-3xl text-center flex-wrap text-primaryColor font-semibold'>REGISTER ADMINISTRATOR</h1>
       </header>
 
-      <div className='bg-white rounded-md w-full xl:w-2/5 my-8 px-4 py-8'>
+      <div className='bg-white rounded-md w-full xl:w-2/5 my-6 px-4 py-6'>
 
-        <Form className='w-full' onSubmit={e => handleSubmit(e)}>
+        <Form className='w-full'>
 
-          <Form.Group className="mb-4" controlId="formBasicFirstName">
+          {/* image upload display */}
+          <header 
+            className='w-full h-50 lg:h-fit mb-3 flex justify-center items-center'
+          >
 
-            <FloatingLabel controlId="floatingInput" label="First Name" className="mb-3">
-              <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)}/>
+            <Image 
+              src={(newUploadUrl) ? newUploadUrl : holder_img}  
+              width={200}
+              height={100}
+              alt='This is a user placeholder image; format: png;'
+              className='w-48 h-48 object-contain object-center relative'
+            />
+
+            <Form.Label 
+              htmlFor='uploadImg' 
+              className='text-2xl xl:text-4xl cursor-pointer absolute border text-gray-500 bg-white'
+            >
+              <BsPlusLg />
+
+            </Form.Label>
+
+          </header>
+
+          <Form.Group className="mb-3 hidden" controlId="uploadImg">
+                              
+            <Form.Control 
+              type='file'
+              accept='image/*'
+              onChange={(e) => {
+                handleHolderImg(e)
+              }}
+              name='image'
+            />
+  
+          </Form.Group>
+
+          <div className='w-full mb-0 md:mb-4 flex flex-col md:flex-row justify-center'>  
+          
+            <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicFirstName">
+
+              <FloatingLabel controlId="floatingInput" label="First Name" className="mb-3 md:mb-0">
+                <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)} required/>
+              </FloatingLabel>
+
+            </Form.Group>
+
+            <Form.Group className="w-full md:w-1/2" controlId="formBasicLastName">
+
+              <FloatingLabel controlId="floatingInput" label="Last Name" className="mb-3 md:mb-0">
+                <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)} required/>
+              </FloatingLabel>
+
+            </Form.Group>
+
+          </div>
+
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+
+            <FloatingLabel controlId="floatingInput" label="Email address">
+              <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required/>
             </FloatingLabel>
 
           </Form.Group>
 
-          <Form.Group className="mb-4" controlId="formBasicLastName">
+          <Form.Group className="mb-3" controlId="formBasicPhone">
 
-            <FloatingLabel controlId="floatingInput" label="Last Name" className="mb-3">
-              <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)}/>
+            <FloatingLabel controlId="floatingInput" label="Phone Number">
+              <Form.Control type="phone" placeholder="+234 800 000 0000" onChange={(e) => setPhone(e.target.value)} required/>
             </FloatingLabel>
 
           </Form.Group>
+          
+          <div className='w-full mb-3 flex flex-col md:flex-row justify-center'>
 
-          <Form.Group className="mb-4" controlId="formBasicEmail">
+            <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicUsername">
 
-            <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-              <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)}/>
-            </FloatingLabel>
+              <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
+                <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)} required/>
+              </FloatingLabel>
 
-          </Form.Group>
+            </Form.Group>
 
+            <Form.Group className="w-full md:w-1/2" controlId="formBasicPassword">
 
-          <Form.Group className="mb-4" controlId="formBasicUsername">
+              <FloatingLabel controlId="floatingPassword" label="Password">
+                <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
+              </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
-              <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)}/>
-            </FloatingLabel>
+            </Form.Group>
 
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-4" controlId="formBasicPassword">
-
-            <FloatingLabel controlId="floatingPassword" label="Password">
-              <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-            </FloatingLabel>
-
-          </Form.Group>
-        
         <Form.Group className='flex justify-center'>
-          <Button variant="primary" type="submit"  className='mx-auto w-full xl:w-3/5'>
+          <Button 
+            variant="primary" 
+            type="submit"  
+            className='mx-auto w-full xl:w-3/5'
+            onClick={handleSave}
+          >
             Submit
           </Button>
         </Form.Group>
 
         </Form>
 
-        <div className='w-full xl:w-3/5 flex justify-center mx-auto mt-2'>
+        <div className='w-full xl:w-3/5 flex justify-center mx-auto'>
           <hr />
           <span >or</span>
           <hr />
         </div>
 
-        <div className='flex justify-center mt-2 px-8 py-2 rounded-md w-full xl:w-3/5 mx-auto border hover:bg-slate-50'>
+        <div className='flex justify-center px-8 py-2 rounded-md w-full xl:w-3/5 mx-auto border hover:bg-slate-50'>
           <button type="button" onClick={() => signIn('google', {  callbackUrl: '/dashboard'})} className='flex items-center hover:underline'>
             <Image 
               src={GoogleLogo}
@@ -122,7 +232,7 @@ export default function RegisterAdminPage() {
           </button>
         </div>
 
-        <div className='flex xl:flex-row xl:justify-center xl:items-start justify-center items-center flex-col mt-2 px-8 py-2 w-full'>
+        <div className='w-full flex xl:flex-row xl:justify-center xl:items-start justify-center items-center flex-col mt-2 px-8'>
           <p className='mr-1'>Already have an account?</p>
           <a href='/login' className='hover:underline'>
             Login

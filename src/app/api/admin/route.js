@@ -57,20 +57,21 @@ export async function GET(req){
 
 export async function POST(req){
 
-    const data = await req.formData()
-
+    let data = await req.formData()
+    
     // extracting the file from formData
     const image = data.get('file');
     const firstName = data.get('firstName')
     const lastName = data.get('lastName')
     const username = data.get('username')
     const email = data.get('email')
+    const phone = data.get('phone')
     const password = data.get('password')
     const isAdmin = data.get('isAdmin')
     
     if (data) {
         try {
-            const existingAdmin = await Menu.findOne({title: title})
+            const existingAdmin = await Admin.findOne({email: email})
 
             if(existingAdmin){
                 return Response.json(
