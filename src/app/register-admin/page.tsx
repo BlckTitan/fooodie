@@ -25,8 +25,16 @@ export default function RegisterAdminPage() {
 
   const router = useRouter()
 
-  const handleValidation(){
-    
+  const handleValidation = () => {
+    // input field validation
+    if(firstName === '') return AlertError('First name cannot be empty')
+    if(lastName === '') return AlertError('Last name cannot be empty')
+    if(username === '') return AlertError('Username cannot be empty') 
+    if(email === '') return AlertError('Email cannot be empty')
+    if(phone === '') return AlertError('Phone number cannot be empty')
+    if(password === '') return AlertError('Password cannot be empty')
+    else if(password.length < 8) return AlertError('Password must be at least 8 characters long')
+    else{return true}
   }
   
   const handleHolderImg = async (e: any) =>{
@@ -45,10 +53,14 @@ export default function RegisterAdminPage() {
   //db admin save handler
   const handleSave = async (e) => {
     e.preventDefault()
+
+    const validate = handleValidation()
     let file;
 
     if(imageData === ''){
-      return AlertError('First name cannot be empty')
+      return AlertError('Select and image for upload')
+    }else if(validate !== true){
+      return  false
     }else{
         file = imageData;
 
@@ -82,7 +94,6 @@ export default function RegisterAdminPage() {
               
             AlertSuccess('user created successfully')
             // trigger page reload after successful save to db
-            // return router.push('/success')
             reloadPage()
 
 
@@ -152,7 +163,12 @@ export default function RegisterAdminPage() {
             <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicFirstName">
 
               <FloatingLabel label="First Name" className="mb-3 md:mb-0">
-                <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)} required/>
+                <Form.Control 
+                  type="text" 
+                  placeholder="John" 
+                  onChange={(e) => setFirstName(e.target.value)} 
+                  required
+                />
               </FloatingLabel>
 
             </Form.Group>
@@ -160,7 +176,12 @@ export default function RegisterAdminPage() {
             <Form.Group className="w-full md:w-1/2" controlId="formBasicLastName">
 
               <FloatingLabel label="Last Name" className="mb-3 md:mb-0">
-                <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)} required/>
+                <Form.Control 
+                  type="text" 
+                  placeholder="Bricks" 
+                  onChange={(e) => setLastName(e.target.value)} 
+                  required
+                />
               </FloatingLabel>
 
             </Form.Group>
@@ -170,7 +191,12 @@ export default function RegisterAdminPage() {
           <Form.Group className="mb-3" controlId="formBasicEmail">
 
             <FloatingLabel label="Email address">
-              <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required/>
+              <Form.Control 
+                type="email" 
+                placeholder="name@example.com" 
+                onChange={(e) => setEmail(e.target.value)} 
+                required
+              />
             </FloatingLabel>
 
           </Form.Group>
@@ -195,7 +221,12 @@ export default function RegisterAdminPage() {
             <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicUsername">
 
               <FloatingLabel label="Username" className="mb-3">
-                <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)} required/>
+                <Form.Control 
+                  type="text"  
+                  placeholder="" 
+                  onChange={(e) => setUsername(e.target.value)} 
+                  required
+                />
               </FloatingLabel>
 
             </Form.Group>
@@ -203,7 +234,13 @@ export default function RegisterAdminPage() {
             <Form.Group className="w-full md:w-1/2" controlId="formBasicPassword">
 
               <FloatingLabel label="Password">
-                <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
+                <Form.Control 
+                  type="password" 
+                  placeholder="Password" 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  minLength={8}
+                  required
+                />
               </FloatingLabel>
 
             </Form.Group>
