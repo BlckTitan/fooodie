@@ -18,7 +18,7 @@ const AdminSchema = new mongoose.Schema({
         public_id: String,
         secure_url: String, 
     })},
-    isAdmin: { type: Boolean, required: true, default: false}
+    // isAdmin: { type: Boolean, required: true, default: false}
 
 }, {timestamps: true});
 

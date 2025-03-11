@@ -59,6 +59,9 @@ export async function POST(req){
 
     let data = await req.formData()
     
+    
+    if(data) {
+        
     // extracting the file from formData
     const image = data.get('file');
     const firstName = data.get('firstName')
@@ -67,9 +70,7 @@ export async function POST(req){
     const email = data.get('email')
     const phone = data.get('phone')
     const password = data.get('password')
-    const isAdmin = data.get('isAdmin')
-    
-    if (data) {
+
         try {
             const existingAdmin = await Admin.findOne({email: email})
 
@@ -96,7 +97,6 @@ export async function POST(req){
                             email: email,
                             phone: phone,
                             password: password,
-                            isAdmin: isAdmin,
                             image:{
                                 public_id: adminPicture[0].public_id,
                                 secure_url: adminPicture[0].secure_url,

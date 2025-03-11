@@ -22,6 +22,12 @@ export default function RegisterAdminPage() {
   const [phone, setPhone] = useState('')
   const [newUploadUrl, setNewUploadUrl] = useState('')
   const [imageData, setImageData] = useState('')
+
+  const router = useRouter()
+
+  const handleValidation(){
+    
+  }
   
   const handleHolderImg = async (e: any) =>{
 
@@ -36,11 +42,9 @@ export default function RegisterAdminPage() {
 
   }
 
-
-  const router = useRouter()
-
   //db admin save handler
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault()
     let file;
 
     if(imageData === ''){
@@ -65,33 +69,30 @@ export default function RegisterAdminPage() {
 
         try {
 
-          await axios({
+            const response = await axios({
             method: 'post',
-            url: '/api/admin/',
+            url: '/api/admin',
             data: data,
             headers: {'Content-Type': 'multipart/form-data'}
           })
-          .then(function (response) {
 
-            if(response.status === 200){
-              return(
-                // trigger page reload after successful save to db
-                reloadPage(),
-                AlertSuccess('user created successfully')
-              )
-            }
+          console.log(response)                                                                                                                                                                                                                                                                                                                                           
 
-          })
-          .catch(function (error) {
+          if(response.status === 200){
+              
+            AlertSuccess('user created successfully')
+            // trigger page reload after successful save to db
+            // return router.push('/success')
+            reloadPage()
 
-            console.log(error);
-            if(error.response.data.message) return AlertError(error.response.data.message)
-          })
 
-        } catch (error) {
+          }
 
-          console.log('failed to create post', error)
+        } catch (error: any) {
 
+          if(error.response.data.message) return AlertError(error.response.data.message)
+          console.log('Failed to create post', error)
+          return AlertError('Failed to create post')
         }
       }
     }
@@ -150,7 +151,7 @@ export default function RegisterAdminPage() {
           
             <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicFirstName">
 
-              <FloatingLabel controlId="floatingInput" label="First Name" className="mb-3 md:mb-0">
+              <FloatingLabel label="First Name" className="mb-3 md:mb-0">
                 <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)} required/>
               </FloatingLabel>
 
@@ -158,7 +159,7 @@ export default function RegisterAdminPage() {
 
             <Form.Group className="w-full md:w-1/2" controlId="formBasicLastName">
 
-              <FloatingLabel controlId="floatingInput" label="Last Name" className="mb-3 md:mb-0">
+              <FloatingLabel label="Last Name" className="mb-3 md:mb-0">
                 <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)} required/>
               </FloatingLabel>
 
@@ -168,7 +169,7 @@ export default function RegisterAdminPage() {
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
 
-            <FloatingLabel controlId="floatingInput" label="Email address">
+            <FloatingLabel label="Email address">
               <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required/>
             </FloatingLabel>
 
@@ -176,8 +177,15 @@ export default function RegisterAdminPage() {
 
           <Form.Group className="mb-3" controlId="formBasicPhone">
 
-            <FloatingLabel controlId="floatingInput" label="Phone Number">
-              <Form.Control type="phone" placeholder="+234 800 000 0000" onChange={(e) => setPhone(e.target.value)} required/>
+            <FloatingLabel label="Phone Number">
+              <Form.Control 
+                type="tel" 
+                placeholder="+234 800 000 0000" 
+                onChange={(e) => setPhone(e.target.value)} 
+                required
+                minLength={9}
+                maxLength={15}
+              />
             </FloatingLabel>
 
           </Form.Group>
@@ -186,7 +194,7 @@ export default function RegisterAdminPage() {
 
             <Form.Group className="w-full md:w-1/2 md:mr-2" controlId="formBasicUsername">
 
-              <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
+              <FloatingLabel label="Username" className="mb-3">
                 <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)} required/>
               </FloatingLabel>
 
@@ -194,7 +202,7 @@ export default function RegisterAdminPage() {
 
             <Form.Group className="w-full md:w-1/2" controlId="formBasicPassword">
 
-              <FloatingLabel controlId="floatingPassword" label="Password">
+              <FloatingLabel label="Password">
                 <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
               </FloatingLabel>
 
@@ -207,7 +215,7 @@ export default function RegisterAdminPage() {
             variant="primary" 
             type="submit"  
             className='mx-auto w-full xl:w-3/5'
-            onClick={handleSave}
+            onClick={e => handleSave(e)}
           >
             Submit
           </Button>
