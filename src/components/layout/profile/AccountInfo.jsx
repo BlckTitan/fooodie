@@ -16,12 +16,12 @@ export default function AccountInfo({account_email, loadingState, username}) {
 
         <ul>
           <li className='mb-4 flex items-center'>
-            <h2 className='font-semibold w-24'>Email: </h2>
+            <h5 className='w-24'>Email: </h5>
             <span className='text-left mr-2'>{(account_email === null) ? '' : account_email}</span>
           </li>
           <li className='mb-4 flex items-center'>
-            <h2 className='font-semibold w-24'>Username: </h2>
-            <span>{(username === null) ? '' : username}</span>
+            <h5 className='w-36'>Username: </h5>
+            <span className='text-left mr-2'>{(username === null) ? '' : username}</span>
           </li>
         </ul>
         

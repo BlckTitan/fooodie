@@ -14,12 +14,12 @@ export default function PersonalInfo({name, firstname, email, lastname, phone, l
     <section className='container bg-white'>
 
         <div>
-            <Avatar img={img} loadingState={loadingState}/>
+          <Avatar img={img} loadingState={loadingState}/>
         </div>
 
         <ul>
-            <li className='mb-4 flex items-center'>
-            <h2 className='font-semibold w-24'>Name: </h2>
+          <li className='mb-4 flex !items-center'>
+            <h5 className='w-24'>Name: </h5>
             {
               (name) ?
               <span className='text-left mr-2'>{(firstname === null) ? '' : name.toUpperCase()} </span> :
@@ -30,11 +30,11 @@ export default function PersonalInfo({name, firstname, email, lastname, phone, l
             }
           </li>
           <li className='mb-4 flex items-center'>
-            <h2 className='font-semibold w-24'>Email: </h2>
+            <h5 className='w-24'>Email: </h5>
             <span>{(email === null) ? '' : email}</span>
           </li> 
           <li className='mb-4 flex items-center'>
-            <h2 className='font-semibold w-24'>Phone: </h2>
+            <h5 className='w-24'>Phone: </h5>
             <span className='text-start'>{(phone === null) ? '' : phone}</span>
           </li>
         </ul>

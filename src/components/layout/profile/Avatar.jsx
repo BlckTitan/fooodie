@@ -89,14 +89,12 @@ export default function Avatar({img, loadingState}) {
                 accept='image/*'
                 // value={img}
                 onChange={handleUpload}
-                className='hidden'
+                className='!hidden'
                 name='image'
               />
           </Form.Group>
         </Form>
-         <div>
-
-          </div>
+        
     </div>
   )
 }
