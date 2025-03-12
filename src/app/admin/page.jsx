@@ -140,17 +140,16 @@ export default function AdminPage() {
                           
                             <tr key={index}>
                                 <td>{index+1}</td>
-                                <td>
+                                <td className='flex justify-center'>
                                     <Image 
                                       src={(adminData?.image) ? adminData?.image?.secure_url : holder_img} 
                                       alt=''
-                                      width={60}
-                                      height={60}
-                                      style={{width: '45', height: '45'}}
-                                      className='object-cover rounded-full'
+                                      width={100}
+                                      height={100}
+                                      style={{width: '100px', height: '100px', borderRadius: '100%', objectFit: 'cover', objectPosition: 'center'}}
                                     />
                                 </td>
-                                <td>{(adminData?.name) ? adminData.name.toUpperCase() : `${adminData?.firstName.toUpperCase()} ${adminData?.firstName.toUpperCase()}`}</td>
+                                <td>{(adminData?.name) ? adminData.name.toUpperCase() : `${adminData?.lastName.toUpperCase()} ${adminData?.firstName.toUpperCase()}`}</td>
                                 <td>{(adminData?.email) && adminData?.email}</td>
                                 <td className='w-64 text-center text-wrap'>
                                     <a href={`/profile/?id=${adminData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view admin profile</a>
