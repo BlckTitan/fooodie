@@ -8,6 +8,9 @@ import useFetch from '@/customHooks/useFetch';
 import {  Table } from 'react-bootstrap';
 import { BsTrash3 } from 'react-icons/bs';
 import Image from 'next/image';
+import axios from 'axios';
+import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
+import reloadPage from '@/lib/reload';
 
 export default function UserPage() {
 
@@ -26,8 +29,28 @@ export default function UserPage() {
   if(isLoading) return <LoadingSpinner/>;
   if(session?.data?.user?.isAdmin === false) return redirect('/login')
 
+    // delete user
   const handleDelete = async (e, id) => {
-    confirm(`Are you sure to delete user`)
+    e.preventDefault();
+
+    const isDeleted = confirm(`Are you sure to delete user`)
+    
+    try {
+      if(isDeleted){
+        await axios.delete(`/api/user/?_id=${id}`)
+        .then(function (response) {
+          if(response.status === 200){
+            AlertSuccess('User deleted successfully')
+            return reloadPage()
+          }else{
+            AlertError('Failed to delete user')
+          }
+        })
+      }
+    }
+    catch (error) {
+      console.error('Failed to delete user', error)
+    }
   }
   
   return (
@@ -51,7 +74,6 @@ export default function UserPage() {
                         <th></th>
                         <th>Name</th>
                         <th>Phone</th>
-                        <th>Role</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -66,15 +88,13 @@ export default function UserPage() {
                                     <Image 
                                         src={userData?.image?.secure_url} 
                                         alt=''
-                                        width={60}
-                                        height={60}
-                                        style={{width: '45', height: '45'}}
-                                        className='object-cover rounded-full'
+                                        width={100}
+                                        height={100}
+                                        className='w-14 h-14 object-cover object-center rounded-full'
                                     />
                                 </td>
-                                <td>{(userData?.name) ? userData.name.toUpperCase() : `${userData?.firstName.toUpperCase()} ${userData?.firstName.toUpperCase()}`}</td>
+                                <td>{(userData?.name) ? userData.name.toUpperCase() : `${userData?.lastName.toUpperCase()} ${userData?.firstName.toUpperCase()}`}</td>
                                 <td>{userData?.phone}</td>
-                                <td>{(userData?.isAdmin === true) ? "Administrator" : "Customer"}</td>
                                 <td>
                                     <a href={`/profile/?id=${userData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view profile</a>
                                     <button 

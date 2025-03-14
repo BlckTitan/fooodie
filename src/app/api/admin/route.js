@@ -195,9 +195,6 @@ export async function DELETE(req) {
             deletePhoto(existingAdmin.image.public_id)
         }
 
-        // Find and delete the admin by ID
-        const deletedAdmin = await Admin.deleteOne({_id: id});
-
         // If no Admin is found, return a 404 response
         if (!existingAdmin) {
             return new Response(JSON.stringify(
@@ -206,6 +203,9 @@ export async function DELETE(req) {
             );
         }
 
+        // Find and delete the admin by ID
+        const deletedAdmin = await Admin.deleteOne({_id: id});
+        
         // If no user is found, return a 500 response
         if (!deletedAdmin) {
             return new Response(JSON.stringify({message: 'Internal Server Error: Unable to delete administrator.' }, { error: "Admin not found" }), { status: 500 });

@@ -6,7 +6,7 @@ import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import GoogleLogo from '../../../public/img/Google-logo.png'
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
 
 export default function RegisterPage() {
@@ -17,8 +17,26 @@ export default function RegisterPage() {
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
 
+  const router = useRouter()
+
+  const handleValidation = () => {
+    // input field validation
+    if(firstName === '') return AlertError('First name cannot be empty')
+    if(lastName === '') return AlertError('Last name cannot be empty')
+    if(username === '') return AlertError('Username cannot be empty') 
+    if(email === '') return AlertError('Email cannot be empty')
+    if(password === '') return AlertError('Password cannot be empty')
+    else if(password.length < 8) return AlertError('Password must be at least 8 characters long')
+    else{return true}
+  }
+  
   const handleSubmit = (e: any) =>{
     e.preventDefault()
+
+    const validate = handleValidation()
+    if(validate !== true){
+      return false;
+    }
 
     axios.post('/api/register', {
       firstName: firstName,
@@ -29,11 +47,9 @@ export default function RegisterPage() {
     })
     .then(function (response) {
       if(response.status === 200){
-        return(
-          redirect('/login'),
-          AlertSuccess('User successfully registered')
-        )
-
+        
+        AlertSuccess('User successfully registered')
+        return router.push('/login')
       }
     })
     .catch(function (error) {
