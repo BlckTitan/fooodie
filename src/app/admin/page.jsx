@@ -12,6 +12,8 @@ import holder_img from '../../../public/img/Profile_avatar_placeholder.png';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import PaginationComponent from '@/components/layout/Pagination';
+import reloadPage from '@/lib/reload';
+import { AlertError, AlertSuccess } from '@/components/layout/Alerts';
 
 export default function AdminPage() {
 
@@ -92,9 +94,29 @@ export default function AdminPage() {
   if(session?.data?.user?.isAdmin === false) return redirect('/login')
 
   const handleDelete = async (e, id) => {
-    confirm(`Are you sure to delete administrator`)
+
+    e.preventDefault();
+
+    const isDeleted = confirm(`Are you sure to delete administrator`)
+    
+    try {
+      if(isDeleted){
+        await axios.delete(`/api/admin/?_id=${id}`)
+        .then(function (response) {
+          if(response.status === 200){
+            AlertSuccess('Admin deleted successfully')
+            return reloadPage()
+          }else{
+            AlertError('Failed to delete adminnistrator')
+          }
+        })
+      }
+    }
+    catch (error) {
+      console.error('Failed to delete admin', error)
+    }
   }
-  
+
   return (
     <section className='flex flex-col lg:flex-row w-full h-screen bg-white'>
 
@@ -155,7 +177,7 @@ export default function AdminPage() {
                                     <a href={`/profile/?id=${adminData?._id}`} className='text-underline text-blue-500 hover:text-primaryColor'>view admin profile</a>
                                     <button 
                                       type='button' 
-                                      className='text-red-500 ml-4' 
+                                      className='text-red-500 ml-4 text-center' 
                                       onClick={(e) => {handleDelete(e, adminData?._id)}}
                                     >
                                       <BsTrash3 />

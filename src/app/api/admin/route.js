@@ -179,7 +179,6 @@ export async function DELETE(req) {
 
     const searchParams = new URL(req.url).searchParams;
     const id = searchParams.get('_id')
-    
     try {
         // Parse the request body
 
@@ -190,21 +189,26 @@ export async function DELETE(req) {
 
         // find existing admin
         const existingAdmin = await Admin.findOne({_id: id})
-        deletePhoto(existingAdmin.image.public_id)
-        
+
+        // if administrator has an image, delete it from cloudinary
+        if (existingAdmin?.image){
+            deletePhoto(existingAdmin.image.public_id)
+        }
+
         // Find and delete the admin by ID
         const deletedAdmin = await Admin.deleteOne({_id: id});
 
         // If no Admin is found, return a 404 response
-        if (!deletedAdmin) {
+        if (!existingAdmin) {
             return new Response(JSON.stringify(
-                {
-                    message: 'Internal Server Error: Admin not found.' 
-                },
-                { 
-                    error: "Admin not found" 
-                }), { status: 404 }
+                { message: 'Internal Server Error: Admin not found.' },
+                { error: "Admin not found" }), { status: 404 }
             );
+        }
+
+        // If no user is found, return a 500 response
+        if (!deletedAdmin) {
+            return new Response(JSON.stringify({message: 'Internal Server Error: Unable to delete administrator.' }, { error: "Admin not found" }), { status: 500 });
         }
 
         // Return the deleted Admin as a response

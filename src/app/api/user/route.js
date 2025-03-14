@@ -131,6 +131,12 @@ export async function DELETE(req) {
 
         // find existing user
         const existingUser = await User.findOne({_id: id})
+
+        // If no user is found, return a 404 response
+        if (!existingUser) {
+            return new Response(JSON.stringify({message: 'Internal Server Error: User not found.' }, { error: "User not found" }), { status: 404 });
+        }
+
         deletePhoto(existingUser.image.public_id)
         
         // Find and delete the user by ID
@@ -138,7 +144,7 @@ export async function DELETE(req) {
 
         // If no user is found, return a 404 response
         if (!deletedUser) {
-            return new Response(JSON.stringify({message: 'Internal Server Error: User not found.' }, { error: "User not found" }), { status: 404 });
+            return new Response(JSON.stringify({message: 'Internal Server Error: User not found.' }, { error: "Unable to delete user" }), { status: 500 });
         }
 
         // Return the deleted User as a response
