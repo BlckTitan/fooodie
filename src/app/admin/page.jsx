@@ -211,74 +211,100 @@ function UserModal(props){
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [username, setUsername] = useState('')
-    const [isAdmin, setIsAdmin] = useState(false)
     const [imageData, setImageData] = useState('')
+    const [phone, setPhone] = useState('')
     const [newUploadUrl, setNewUploadUrl] = useState('')
 
     const handleHolderImg = async (e) =>{
 
-      const file = await e.target.files;
-      const url = URL.createObjectURL(file[0])
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file)
+  
+      // set new image data if we have selected a new file
+      if(file){
+        
+        setImageData(file)
 
+      } 
       // set new url if we have selected a new image
       if(url){
         setNewUploadUrl(url)
       } 
-
+  
     }
 
-  //db category save handler
-  const handleSave = async () => {
-      
-    if(title === ''){
-      return AlertError('Title cannot be empty')
-    }else{
-      const file = await imageData.target.files;
+    // input field validation
+    const handleValidation = () => {
+
+      if(firstName === '') return AlertError('First name cannot be empty')
+      if(lastName === '') return AlertError('Last name cannot be empty')
+      if(username === '') return AlertError('Username cannot be empty') 
+      if(email === '') return AlertError('Email cannot be empty')
+      if(phone === '') return AlertError('Phone number cannot be empty')
+      if(password === '') return AlertError('Password cannot be empty')
+      else if(password.length < 8) return AlertError('Password must be at least 8 characters long')
+      else{ return true }
+
+    }
+    
+  //db admin save handler
+  const handleSave = async (e) => {
+
+      e.preventDefault()
+   
+      const validate = handleValidation()
+      let file;
+   
+      if(imageData === ''){
+        return AlertError('Select and image for upload')
+      }else if(validate !== true){
+        return  false
+      }else{
+
+        file = imageData;
+
         let data; 
   
         //checking for file size and type(image files)
-        if(file[0].size < 1024 * 1024 && file[0].type.startsWith('image/')){
+        if(file.size < 1024 * 1024 && file.type.startsWith('image/')){
           
           data = new FormData(); 
 
-          data.set('file', file[0])
+          data.set('file', file)
           data.set('firstName', firstName)
           data.set('lastName', lastName)
           data.set('username', username)
           data.set('email', email)
+          data.set('phone', phone)
           data.set('password', password)
-          data.set('isAdmin', isAdmin)
 
         try {
 
-          await axios({
-            method: 'post',
-            url: '/api/register/',
-            data: data,
-            headers: {'Content-Type': 'multipart/form-data'}
-          })
-          .then(function (response) {
+          const response = await axios({
+          method: 'post',
+          url: '/api/admin',
+          data: data,
+          headers: {'Content-Type': 'multipart/form-data'}
+          
+        })
 
-            if(response.status === 200){
-              return(
-                // trigger page reload after successful save to db
-                reload(),
-                AlertSuccess('user created successfully')
-              )
-            }
+          console.log(response)                                                                                                                                                                                                                                                                                                                                           
 
-          })
-          .catch(function (error) {
-
-            console.log(error);
-            if(error.response.data.message) return AlertError(error.response.data.message)
-          })
+          if(response.status === 200){
+              
+            AlertSuccess('user created successfully')
+            // trigger page reload after successful save to db
+            reloadPage()
+          }
 
         } catch (error) {
 
-          console.log('failed to create post', error)
-
+          if(error.response.data.message) return AlertError(error.response.data.message)
+          console.log('Failed to create post', error)
+          return AlertError('Failed to create post')
         }
+      }else{
+        return AlertError('File size must be less than 1MB and must be an image file')
       }
     }
 
@@ -303,19 +329,19 @@ function UserModal(props){
 
       <Modal.Body>
 
-        <header className='w-full h-80 lg:h-48 relative'>
+        <header className='w-full h-48 lg:h-48 flex items-center justify-center relative'>
 
           <Image 
-              src={(newUploadUrl) ? newUploadUrl : holder_img}  
-              width={200}
-              height={100}
-              alt='This is a user placeholder image; format: png;'
-              className='w-full h-full object-cover object-center'
+            src={(newUploadUrl) ? newUploadUrl : holder_img}  
+            width={100}
+            height={100}
+            alt='This is a user placeholder image; format: png;'
+            className='w-48 h-48 object-cover object-center'
           />
 
           <Form.Label 
             htmlFor='uploadImg' 
-            className='text-2xl xl:text-4xl cursor-pointer absolute left-1/2 bottom-1/2 border text-gray-500 bg-white'
+            className='text-2xl xl:text-4xl cursor-pointer border text-gray-500 bg-white absolute'
           >
               <BsPlusLg />
 
@@ -323,85 +349,115 @@ function UserModal(props){
 
         </header>
         
-      <Form className='w-full' onSubmit={e => handleSubmit(e)}>
+      <Form className='w-full'>
 
-        <Form.Group className="mb-3" controlId="formBasicText">
+        <Form.Group className="mb-3" controlId="uploadImg">
                     
           <Form.Control 
-            id='uploadImg'
             type='file'
             accept='image/*'
             onChange={(e) => {setImageData(e), handleHolderImg(e)}}
-            className='hidden'
+            className='!hidden'
             name='image'
           />
 
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="formBasicFirstName">
+        <Form.Group className="mb-3" controlId="formBasicFirstName">
 
-          <FloatingLabel controlId="floatingInput" label="First Name" className="mb-3">
-            <Form.Control type="text" placeholder="John" onChange={(e) => setFirstName(e.target.value)}/>
+          <FloatingLabel controlId="formBasicFirstName" label="First Name">
+            <Form.Control 
+              type="text" 
+              placeholder="John" 
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
           </FloatingLabel>
 
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="formBasicLastName">
+        <Form.Group className="mb-3" controlId="formBasicLastName">
 
-          <FloatingLabel controlId="floatingInput" label="Last Name" className="mb-3">
-            <Form.Control type="text" placeholder="Bricks" onChange={(e) => setLastName(e.target.value)}/>
+          <FloatingLabel controlId="formBasicLastName" label="Last Name">
+            <Form.Control 
+              type="text" 
+              placeholder="Bricks" 
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </FloatingLabel>
 
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
 
-          <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-            <Form.Control type="email" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)}/>
+          <FloatingLabel controlId="formBasicEmail" label="Email address">
+            <Form.Control 
+              type="email" 
+              placeholder="name@example.com" 
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </FloatingLabel>
 
         </Form.Group>
 
+        <Form.Group className="mb-3" controlId="formBasicPhone">
 
-        <Form.Group className="mb-4" controlId="formBasicUsername">
-
-          <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
-            <Form.Control type="text"  placeholder="" onChange={(e) => setUsername(e.target.value)}/>
+          <FloatingLabel controlId="formBasicPhone" label="Phone Number">
+            <Form.Control 
+              type="tel" 
+              placeholder="+234 800 000 0000" 
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              minLength={9}
+              maxLength={15}
+            />
           </FloatingLabel>
 
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicUsername">
 
-          <FloatingLabel controlId="floatingPassword" label="Password">
-            <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+          <FloatingLabel controlId="formBasicUsername" label="Username" >
+            <Form.Control 
+              type="text"  
+              placeholder="" 
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </FloatingLabel>
 
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="formBasicAdmin">
+        <Form.Group className="mb-3" controlId="formBasicPassword">
 
-          <div className="mb-3 flex">
-            <Form.Check aria-label="admin" className='mr-3' onClick={(e) => setIsAdmin(e.target.checked)}/>
-            <Form.Check.Label>Administrator</Form.Check.Label>
-          </div>
+          <FloatingLabel controlId="formBasicPassword" label="Password">
+            <Form.Control 
+              type="password" 
+              placeholder="Password" 
+              onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              required
+            />
+          </FloatingLabel>
 
-        </Form.Group>
-
-        <Form.Group className='flex justify-center'>
-          <Button variant="primary" type="submit"  className='mx-auto w-full xl:w-3/5'>
-            Submit
-          </Button>
         </Form.Group>
 
         </Form>
 
       </Modal.Body>
 
-      <Modal.Footer>
+      <Modal.Footer className='w-full flex flex-col md:flex-row md:!justify-between  md:items-stretch'>
 
-        <Button variant='primary' onClick={handleSave}>Save</Button>
-        <Button variant='secondary' onClick={props.onHide}>Close</Button>
+        <Button 
+          type='submit'
+          variant='primary' onClick={(e) => handleSave(e)} 
+          className='w-full md:w-48'
+        >
+          Save
+        </Button>
+        <Button variant='secondary' onClick={props.onHide} className='w-full md:w-48'>Close</Button>
 
       </Modal.Footer>
 

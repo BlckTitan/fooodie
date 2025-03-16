@@ -40,9 +40,15 @@ export default function RegisterAdminPage() {
   const handleHolderImg = async (e: any) =>{
 
     const file = e.target.files[0];
-    setImageData(file)
+
     const url = URL.createObjectURL(file)
 
+    // set new image data if we have selected a new file
+    if(file){
+      
+      setImageData(file)
+
+    } 
     // set new url if we have selected a new image
     if(url){
       setNewUploadUrl(url)
@@ -95,8 +101,6 @@ export default function RegisterAdminPage() {
             AlertSuccess('user created successfully')
             // trigger page reload after successful save to db
             reloadPage()
-
-
           }
 
         } catch (error: any) {
@@ -154,6 +158,7 @@ export default function RegisterAdminPage() {
                 handleHolderImg(e)
               }}
               name='image'
+              required
             />
   
           </Form.Group>
