@@ -67,7 +67,7 @@ a.page-link{
   color: #000 !important;
 }
 div.card{
-  @apply mb-4 w-72 h-fit;
+  @apply my-2 w-full xl:w-72 h-fit;
   border: 0.7px solid #e2e8f0 !important;
   box-shadow: 0.5 solid;
 }
@@ -137,7 +137,7 @@ div.testimonialTitle span{
   @apply  text-base xl:text-lg font-normal;
 }
 div.CTA_btn button{
-  @apply p-3 text-2xl font-semibold mt-4;
+  @apply w-full xl:w-fit p-2 text-2xl font-semibold mt-4;
 }
 div.CTA_btn button.CTA_btn__order{
   @apply bg-primaryColor hover:bg-orange-700 text-white rounded-md mr-4;

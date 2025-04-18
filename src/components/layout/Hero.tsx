@@ -6,7 +6,7 @@ import { BsArrowRightCircle } from 'react-icons/bs'
 export default function Hero() {
 
   return (
-    <section className='container h-[45vh] flex flex-col-reverse xl:grid xl:grid-cols-2'>
+    <section className='container h-fit xl:h-[45vh] flex flex-col-reverse xl:grid xl:grid-cols-2'>
         <div className='w-full h-fit jumbotron jumbotron-fluid d-flex flex-column'>
 
             <div className="jumboText text">

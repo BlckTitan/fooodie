@@ -9,6 +9,9 @@ const MenuSchema = new mongoose.Schema({
         public_id: { type: String, required: true },
         secure_url: { type: String, required: true}, 
     })},
+    category: {type: new mongoose.Schema({
+        name: { type: String, required: true}, 
+    })},
     price: { type: Number, required: true },    
     rating: { type: Number, required: false }
 

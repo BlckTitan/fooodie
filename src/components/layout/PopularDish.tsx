@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function PopularDish() {
   return (
-    <section className='container h-[45vh] flex-col xl:grid xl:grid-cols-3'>
+    <section className='container h-fit xl:h-[45vh] flex-col xl:grid xl:grid-cols-3'>
         
         <div className="img relative w-full h-[25vh] xl:h-[45vh] mb-4 xl:mb-0 xl:mr-4 xl:col-span-2">
             <Image src={Food1} alt='type: Img, format: jpg'  className=' w-full h-full object-cover object-center'/>

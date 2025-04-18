@@ -88,7 +88,7 @@ export async function POST(req){
 
                     newMenu = await Menu.create(
                         {
-                            title: title, description: description, price: price,
+                            title: title, description: description, price: price, category: category,
                             image:{
                                 public_id: menuPicture[0].public_id,
                                 secure_url: menuPicture[0].secure_url,

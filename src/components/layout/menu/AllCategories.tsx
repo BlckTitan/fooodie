@@ -12,21 +12,21 @@ import Pagination from '../Pagination';
 export default function AllCategories() {
   const dummyText = [
     {img: Menu1, title: 'Spagheti', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'},
-    {img: Menu1, title: 'Gnocchi', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'},
-    {img: Menu1, title: 'Rovioli', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'},
-    {img: Menu1, title: 'Risoto', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'}
+    {img: Menu2, title: 'Gnocchi', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'},
+    {img: Menu3, title: 'Rovioli', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'},
+    {img: Menu4, title: 'Risoto', text:'Some quick example text to build on the card title and make up the bulk of the cards content', price: '#2500'}
   ]
   return (
-    <section className='p-4'>
+    <section className='w-full p-0 xl:p-4'>
       <div className='menuItems'>
         {
           dummyText.map((dummyData, index) => (
             <div className="card" key={index}>
 
-              <div className='relative flex justify-center items-center'>
+              <div className=' flex justify-center items-center'>
                 <Image src={dummyData.img} 
-                  className="card-img-top w-full h-48 object-cover" 
-                  alt="type: image; format: jpg; name: menu1;" 
+                  className="card-img-top w-full h-48 object-cover object-center" 
+                  alt={`type: image; format: jpg; name: ${dummyData.title}`}
                 />
               </div>
 
