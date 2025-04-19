@@ -1,6 +1,6 @@
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { User } from "../../app/models/User";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from '../../lib/mongooseConnect'

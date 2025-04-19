@@ -1,5 +1,5 @@
 import { mongoose} from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { isEmail, isAlphanumeric } from 'validator';
 
 const AdminSchema = new mongoose.Schema({
