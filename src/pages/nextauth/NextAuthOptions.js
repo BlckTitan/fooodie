@@ -66,6 +66,7 @@ const  authOptions = {
         async jwt({ token, user, session, trigger}) {
             
             if(user){
+                // on signin
                 return{
                     ...token,
                     id: user.id,
@@ -74,18 +75,24 @@ const  authOptions = {
                 }
             }
 
-            if(trigger === 'update'){
-                return { ...token}
+            if (trigger === 'update' && session) {
+                // When session is updated explicitly
+                return {
+                    ...token,
+                    id: session.id ?? token.id,
+                    username: session.username ?? token.username,
+                    isAdmin: session.isAdmin ?? token.isAdmin,
+                };
             }
             
             return token
         },
 
-        async session({ session, user, token }) {
+        async session({ session, token }) {
 
-            session.user.id = token && token.id
-            session.user.username = token && token.username
-            session.user.isAdmin = token && token.isAdmin
+            session.user.id = token?.id ??  null
+            session.user.username = token?.username ?? null
+            session.user.isAdmin = token?.isAdmin ?? null
 
             return session
         },

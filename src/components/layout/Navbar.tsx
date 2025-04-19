@@ -23,6 +23,7 @@ export default function Navbar() {
     }
   }
   
+  console.log(session?.data?.user?.username)
   return (
     <nav className="navbar navbar-expand-lg">
         <div className="container">

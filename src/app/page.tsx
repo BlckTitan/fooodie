@@ -9,7 +9,7 @@ import Menu from "@/components/layout/menu/Menu";
 export default function Home() {
 
   return (
-      <main className="w-full h-full">
+      <main className="w-full h-full flex flex-row justify-center">
         
         <div className="container bg-white">
           
