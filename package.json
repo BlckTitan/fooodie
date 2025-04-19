@@ -12,7 +12,7 @@
     "@auth/mongodb-adapter": "^3.4.1",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.2",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.3",
     "cloudinary": "^2.4.0",
     "mongodb": "^6.8.0",

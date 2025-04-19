@@ -1,5 +1,5 @@
 import {Mongoose, mongoose} from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptJs'
 import { isEmail, isAlphanumeric, isAlpha, isCreditCard, isInt} from 'validator';
 // import {AddressSchema} from './Address';
 // import {BillingSchema} from './Billing';
