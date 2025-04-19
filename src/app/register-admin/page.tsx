@@ -21,7 +21,7 @@ export default function RegisterAdminPage() {
   const [username, setUsername] = useState('')
   const [phone, setPhone] = useState('')
   const [newUploadUrl, setNewUploadUrl] = useState('')
-  const [imageData, setImageData] = useState('')
+  const [imageData, setImageData] = useState<File | null>(null)
 
   const router = useRouter()
 
@@ -57,13 +57,13 @@ export default function RegisterAdminPage() {
   }
 
   //db admin save handler
-  const handleSave = async (e) => {
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
     const validate = handleValidation()
     let file;
 
-    if(imageData === ''){
+    if(imageData === null){
       return AlertError('Select and image for upload')
     }else if(validate !== true){
       return  false
@@ -73,7 +73,7 @@ export default function RegisterAdminPage() {
         let data; 
   
         //checking for file size and type(image files)
-        if(file.size < 1024 * 1024 && file.type.startsWith('image/')){
+        if(file && file.size < 1024 * 1024 && file.type.startsWith('image/')){
           
           data = new FormData(); 
 

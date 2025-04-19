@@ -16,9 +16,9 @@ import axios from 'axios';
 export default function ProfilePage() {
 
   const [modalShow, setModalShow] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState('');
   const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('')
   const [firstname, setFirstName] = useState('')
@@ -41,9 +41,9 @@ export default function ProfilePage() {
 
   const fetchUser = async () =>{
 
-    setUserId(session?.data?.user?.id)
+    setUserId(session?.data?.user?.id || '')
     setIsLoading(true); // Set loading to true before making the request
-    setError(null); // Reset error before each fetch
+    setError(''); // Reset error before each fetch
 
     try {
       
@@ -64,7 +64,7 @@ export default function ProfilePage() {
         setStreet(response.data?.address?.street)// Set street on ok response
       }
 
-    } catch (err) {
+    } catch (err: string | any) {
 
       setError(err); // Capture and set error
       console.log(error)
